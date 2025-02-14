@@ -9,6 +9,13 @@ import UIKit
 
 // MARK: Main Elements
 
+public var APP_VERSION: String {
+  Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+}
+public var APP_BUILD: String {
+  Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
+}
+
 public var WINDOW: UIWindow? {
   UIApplication.shared.delegate?.window as? UIWindow
 }

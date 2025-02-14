@@ -84,7 +84,7 @@ class ChangeManager: NSObject {
       names = v.joined(separator: ", ")
     }
     func o2s(_ obj: AnyObject?) -> String {
-      "[\(d_obj_clsname(obj) ?? "--"),\(d_obj_addr(obj) ?? "--")]"
+      "[\(dev_obj_clsname(obj) ?? "--"),\(dev_obj_addr(obj) ?? "--")]"
     }
     var description: String {
       [time, cname, vname, instance, names].joined(separator: " ")
@@ -117,7 +117,7 @@ class ChangeManager: NSObject {
 #if DEBUG
 fileprivate extension UIView {
   var custom: UIView? {
-    let name = d_obj_clsname(self)?.trimmingCharacters(in: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".charset.inverted) ?? ""
+    let name = dev_obj_clsname(self)?.trimmingCharacters(in: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".charset.inverted) ?? ""
     return name.hasPrefix("UI") ? superview?.custom : self
   }
 }

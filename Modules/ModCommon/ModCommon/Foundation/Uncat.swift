@@ -48,9 +48,6 @@ public extension NSObject {
   }
 }
 
-
-// =============================================================================
-
 public extension DispatchQueue {
   static var userInteractive: DispatchQueue { .global(qos: .userInteractive) }
   static var userInitiated: DispatchQueue { .global(qos: .userInitiated) }
@@ -68,6 +65,7 @@ public extension DispatchQueue {
     return item
   }
 }
+
 @discardableResult
 public func masy(_ time: Double? = nil, _ handler: VoidCb?) -> DispatchWorkItem? { // [F]
   DispatchQueue.main.delay(time, handler)
@@ -109,4 +107,23 @@ public func zip_files(_ at: String?, _ to: String? = nil) -> Bool { // [F]
     }
   }
   return error == nil && result
+}
+
+// days / hours / minutes / seconds
+public extension BinaryInteger {
+  func dhms(_ trim: Bool) -> [(Int,String)] {
+    let val = self.int
+    var list = [
+      (  val / 86400              , "d"),
+      ( (val % 86400) / 3600      , "h"),
+      (((val % 86400) % 3600) / 60, "m"),
+      (((val % 86400) % 3600) % 60, "s"),
+    ]
+    if trim {
+      while list.first?.0 == 0 && list.count > 1 {
+        list.removeFirst()
+      }
+    }
+    return list
+  }
 }

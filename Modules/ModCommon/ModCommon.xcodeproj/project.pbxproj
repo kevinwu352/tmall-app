@@ -96,7 +96,6 @@
 		253548F42CF85ABA00471D54 /* BaseStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253548F32CF85ABA00471D54 /* BaseStackView.swift */; };
 		253548F62CF85C2A00471D54 /* Infoline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253548F52CF85C2A00471D54 /* Infoline.swift */; };
 		253548FC2CF866C800471D54 /* UtilsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253548FB2CF866C800471D54 /* UtilsView.swift */; };
-		2571B3912D0BC2250043833A /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571B3902D0BC2250043833A /* Number.swift */; };
 		660F916C8B655F96A089A030 /* Pods_ModCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C1351727CE60ACA703DC80F /* Pods_ModCommon.framework */; };
 /* End PBXBuildFile section */
 
@@ -196,7 +195,6 @@
 		253548F32CF85ABA00471D54 /* BaseStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStackView.swift; sourceTree = "<group>"; };
 		253548F52CF85C2A00471D54 /* Infoline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Infoline.swift; sourceTree = "<group>"; };
 		253548FB2CF866C800471D54 /* UtilsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsView.swift; sourceTree = "<group>"; };
-		2571B3902D0BC2250043833A /* Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Number.swift; sourceTree = "<group>"; };
 		28EA023155239CF99F48C26E /* Pods-ModCommon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModCommon.release.xcconfig"; path = "Target Support Files/Pods-ModCommon/Pods-ModCommon.release.xcconfig"; sourceTree = "<group>"; };
 		397F5F364D8D0109A54B160C /* Pods-ModCommon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModCommon.debug.xcconfig"; path = "Target Support Files/Pods-ModCommon/Pods-ModCommon.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -456,10 +454,9 @@
 			isa = PBXGroup;
 			children = (
 				0A5349692A54521A00EDA4BF /* Metric.swift */,
+				0A5349782A54521A00EDA4BF /* Types.swift */,
 				0A5349742A54521A00EDA4BF /* Uncat.swift */,
 				0AFA2FDF2D5F1A2500A9B3C0 /* todo */,
-				0A5349782A54521A00EDA4BF /* Types.swift */,
-				2571B3902D0BC2250043833A /* Number.swift */,
 				0A5349732A54521A00EDA4BF /* CollectionExt.swift */,
 				0A53496C2A54521A00EDA4BF /* StringExt.swift */,
 				0A53496B2A54521A00EDA4BF /* UIColorExt.swift */,
@@ -700,7 +697,6 @@
 				0A534ADE2A54521B00EDA4BF /* SharedRes.swift in Sources */,
 				0A534A192A54521B00EDA4BF /* HttpError.swift in Sources */,
 				0A534A312A54521B00EDA4BF /* LanguageManager.swift in Sources */,
-				2571B3912D0BC2250043833A /* Number.swift in Sources */,
 				0A534A2E2A54521B00EDA4BF /* Hover.swift in Sources */,
 				0A534A232A54521B00EDA4BF /* HuaSuanService.swift in Sources */,
 				253548F42CF85ABA00471D54 /* BaseStackView.swift in Sources */,

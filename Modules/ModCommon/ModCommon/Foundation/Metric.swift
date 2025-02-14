@@ -39,9 +39,9 @@ public let NOTCH = SAFE_BOT > 0
 
 public let STATUS_BAR_HET = NOTCH ? SAFE_TOP : 20.0
 public let NAV_BAR_HET = 44.0
-public let TOP_HET = STATUS_BAR_HET + NAV_BAR_HET
-
 public let TAB_BAR_HET = 49.0
+
+public let TOP_HET = STATUS_BAR_HET + NAV_BAR_HET
 public let BOT_HET = SAFE_BOT + TAB_BAR_HET
 
 

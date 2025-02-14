@@ -71,7 +71,7 @@
 		0A534A4B2A54521B00EDA4BF /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349622A54521A00EDA4BF /* BaseView.swift */; };
 		0A534A502A54521B00EDA4BF /* Metric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349692A54521A00EDA4BF /* Metric.swift */; };
 		0A534A512A54521B00EDA4BF /* Serialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A53496A2A54521A00EDA4BF /* Serialize.swift */; };
-		0A534A522A54521B00EDA4BF /* UIColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A53496B2A54521A00EDA4BF /* UIColorExt.swift */; };
+		0A534A522A54521B00EDA4BF /* ColorImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A53496B2A54521A00EDA4BF /* ColorImage.swift */; };
 		0A534A532A54521B00EDA4BF /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A53496C2A54521A00EDA4BF /* StringExt.swift */; };
 		0A534A552A54521B00EDA4BF /* ThirdExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A53496E2A54521A00EDA4BF /* ThirdExt.swift */; };
 		0A534A572A54521B00EDA4BF /* Codec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349702A54521A00EDA4BF /* Codec.swift */; };
@@ -84,7 +84,6 @@
 		0A534A5F2A54521B00EDA4BF /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349782A54521A00EDA4BF /* Types.swift */; };
 		0A534A602A54521B00EDA4BF /* Datetime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349792A54521A00EDA4BF /* Datetime.swift */; };
 		0A534A612A54521B00EDA4BF /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A53497A2A54521A00EDA4BF /* Utils.swift */; };
-		0A534A622A54521B00EDA4BF /* UIImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A53497B2A54521A00EDA4BF /* UIImageExt.swift */; };
 		0A534A632A54521B00EDA4BF /* com.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0A53497D2A54521B00EDA4BF /* com.strings */; };
 		0A534A642A54521B00EDA4BF /* shared.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0A53497F2A54521B00EDA4BF /* shared.strings */; };
 		0A534ADD2A54521B00EDA4BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A5349FC2A54521B00EDA4BF /* Assets.xcassets */; };
@@ -165,7 +164,7 @@
 		0A5349622A54521A00EDA4BF /* BaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		0A5349692A54521A00EDA4BF /* Metric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Metric.swift; sourceTree = "<group>"; };
 		0A53496A2A54521A00EDA4BF /* Serialize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serialize.swift; sourceTree = "<group>"; };
-		0A53496B2A54521A00EDA4BF /* UIColorExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExt.swift; sourceTree = "<group>"; };
+		0A53496B2A54521A00EDA4BF /* ColorImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorImage.swift; sourceTree = "<group>"; };
 		0A53496C2A54521A00EDA4BF /* StringExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
 		0A53496E2A54521A00EDA4BF /* ThirdExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdExt.swift; sourceTree = "<group>"; };
 		0A5349702A54521A00EDA4BF /* Codec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Codec.swift; sourceTree = "<group>"; };
@@ -178,7 +177,6 @@
 		0A5349782A54521A00EDA4BF /* Types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		0A5349792A54521A00EDA4BF /* Datetime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Datetime.swift; sourceTree = "<group>"; };
 		0A53497A2A54521A00EDA4BF /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		0A53497B2A54521A00EDA4BF /* UIImageExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExt.swift; sourceTree = "<group>"; };
 		0A53497E2A54521B00EDA4BF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/com.strings"; sourceTree = "<group>"; };
 		0A5349802A54521B00EDA4BF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/shared.strings"; sourceTree = "<group>"; };
 		0A5349812A54521B00EDA4BF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/com.strings; sourceTree = "<group>"; };
@@ -456,11 +454,10 @@
 				0A5349692A54521A00EDA4BF /* Metric.swift */,
 				0A5349782A54521A00EDA4BF /* Types.swift */,
 				0A5349742A54521A00EDA4BF /* Uncat.swift */,
+				0A53496B2A54521A00EDA4BF /* ColorImage.swift */,
 				0AFA2FDF2D5F1A2500A9B3C0 /* todo */,
 				0A5349732A54521A00EDA4BF /* CollectionExt.swift */,
 				0A53496C2A54521A00EDA4BF /* StringExt.swift */,
-				0A53496B2A54521A00EDA4BF /* UIColorExt.swift */,
-				0A53497B2A54521A00EDA4BF /* UIImageExt.swift */,
 				0A5349712A54521A00EDA4BF /* UIViewExt.swift */,
 				0A5349792A54521A00EDA4BF /* Datetime.swift */,
 				0A5349702A54521A00EDA4BF /* Codec.swift */,
@@ -651,7 +648,6 @@
 				0A534A0E2A54521B00EDA4BF /* UserCache.swift in Sources */,
 				0A534A012A54521B00EDA4BF /* Comb.swift in Sources */,
 				0A534A222A54521B00EDA4BF /* HomePageService.swift in Sources */,
-				0A534A622A54521B00EDA4BF /* UIImageExt.swift in Sources */,
 				0A534A1F2A54521B00EDA4BF /* AccountManager.swift in Sources */,
 				0A534A072A54521B00EDA4BF /* Combinable.swift in Sources */,
 				0A534A532A54521B00EDA4BF /* StringExt.swift in Sources */,
@@ -720,7 +716,7 @@
 				0A534A2F2A54521B00EDA4BF /* Hud.swift in Sources */,
 				0A534A3E2A54521B00EDA4BF /* NavigationController.swift in Sources */,
 				0A534A052A54521B00EDA4BF /* CombineExt.swift in Sources */,
-				0A534A522A54521B00EDA4BF /* UIColorExt.swift in Sources */,
+				0A534A522A54521B00EDA4BF /* ColorImage.swift in Sources */,
 				0A534A332A54521B00EDA4BF /* ThemeManager.swift in Sources */,
 				0A534A5A2A54521B00EDA4BF /* CollectionExt.swift in Sources */,
 				0A534A512A54521B00EDA4BF /* Serialize.swift in Sources */,

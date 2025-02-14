@@ -1,0 +1,56 @@
+
+# Equatable
+
+1) For a struct, all its stored properties must conform to Equatable.
+2) For an enum, all its associated values must conform to Equatable. (An enum without associated values has Equatable conformance even without the declaration.)
+
+无关联值，无需声明 Equatable，直接是 Equatable
+有关联值且全部 Equatable，声明即可变成 Equatable
+
+## NSObject
+
+// NSObject，== 假，!= 真
+
+// 属性值相同的 NSObject 子类，== 假，!= 真
+// 属性值不同的 NSObject 子类，== 假，!= 真
+
+// 属性值相同的 NSObject 子类，实现 == 方法，== 真，!= 真（!= 不走 == 方法）
+// 属性值不同的 NSObject 子类，实现 == 方法，== 假，!= 真
+
+// 属性值相同的 NSObject 子类，实现 != 方法，== 假，!= 假
+// 属性值不同的 NSObject 子类，实现 != 方法，== 假，!= 真
+
+// 两个属性值相同的 NSObject 子类，实现 == 和 != 方法，== 真，!= 假
+// 两个属性值不同的 NSObject 子类，实现 == 和 != 方法，== 假，!= 真
+
+class Address: NSObject {
+  let streetName: String
+  let zipCode: Int
+  init(streetName: String, zipCode: Int) {
+    self.streetName = streetName
+    self.zipCode = zipCode
+  }
+  static func ==(lhs: Address, rhs: Address) -> Bool {
+    lhs.streetName == rhs.streetName && lhs.zipCode == rhs.zipCode
+  }
+  static func !=(lhs: Address, rhs: Address) -> Bool {
+    !(lhs == rhs)
+  }
+}
+
+## 可选变量
+
+let mark1: NSObject? = nil
+let mark2: NSObject? = nil
+print( mark1 == mark2 ) // true
+print( mark1 != mark2 ) // false
+
+
+## Hashable
+
+1) For a struct, all its stored properties must conform to Hashable.
+
+2) For an enum, all its associated values must conform to Hashable. (An enum without associated values has Hashable conformance even without the declaration.)
+
+无关联值，无需声明 Hashable，直接是 Hashable
+有关联值且全部 Hashable，声明即可变成 Hashable

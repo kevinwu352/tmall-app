@@ -1,0 +1,71 @@
+
+brew install formula
+brew uninstall formula
+brew list
+brew list frum  好像可以展示此包相关的文件
+
+brew search [text|/text/]     // 搜索 cask token 或 formula name
+
+
+brew autoremove               // 删除所有作为依赖被安装而现在并不需要的包
+brew autoremove --dry-run     // 仅仅展示
+
+brew cleanup
+brew cleanup --dry-run
+
+
+brew deps --installed --tree  // 显示依赖
+
+
+brew outdated                 // 显示所有过期包
+brew update
+brew upgrade
+
+
+brew leaves     // 显示所有非别人依赖的包
+brew formulae
+brew casks      // 列出所有本地可安装的 cask
+
+
+brew tap        // 列出所有已安装的仓库
+brew tap xxx    // 安装仓库
+brew untap
+
+
+brew --cache
+brew --caskroom
+brew --cellar
+brew --prefix
+brew --repo
+
+
+
+
+If sudo is passed, operate on /Library/LaunchDaemons (started at boot).
+Otherwise, operate on ~/Library/LaunchAgents (started at login).
+
+[sudo] brew services [list]
+List all managed services for the current user (or root).
+
+[sudo] brew services run (formula|--all)
+Run the service formula without registering to launch at login (or boot).
+
+[sudo] brew services start (formula|--all)
+Start the service formula immediately and register it to launch at login (or boot).
+
+[sudo] brew services stop (formula|--all)
+Stop the service formula immediately and unregister it from launching at login (or boot).
+
+[sudo] brew services restart (formula|--all)
+Stop (if necessary) and start the service formula immediately and register it to launch at login (or boot).
+
+
+
+formula(e)  公式    安装包的描述文件，formulae 为复数
+cellar      地窖    安装好后所在的目录
+keg         小桶    具体某个包所在的目录，keg 是 cellar 的子目录
+bottle      瓶子    预先编译好的包，不需要现场下载编译源码，速度会快很多；官方库中的包大多都是通过 bottle 方式安装
+tap         水龙头  下载启用某个源
+cask        木桶    安装 macOS native 应用的扩展
+bundle      捆      描述 Homebrew 依赖的扩展
+

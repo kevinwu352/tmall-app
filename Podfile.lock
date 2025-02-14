@@ -1,0 +1,61 @@
+PODS:
+  - Alamofire (5.9.0)
+  - Atributika (5.0.5)
+  - AtributikaViews (5.0.5)
+  - Cache (6.0.0)
+  - Kingfisher (7.11.0)
+  - MJRefresh (3.7.6)
+  - R.swift (7.3.2)
+  - SnapKit (5.7.1)
+  - SwiftEntryKit (2.0.1)
+  - SwiftyJSON (5.0.1)
+
+DEPENDENCIES:
+  - Alamofire
+  - Atributika
+  - AtributikaViews
+  - Cache
+  - Kingfisher
+  - MJRefresh
+  - R.swift
+  - SnapKit
+  - SwiftEntryKit (from `https://github.com/kevinwu352/SwiftEntryKit.git`, branch `dev`)
+  - SwiftyJSON
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - Atributika
+    - AtributikaViews
+    - Cache
+    - Kingfisher
+    - MJRefresh
+    - R.swift
+    - SnapKit
+    - SwiftyJSON
+
+EXTERNAL SOURCES:
+  SwiftEntryKit:
+    :branch: dev
+    :git: https://github.com/kevinwu352/SwiftEntryKit.git
+
+CHECKOUT OPTIONS:
+  SwiftEntryKit:
+    :commit: 90585a015425be4fad6f11dbc06b8b908d774d49
+    :git: https://github.com/kevinwu352/SwiftEntryKit.git
+
+SPEC CHECKSUMS:
+  Alamofire: 02b772c9910e8eba1a079227c32fbd9e46c90a24
+  Atributika: ecedf5259e4aa3c6278d840b6c18d60c1a8b6ca0
+  AtributikaViews: e7a47f129c7b6dbe4b9f413cb1726a14b812f3e9
+  Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d
+  Kingfisher: b9c985d864d43515f404f1ef4a8ce7d802ace3ac
+  MJRefresh: 2fe7fb43a5167ceda20bb7e63f130c04fd1814a5
+  R.swift: 0af0d882f49f03711415cb4e5215daa977d8a480
+  SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
+  SwiftEntryKit: f354f26d332c3698add4ae9a3095c1ea4102aa81
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
+
+PODFILE CHECKSUM: 08fedb761be949e193745912ff54bab91c570585
+
+COCOAPODS: 1.16.2

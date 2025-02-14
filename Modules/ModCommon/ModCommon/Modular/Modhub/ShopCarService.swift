@@ -1,0 +1,12 @@
+//
+//  ShopCarService.swift
+//  ModCommon
+//
+//  Created by Kevin Wu on 2022/1/1.
+//
+
+import UIKit
+
+public protocol ShopCarService: Modulable {
+  var list: [String] { get }
+}

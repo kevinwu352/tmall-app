@@ -1,0 +1,12 @@
+
+/* Refresh */
+"refresh_foot_idle" = "Load More";
+"refresh_foot_refreshing" = "Loading...";
+"refresh_foot_nomore" = "No More";
+
+
+/* State */
+"state_loading_title" = "Loading...";
+"state_empty_title" = "No Records";
+"state_empty_refresh" = "Refresh";
+"state_error_title" = "Error Occurred";

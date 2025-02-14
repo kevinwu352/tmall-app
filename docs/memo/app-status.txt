@@ -1,0 +1,36 @@
+
+launch
+  did finish launching
+  did become active
+
+
+click home
+  will resign active
+  did enter background
+click app
+  will enter foreground
+  did become active
+
+
+call banner
+  ...
+call cancelled
+  ...
+
+
+call expanded
+  will resign active
+  did enter background
+call cancelled
+  will enter foreground
+  did become active
+
+
+open url, alive
+  will enter foreground
+  open url
+  did become active
+open url, dead
+  did finish launching
+  open url
+  did become active

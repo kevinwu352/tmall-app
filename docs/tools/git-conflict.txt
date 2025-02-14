@@ -1,0 +1,42 @@
+
+master
+>> 111
+  aaa
+  bbb
+>> 222
+  aaa
+  bbb
+  xxx
+
+fix
+>> 111
+  aaa
+  bbb
+>> 333
+  aaa
+  bbb
+  mine
+
+========================================
+
+git rebase master
+
+  aaa
+  bbb
+<<<<<<< HEAD                  current change
+  xxx
+=======
+  mine
+>>>>>>> 1f13215 (333)         imcoming change
+
+========================================
+
+git merge master
+
+  aaa
+  bbb
+<<<<<<< HEAD                  current change
+  mine
+=======
+  xxx
+>>>>>>> master                imcoming change

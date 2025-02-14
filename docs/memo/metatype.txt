@@ -1,0 +1,9 @@
+
+//typealias AnyClass = AnyObject.Type
+
+let metatype1: Int.Type = Int.self
+
+//protocol MyProtocol { }
+//struct MyType: MyProtocol { }
+let metatype2: MyProtocol.Type = MyType.self
+//let metatype3: MyProtocol.Type = MyProtocol.self // error

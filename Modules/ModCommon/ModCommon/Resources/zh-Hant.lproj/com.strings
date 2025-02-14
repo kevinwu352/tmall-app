@@ -1,0 +1,12 @@
+
+/* Refresh */
+"refresh_foot_idle" = "加載更多";
+"refresh_foot_refreshing" = "加載中...";
+"refresh_foot_nomore" = "已無更多";
+
+
+/* State */
+"state_loading_title" = "加載中...";
+"state_empty_title" = "暫無數據";
+"state_empty_refresh" = "刷新";
+"state_error_title" = "出錯了";

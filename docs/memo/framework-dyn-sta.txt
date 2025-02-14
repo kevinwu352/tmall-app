@@ -1,0 +1,8 @@
+
+D1 -> D2 = D2+D1 / D2(Embed-D1)
+S1 -> D2 = D2
+
+D1 -> S2 = S2+D1 / xxx
+S1 -> S2 = S2+S1
+
+动态库都需要 Embed & Sign

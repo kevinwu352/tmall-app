@@ -1,0 +1,3 @@
+
+NAME="output-$(date +"%d%H%M")"
+echo $NAME

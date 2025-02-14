@@ -1,0 +1,6 @@
+framework module Pods_TmallApp {
+  umbrella header "Pods-TmallApp-umbrella.h"
+
+  export *
+  module * { export * }
+}

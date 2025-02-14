@@ -1,0 +1,6 @@
+framework module AtributikaViews {
+  umbrella header "AtributikaViews-umbrella.h"
+
+  export *
+  module * { export * }
+}

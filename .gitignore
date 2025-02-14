@@ -1,0 +1,8 @@
+.DS_Store
+
+*.generated.swift
+
+xcuserdata
+
+build
+temp

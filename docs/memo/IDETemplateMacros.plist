@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>FULLUSERNAME</key>
+	<string>kevin</string>
+</dict>
+</plist>
+
+
+IDETemplateMacros.plist
+
+Project user data:
+<ProjectName>.xcodeproj/xcuserdata/[username].xcuserdatad/
+Project shared data:
+<ProjectName>.xcodeproj/xcshareddata/IDETemplateMacros.plist
+
+Workspace user data:
+<WorkspaceName>.xcworkspace/xcuserdata/[username].xcuserdatad/
+Workspace shared data:
+<WorkspaceName>.xcworkspace/xcshareddata/
+
+User Xcode data:
+~/Library/Developer/Xcode/UserData/
+
+
+
+FILEHEADER
+
+/**
+/**
+___PACKAGENAME___
+Created by: ___FULLUSERNAME___ on ___DATE___
+Copyright (c) 2017 My Company
+
++-----------------------------------------------------+
+|                                                     |
+|                                                     |
+|         _________ _______          _________        |
+|         \__   __/(  ____ \|\     /|\__   __/        |
+|            ) (   | (    \/( \   / )   ) (           |
+|            | |   | (__     \ (_) /    | |           |
+|            | |   |  __)     ) _ (     | |           |
+|            | |   | (       / ( ) \    | |           |
+|            | |   | (____/\( /   \ )   | |           |
+|            )_(   (_______/|/     \|   )_(           |
+|                                                     |
+|                                                     |
++-----------------------------------------------------+
+
+*/

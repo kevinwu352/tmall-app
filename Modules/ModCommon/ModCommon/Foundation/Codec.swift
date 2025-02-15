@@ -9,6 +9,19 @@ import UIKit
 import CommonCrypto
 import CryptoKit
 
+public extension Data {
+  init(random: Int) { // [F]
+    let bytes = UnsafeMutableRawPointer.allocate(byteCount: random, alignment: 1)
+    defer { bytes.deallocate() }
+    if CCRandomGenerateBytes(bytes, random) == kCCSuccess {
+      self.init(bytes: bytes, count: random)
+    } else {
+      self.init(count: random)
+    }
+  }
+}
+
+
 // MARK: Aes
 
 // https://www.splinter.com.au/2019/06/09/pure-swift-common-crypto-aes-encryption/
@@ -33,50 +46,39 @@ import CryptoKit
 // print( decoded_str == "kevin" )
 
 public extension Data {
-  init(random: Int) { // FUNC
-    let bytes = UnsafeMutableRawPointer.allocate(byteCount: random, alignment: 1)
-    defer { bytes.deallocate() }
-    if CCRandomGenerateBytes(bytes, random) == kCCSuccess {
-      self.init(bytes: bytes, count: random)
-    } else {
-      self.init(count: random)
-    }
-  }
-}
-
-public extension Data {
   func aesECBEncrypt(_ key: Data, _ padding: Bool) -> Data? {
     var options = 0
     options += kCCOptionECBMode
     options += (padding ? kCCOptionPKCS7Padding : 0)
-    return crypt(kCCEncrypt, options, key, Data(count: kCCBlockSizeAES128), self)
+    return crypt(operation: kCCEncrypt, options: options, key: key, iv: Data(count: kCCBlockSizeAES128), data: self)
   }
   func aesECBDecrypt(_ key: Data, _ padding: Bool) -> Data? {
     var options = 0
     options += kCCOptionECBMode
     options += (padding ? kCCOptionPKCS7Padding : 0)
-    return crypt(kCCDecrypt, options, key, Data(count: kCCBlockSizeAES128), self)
+    return crypt(operation: kCCDecrypt, options: options, key: key, iv: Data(count: kCCBlockSizeAES128), data: self)
   }
 
   func aesCBCEncrypt(_ key: Data, _ iv: Data, _ padding: Bool) -> Data? {
     var options = 0
     //options += kCCOptionECBMode
     options += (padding ? kCCOptionPKCS7Padding : 0)
-    return crypt(kCCEncrypt, options, key, iv, self)
+    return crypt(operation: kCCEncrypt, options: options, key: key, iv: iv, data: self)
   }
   func aesCBCDecrypt(_ key: Data, _ iv: Data, _ padding: Bool) -> Data? {
     var options = 0
     //options += kCCOptionECBMode
     options += (padding ? kCCOptionPKCS7Padding : 0)
-    return crypt(kCCDecrypt, options, key, iv, self)
+    return crypt(operation: kCCDecrypt, options: options, key: key, iv: iv, data: self)
   }
-
-  private func crypt(_ operation: Int,
-                     _ options: Int,
-                     _ key: Data,
-                     _ iv: Data,
-                     _ data: Data
-  ) -> Data? {
+}
+fileprivate extension Data {
+  func crypt(operation: Int,
+             options: Int,
+             key: Data,
+             iv: Data,
+             data: Data
+  ) -> Data? { // [F]
     key.withUnsafeBytes { key_ptr in
       iv.withUnsafeBytes { iv_ptr in
         data.withUnsafeBytes { data_ptr in
@@ -89,11 +91,7 @@ public extension Data {
                                iv_ptr.baseAddress,
                                data_ptr.baseAddress, data.count,
                                out_ptr, out_size, &out_moved)
-          if status == kCCSuccess {
-            return Data(bytes: out_ptr, count: out_moved)
-          } else {
-            return nil
-          }
+          return status == kCCSuccess ? Data(bytes: out_ptr, count: out_moved) : nil
         }
       }
     }
@@ -102,7 +100,6 @@ public extension Data {
 
 
 // MARK: Hash
-// "" -> ""
 
 public extension Data {
   var md5: String {
@@ -125,20 +122,18 @@ public extension Data {
 // MARK: Base64
 //  "xxx".dat.base64Encoded().str
 // "eHh4".dat.base64Decoded().str
-// "" -> ""
 
 public extension Data {
-  func base64Encoded(_ options: Base64EncodingOptions = []) -> Data { // FUNC
+  func base64Encoded(_ options: Base64EncodingOptions = []) -> Data { // [F]
     base64EncodedData(options: options)
   }
-  func base64Decoded(_ options: Base64DecodingOptions = []) -> Data? { // FUNC
+  func base64Decoded(_ options: Base64DecodingOptions = []) -> Data? { // [F]
     Data(base64Encoded: self, options: options)
   }
 }
 
 
 // MARK: Url Encode
-// "" -> ""
 
 public extension String {
   var urlEncoded: String {

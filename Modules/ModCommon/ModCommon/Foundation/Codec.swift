@@ -148,20 +148,3 @@ public extension String {
     removingPercentEncoding ?? self
   }
 }
-
-
-// MARK: QRCode
-
-public extension UIImage {
-  var qrcodeDecoded: String? {
-    if let image = CIImage(image: self),
-       let decoder = CIDetector(ofType: CIDetectorTypeQRCode, context: nil, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])
-    {
-      let features = decoder
-        .features(in: image)
-        .compactMap { $0 as? CIQRCodeFeature }
-      return features.first?.messageString
-    }
-    return nil
-  }
-}

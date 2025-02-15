@@ -48,3 +48,30 @@ public extension UIImage {
     }
   }
 }
+
+public extension UIImage {
+  var qrcode: String? {
+    if let decoder = CIDetector(ofType: CIDetectorTypeQRCode, context: nil, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh]),
+       let image = CIImage(image: self)
+    {
+      let features = decoder
+        .features(in: image)
+        .compactMap { $0 as? CIQRCodeFeature }
+      return features.first?.messageString
+    }
+    return nil
+  }
+}
+public extension String {
+  func qrcode(_ size: CGSize) -> UIImage? {
+    if let filter = CIFilter(name: "CIQRCodeGenerator") {
+      filter.setValue(dat, forKey: "inputMessage")
+      filter.setValue("H", forKey: "inputCorrectionLevel") // L:7%, M:15%, Q:25%, H:30%
+      if let image = filter.outputImage {
+        let transformed = image.transformed(by: CGAffineTransform(scaleX: size.width / image.extent.size.width, y: size.height / image.extent.size.height))
+        return UIImage(ciImage: transformed)
+      }
+    }
+    return nil
+  }
+}

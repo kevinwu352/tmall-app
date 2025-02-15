@@ -9,51 +9,51 @@ import UIKit
 import Combine
 
 /*
-lazy var collectionView: UICollectionView = {
-    let items = 3.0
-    let hor_margin = 32.0
-    let ver_margin = 20.0
-    let item_height = 140.0
-    let ver_spacing = 24.0
+ lazy var collectionView: UICollectionView = {
+     let items = 3.0
+     let hor_margin = 32.0
+     let ver_margin = 20.0
+     let item_height = 140.0
+     let ver_spacing = 24.0
 
-    let item_width = 96.0
-    let hor_spacing = floor( (kScreenWidth - hor_margin*2 - item_width*items) / (items-1) )
-    //let hor_spacing = 50.0
-    //let item_width = floor( (kScreenWidth - hor_margin*2 - hor_spacing*(items-1)) / items )
+     let item_width = 96.0
+     let hor_spacing = floor( (kScreenWidth - hor_margin*2 - item_width*items) / (items-1) )
+     //let hor_spacing = 50.0
+     //let item_width = floor( (kScreenWidth - hor_margin*2 - hor_spacing*(items-1)) / items )
 
 
-    let layout = UICollectionViewFlowLayout()
-    layout.scrollDirection = .vertical
-    layout.sectionInset = UIEdgeInsets(top: ver_margin, left: hor_margin, bottom: ver_margin, right: hor_margin)
-    layout.itemSize = CGSize(width: item_width, height: item_height)
-    //layout.estimatedItemSize
-    layout.minimumInteritemSpacing = hor_spacing
-    layout.minimumLineSpacing = ver_spacing
-    //layout.headerReferenceSize
-    //layout.footerReferenceSize
-    //layout.sectionHeadersPinToVisibleBounds
-    //layout.sectionFootersPinToVisibleBounds
+     let layout = UICollectionViewFlowLayout()
+     layout.scrollDirection = .vertical
+     layout.sectionInset = UIEdgeInsets(top: ver_margin, left: hor_margin, bottom: ver_margin, right: hor_margin)
+     layout.itemSize = CGSize(width: item_width, height: item_height)
+     //layout.estimatedItemSize
+     layout.minimumInteritemSpacing = hor_spacing
+     layout.minimumLineSpacing = ver_spacing
+     //layout.headerReferenceSize
+     //layout.footerReferenceSize
+     //layout.sectionHeadersPinToVisibleBounds
+     //layout.sectionFootersPinToVisibleBounds
 
-    let ret = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    ret.dataSource = self
-    ret.register(XXX.self, forCellWithReuseIdentifier: "cell")
-    ret.backgroundColor = .clear
+     let ret = UICollectionView(frame: .zero, collectionViewLayout: layout)
+     ret.dataSource = self
+     ret.register(XXX.self, forCellWithReuseIdentifier: "cell")
+     ret.backgroundColor = .clear
 
-    return ret
-}()
-*/
+     return ret
+ }()
+ */
 /*
-layout.headerReferenceSize = CGSize(width: xxx, height: xxx)
-ret.register(XXXHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
-func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    if kind == UICollectionView.elementKindSectionHeader {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as! XXXHeaderView
-        header...
-        return header
-    }
-    fatalError("invalid kind")
-}
-*/
+ layout.headerReferenceSize = CGSize(width: xxx, height: xxx)
+ ret.register(XXXHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
+ func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+     if kind == UICollectionView.elementKindSectionHeader {
+         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as! XXXHeaderView
+         header...
+         return header
+     }
+     fatalError("invalid kind")
+ }
+ */
 
 open class BaseCollectionViewCell: UICollectionViewCell, Combinable {
 

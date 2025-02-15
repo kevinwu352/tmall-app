@@ -24,7 +24,7 @@ import SwiftyJSON
      .publish(api: .obj(), object: Obj<Person>.self)
      .eraseToAnyPublisher()
  }
-*/
+ */
 
 public protocol Ret: AnyModel {
   associatedtype Model: AnyModel

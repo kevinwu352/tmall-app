@@ -22,19 +22,19 @@ public extension JSON {
 
 
 /*
-public struct FoobarModel: AnyModel {
-  var name: String?
-  var age: Int?
+ public struct FoobarModel: AnyModel {
+   var name: String?
+   var age: Int?
 
-  public init() { }
+   public init() { }
 
-  public init(any: Any?) {
-    let json = JSON(any: any)
-    name = json["name"].string
-    age = json["age"].int
-  }
-}
-*/
+   public init(any: Any?) {
+     let json = JSON(any: any)
+     name = json["name"].string
+     age = json["age"].int
+   }
+ }
+ */
 
 public protocol AnyModel {
   init(any: Any?) // FUNC

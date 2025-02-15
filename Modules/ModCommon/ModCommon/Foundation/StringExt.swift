@@ -7,9 +7,7 @@
 
 import UIKit
 
-/* [ ] */
 public let SEP_LINE = "\u{2028}"
-/* [ ] */
 public let SEP_PARA = "\u{2029}"
 
 // MARK: Literals

@@ -24,7 +24,7 @@ import UIKit
  func reload(_ old: Int?, _ animated: Bool) {
    // ...
  }
-*/
+ */
 
 public protocol ValueControl: AnyObject {
   associatedtype Value: Equatable

@@ -7,29 +7,31 @@
 
 import UIKit
 
-// /Users/shared/
-//   Caches/
-//   options
-//
-// /Users/kevin/
-//   Caches/
-//   options
-//   user
-//
-// /Caches/
-// /options
-// /defaults
-// /Logs/http.json
+/*
+ /Users/shared/
+   Caches/
+   options
+
+ /Users/kevin/
+   Caches/
+   options
+   user
+
+ /Caches/
+ /options
+ /defaults
+ */
 
 
 // MARK: Path
 
-public func pathmk(_ trail: String, _ uid: String? = nil) -> String { // FUNC
-  let base = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first ?? ""
+public let DOCDIR = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first ?? ""
+
+public func pathmk(_ trail: String, _ uid: String? = nil) -> String { // [F]
   if let uid = uid, uid.notEmpty {
-    return base.addedPathseg(["Users", uid].joined(separator: "/")).addedPathseg(trail)
+    return DOCDIR.addedPathseg(["Users", uid].joined(separator: "/")).addedPathseg(trail)
   } else {
-    return base.addedPathseg(trail)
+    return DOCDIR.addedPathseg(trail)
   }
 }
 

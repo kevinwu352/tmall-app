@@ -9,55 +9,35 @@ import UIKit
 
 public var TIMESTAMP: Double { Date().timeIntervalSince1970 }
 
-public extension Date {
-  // 目前，时间戳秒 10 位，时间戳毫秒 13 位
-  // 16_2450_3116
-  // 10_0000_0000     ≈ 30 年
-  // 10_0000_0000_000 ≈ 30000 年
-  // 所以，将大于 10 位的数当成毫秒
-  // 当参数是 1000 时，到底是 1s 还是 1000ms 呢？分不清楚，所以几年、十几年前的时间支持不好
-  init?(ts: Double?) { // FUNC
-    if let ts = ts, ts > 0 {
-      self.init(timeIntervalSince1970: ts < 100_0000_0000 ? ts : ts / 1000)
-    } else {
-      return nil
-    }
-  }
-}
-
-public extension DateFormatter {
-  func str(_ dte: Date?) -> String? {
-    guard let dte = dte else { return nil }
-    return string(from: dte)
-  }
-  func dte(_ str: String?) -> Date? {
-    guard let str = str, str.notEmpty else { return nil }
-    return date(from: str)
-  }
-}
-public extension ISO8601DateFormatter {
-  func str(_ dte: Date?) -> String? {
-    guard let dte = dte else { return nil }
-    return string(from: dte)
-  }
-  func dte(_ str: String?) -> Date? {
-    guard let str = str, str.notEmpty else { return nil }
-    return date(from: str)
-  }
-}
-
 // print(date) // time-zone:0
 // print(df.str(date)) // time-zone:local
 //
 // TimeZone.knownTimeZoneIdentifiers
 // df.timeZone = TimeZone(identifier: "GMT")
 public extension Date {
-  func str(_ df: DateFormatter? = nil) -> String { // FUNC
+  // 16_2450_3116
+  // 10_0000_0000     ≈ 30 years
+  // 10_0000_0000_000 ≈ 30000 years
+  init?(ts: Double?) { // [F]
+    if let ts = ts, ts > 0 {
+      self.init(timeIntervalSince1970: ts < 100_0000_0000 ? ts : ts / 1000)
+    } else {
+      return nil
+    }
+  }
+
+  func str(_ df: DateFormatter? = nil) -> String { // [F]
     (df ?? FULL_dash_colon).string(from: self)
   }
 
   var start: Date {
     Calendar.current.startOfDay(for: self)
+  }
+  var yesterday: Date {
+    addedDay(-1)
+  }
+  var tomorrow: Date {
+    addedDay(1)
   }
   var startOfMonth: Date {
     let day = Calendar.current.component(.day, from: self)
@@ -71,17 +51,12 @@ public extension Date {
     }
     return it.addedDay(-1)
   }
-  var yesterday: Date {
-    addedDay(-1)
-  }
-  var tomorrow: Date {
-    addedDay(1)
-  }
-  func addedDay(_ value: Int) -> Date {
-    Date(timeIntervalSince1970: timeIntervalSince1970 + 86400 * value.dbl)
-  }
+
   func added(_ component: Calendar.Component, _ value: Int) -> Date? {
     Calendar.current.date(byAdding: component, value: value, to: self)
+  }
+  func addedDay(_ value: Int) -> Date {
+    Date(timeIntervalSince1970: timeIntervalSince1970 + 86400 * value.d)
   }
 
   func older(_ date: Date?) -> Date {
@@ -107,8 +82,7 @@ public extension Date {
     return Calendar.current.isDate(self, inSameDayAs: date)
   }
 
-  // anchor.isBeforeDay(date)
-  // date is before day of anchor?
+  // date is before day of receiver?
   func isBeforeDay(_ date: Date?) -> Bool {
     guard let date = date else { return false }
     let result = Calendar.current.compare(self, to: date, toGranularity: .day)
@@ -128,6 +102,27 @@ public extension Date {
     guard let date = date else { return false }
     let result = Calendar.current.compare(self, to: date, toGranularity: .day)
     return result == .orderedAscending || result == .orderedSame
+  }
+}
+
+public extension DateFormatter {
+  func str(_ dte: Date?) -> String? {
+    guard let dte = dte else { return nil }
+    return string(from: dte)
+  }
+  func dte(_ str: String?) -> Date? {
+    guard let str = str, str.notEmpty else { return nil }
+    return date(from: str)
+  }
+}
+public extension ISO8601DateFormatter {
+  func str(_ dte: Date?) -> String? {
+    guard let dte = dte else { return nil }
+    return string(from: dte)
+  }
+  func dte(_ str: String?) -> Date? {
+    guard let str = str, str.notEmpty else { return nil }
+    return date(from: str)
   }
 }
 

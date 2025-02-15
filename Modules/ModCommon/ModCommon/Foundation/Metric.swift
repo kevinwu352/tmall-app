@@ -72,16 +72,6 @@ public extension CGRect {
   func oh(_ val: Double) -> CGRect { CGRect(x: minX, y: minY, width: width, height: height + val) }
 }
 
-
-// MARK: Uncat
-
-public extension CGSize {
-  // aspect fit / aspect fill
-  func ratio(_ limit: CGSize, _ fit: Bool) -> Double {
-    fit ? min(limit.width / width, limit.height / height) : max(limit.width / width, limit.height / height)
-  }
-}
-
 public extension UIEdgeInsets {
   var vertical: CGFloat { top + bottom }
   var horizontal: CGFloat { left + right }

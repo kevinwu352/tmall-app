@@ -16,6 +16,12 @@ public extension UIImage {
   }
 }
 
+public extension CGSize {
+  // aspect fit / aspect fill
+  func ratio(_ limit: CGSize, _ fit: Bool) -> Double {
+    fit ? min(limit.width / width, limit.height / height) : max(limit.width / width, limit.height / height)
+  }
+}
 public extension UIImage {
   func scaleToFill(_ limit: CGSize) -> UIImage {
     UIGraphicsImageRenderer(size: limit).image {

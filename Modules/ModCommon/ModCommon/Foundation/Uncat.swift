@@ -112,7 +112,7 @@ public func zip_files(_ at: String?, _ to: String? = nil) -> Bool { // [F]
 // days / hours / minutes / seconds
 public extension BinaryInteger {
   func dhms(_ trim: Bool) -> [(Int,String)] {
-    let val = self.int
+    let val = self.i
     var list = [
       (  val / 86400              , "d"),
       ( (val % 86400) / 3600      , "h"),

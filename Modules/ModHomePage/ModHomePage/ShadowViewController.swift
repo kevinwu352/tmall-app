@@ -142,7 +142,7 @@ class ShadowViewController: BaseViewController {
         }
         var step: Double = 0.0
         func loadValueText() {
-            valueLabel.text = value.str.zeroTrimmed()
+            valueLabel.text = value.s.zeroTrimmed()
             UIView.animate(withDuration: 0.2, delay: 0) {
                 self.valueLabel.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
             } completion: { _ in

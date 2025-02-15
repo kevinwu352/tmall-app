@@ -102,7 +102,7 @@ class HttpLogger {
         info += " \(status)"
       }
       if let duration = duration {
-        info += " \((duration*1000).int)ms"
+        info += " \((duration*1000).i)ms"
       }
 
       info += "\n"

@@ -99,11 +99,11 @@ public enum Timeint {
   case week(_ n: Int)
   public var val: Double {
     switch self {
-    case let .second(n): return n.dbl
-    case let .minute(n): return n.dbl * 60
-    case let .hour(n): return n.dbl * 60 * 60
-    case let .day(n): return n.dbl * 24 * 60 * 60
-    case let .week(n): return n.dbl * 7 * 24 * 60 * 60
+    case let .second(n): return n.d
+    case let .minute(n): return n.d * 60
+    case let .hour(n): return n.d * 60 * 60
+    case let .day(n): return n.d * 24 * 60 * 60
+    case let .week(n): return n.d * 7 * 24 * 60 * 60
     }
   }
 }

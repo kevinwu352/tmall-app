@@ -160,7 +160,7 @@ class FontViewController: BaseViewController, UITableViewDataSource, UITableView
       }
     }
     @objc func valueAction() {
-      label.text = steper.value.str.zeroTrimmed()
+      label.text = steper.value.s.zeroTrimmed()
       valueAct?()
     }
     var valueAct: (()->Void)?

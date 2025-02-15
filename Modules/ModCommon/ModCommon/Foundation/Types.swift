@@ -28,28 +28,28 @@ public struct Err: LocalizedError {
 
 // Int - Double
 public extension BinaryInteger {
-  var int: Int { Int(self) }
-  var dbl: Double { Double(self) }
+  var i: Int { Int(self) }
+  var d: Double { Double(self) }
 }
 public extension BinaryFloatingPoint {
-  var dbl: Double { Double(self) }
-  var int: Int { Int(self) }
+  var d: Double { Double(self) }
+  var i: Int { Int(self) }
 }
 
 // Int - String
 public extension Int {
-  var str: String { String(self, radix: 10, uppercase: false) }
+  var s: String { String(self, radix: 10, uppercase: false) }
 }
 public extension String {
-  var int: Int? { Int(self, radix: 10) }
+  var i: Int? { Int(self, radix: 10) }
 }
 
 // Double - String
 public extension Double {
-  var str: String { String(format: "%f", self) }
+  var s: String { String(format: "%f", self) }
 }
 public extension String {
-  var dbl: Double? { Double(self) }
+  var d: Double? { Double(self) }
 }
 
 

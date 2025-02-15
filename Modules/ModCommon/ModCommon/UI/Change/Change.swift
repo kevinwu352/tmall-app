@@ -21,7 +21,7 @@ class ChangeManager: NSObject {
     let id: ObjectIdentifier
     weak var raw: NSObject?
 #if DEBUG
-    var time = TIMESTAMP.int
+    var time = TIMESTAMP.i
 #endif
     static func == (lhs: Entry, rhs: Entry) -> Bool {
       lhs.id == rhs.id
@@ -77,7 +77,7 @@ class ChangeManager: NSObject {
     var instance = ""
     var names = ""
     init(_ k: Entry, _ v: any Collection<String>) {
-      time = String(format: "[%6d]", TIMESTAMP.int - k.time)
+      time = String(format: "[%6d]", TIMESTAMP.i - k.time)
       cname = o2s(k.raw as? UIViewController ?? (k.raw as? UIView)?.owner)
       vname = o2s((k.raw as? UIView)?.custom)
       instance = o2s(k.raw)

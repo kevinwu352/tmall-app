@@ -30,10 +30,6 @@ public let SEP_PARA = "\u{2029}"
 
 // MARK: General
 
-public extension Character {
-  var str: String { String(self) }
-}
-
 public extension String {
 
   var charset: CharacterSet {
@@ -167,14 +163,14 @@ public extension String {
   }
   var unplused: String {
     if hasPrefix("+") {
-      return suffix(from: index(1)).sup
+      return suffix(from: idx(1)).sup
     } else {
       return self
     }
   }
   var unsigned: String {
     if hasPrefix("+") || hasPrefix("-") {
-      return suffix(from: index(1)).sup
+      return suffix(from: idx(1)).sup
     } else {
       return self
     }

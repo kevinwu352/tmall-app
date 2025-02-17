@@ -7,62 +7,40 @@
 
 import UIKit
 
-// 1..<2 // Range<Int>
-//
-// 1...2 // ClosedRange<Int>
-//
-// 1...  // PartialRangeFrom<Int>
-// ...2  // PartialRangeThrough<Int>
-//  ..<2 // PartialRangeUpTo<Int>
-
-public extension Range where Bound == Int {
-  func `in`<C: Collection>(_ c: C) -> Range<C.Index> {
-    c.index(lowerBound)..<c.index(upperBound)
-  }
-}
-public extension NSRange {
-  func `in`<C: Collection>(_ c: C) -> Range<C.Index> {
-    c.index(location)..<c.index(end)
-  }
-}
-public extension NSRange {
-  var end: Int { location + length }
-}
-
-
 public extension Collection {
 
   var notEmpty: Bool { !isEmpty }
 
-
-  // MARK: 获取子内容 - 索引
-
-  // [ ] startIndex / endIndex / ...
-
   func at(_ i: Int) -> Element? {
-    idxIn(i) ? self[index(i)] : nil
+    iin(i) ? self[idx(i)] : nil
   }
 
-  // 能否用于 []
-  func idxIn(_ i: Int) -> Bool {
+  // for []
+  func iin(_ i: Int) -> Bool {
     i >= 0 && i < count
   }
-  // 能否用于 insert
-  func idxInn(_ i: Int) -> Bool {
+  // for insert
+  func iinn(_ i: Int) -> Bool {
     i >= 0 && i <= count
   }
-  // 正负方向，最后位置是 -1
-  func idxUni(_ i: Int) -> Int {
+  // support -1
+  func iuni(_ i: Int) -> Int {
     i < 0 ? i + count : i
   }
 
-  // 越界以后，返回首或尾
-  func index(_ i: Int) -> Index {
+  // out-of-bound: start / end
+  func idx(_ i: Int) -> Index {
     i < 0 ? startIndex : index(startIndex, offsetBy: i, limitedBy: endIndex) ?? endIndex
   }
 
+  // allSatisfy                     []:true
+  // contains(where: )
+  func none(_ h: (Element)->Bool) -> Bool { // [C]
+    !contains(where: h)
+  }
 
-  // MARK: 获取子内容 - 规则
+
+  // MARK: 获取子内容
 
   // [ ] min / min(by: xxx)
   // [ ] max / max(by: xxx)
@@ -92,18 +70,6 @@ public extension Collection {
   //
   // [S] hasPrefix(xxx)
   // [S] hasSuffix(xxx)
-
-  func some(_ h: (Element)->Bool) -> Bool { // CLOS
-    contains(where: h)
-  }
-  // 空集合一定是 true
-  func every(_ h: (Element)->Bool) -> Bool { // CLOS
-    allSatisfy(h)
-  }
-  // 空集合一定是 true
-  func none(_ h: (Element)->Bool) -> Bool { // CLOS
-    !some(h)
-  }
 
 
   // MARK: 增删内容
@@ -145,7 +111,8 @@ public extension Collection {
   // [A] swapAt                   [0..<count]
 }
 
-// MARK: 字典
+
+// MARK: Dictionary
 
 // [D] updateValue(_,forKey:)    // 返回旧值，能判断新加或更新
 // [D] removeValue(forKey:)      // 返回旧值
@@ -167,19 +134,6 @@ public extension Collection {
 
 // [D] contains(where:)
 // [D] allSatisfy(_:)
-
-public extension Collection {
-  func removeDuplicates<P: Equatable>(_ h: (Element)->P?) -> [Element] { // CLOS
-    reduce([Element]()) { ret, item in
-      var ret = ret
-      if !ret.contains(where: { h($0) == h(item) }) {
-        ret.append(item)
-      }
-      return ret
-    }
-  }
-}
-
 
 public extension Dictionary {
   func set(_ v: Value?, _ k: Key?) -> Self {
@@ -211,5 +165,25 @@ public extension Dictionary where Key == Int {
     enumerated()
       .sorted { $0.element.key < $1.element.key }
       .map { $0.element.value }
+  }
+}
+
+
+// 1..<2 // Range<Int>
+//
+// 1...2 // ClosedRange<Int>
+//
+// 1...  // PartialRangeFrom<Int>
+// ...2  // PartialRangeThrough<Int>
+//  ..<2 // PartialRangeUpTo<Int>
+
+public extension Range where Bound == Int {
+  func `in`<C: Collection>(_ c: C) -> Range<C.Index> {
+    c.idx(lowerBound)..<c.idx(upperBound)
+  }
+}
+public extension NSRange {
+  func `in`<C: Collection>(_ c: C) -> Range<C.Index> {
+    c.idx(location)..<c.idx(location + length)
   }
 }

@@ -30,7 +30,7 @@ class HttpLogger {
 
 
   func begin(_ id: String, _ url: String, _ method: String) {
-    if entries.none({ $0.id == id }) {
+    if !entries.contains(where: { $0.id == id }) {
       let order = entries.first?.order ?? 0
       let entry = Entry(order: order+1, id: id, url: url, method: method)
       entries.insert(entry, at: 0)

@@ -11,24 +11,21 @@ public let SEP_LINE = "\u{2028}"
 public let SEP_PARA = "\u{2029}"
 /*
  str = """
- Line 1
- Line 2
- """
+   Line 1
+   Line 2
+   """
 
  str = """
- Line 1 \
- Line 2
- """
+   Line 1 \
+   Line 1
+   """
 
- str = #"Line 1 \nLine 2"#
+ str = #"Line 1 \nLine 1"#
 
  str = #"""
- Here are three more double quotes: """
- """#
-*/
-
-
-// MARK: General
+   Here are three more double quotes: """
+   """#
+ */
 
 public extension String {
 

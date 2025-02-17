@@ -7,7 +7,7 @@
 
 import UIKit
 
-public var TIMESTAMP: Double { Date().timeIntervalSince1970 }
+public var TIMESTAMP: Double { Date().timeIntervalSince1970 } // [G]
 
 // print(date) // time-zone:0
 // print(df.str(date)) // time-zone:local
@@ -26,7 +26,7 @@ public extension Date {
     }
   }
 
-  func str(_ df: DateFormatter? = nil) -> String { // [F]
+  func str(_ df: DateFormatter?) -> String {
     (df ?? FULL_dash_colon).string(from: self)
   }
 

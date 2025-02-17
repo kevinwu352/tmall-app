@@ -141,7 +141,7 @@ class StackViewController: BaseViewController {
 
   func lb(_ str: String?) -> UILabel {
     let ret = UILabel()
-    ret.backgroundColor = .rand()
+    ret.backgroundColor = .rand
     ret.font = UIFont.systemFont(ofSize: 14)
     ret.textColor = .black
     ret.text = str

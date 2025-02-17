@@ -124,10 +124,10 @@ public extension Data {
 // "eHh4".dat.base64Decoded().str
 
 public extension Data {
-  func base64Encoded(_ options: Base64EncodingOptions = []) -> Data { // [F]
+  func base64Encoded(_ options: Base64EncodingOptions) -> Data {
     base64EncodedData(options: options)
   }
-  func base64Decoded(_ options: Base64DecodingOptions = []) -> Data? { // [F]
+  func base64Decoded(_ options: Base64DecodingOptions) -> Data? {
     Data(base64Encoded: self, options: options)
   }
 }

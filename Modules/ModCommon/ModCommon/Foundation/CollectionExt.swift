@@ -30,10 +30,6 @@ public extension NSRange {
 }
 
 
-public extension ArraySlice {
-  var ary: Array<Element> { Array(self) }
-}
-
 public extension Collection {
 
   var notEmpty: Bool { !isEmpty }

@@ -9,31 +9,26 @@ import UIKit
 
 public let SEP_LINE = "\u{2028}"
 public let SEP_PARA = "\u{2029}"
+/*
+ str = """
+ Line 1
+ Line 2
+ """
 
-// MARK: Literals
+ str = """
+ Line 1 \
+ Line 2
+ """
 
-// str = """
-// Line 1
-// Line 2
-// """
-//
-// str = """
-// Line 1 \
-// Line 2
-// """
-//
-// str = #"Line 1 \nLine 2"#
-//
-// str = #"""
-// Here are three more double quotes: """
-// """#
+ str = #"Line 1 \nLine 2"#
+
+ str = #"""
+ Here are three more double quotes: """
+ """#
+*/
 
 
 // MARK: General
-
-public extension Substring {
-  var str: String { String(self) }
-}
 
 public extension Character {
   var str: String { String(self) }
@@ -144,7 +139,7 @@ public extension String {
 
   func regexExtract(_ regex: String) -> String? {
     if let range = regexMatch(regex).first {
-      return self[range].str
+      return self[range].sup
     }
     return nil
   }
@@ -172,14 +167,14 @@ public extension String {
   }
   var unplused: String {
     if hasPrefix("+") {
-      return suffix(from: index(1)).str
+      return suffix(from: index(1)).sup
     } else {
       return self
     }
   }
   var unsigned: String {
     if hasPrefix("+") || hasPrefix("-") {
-      return suffix(from: index(1)).str
+      return suffix(from: index(1)).sup
     } else {
       return self
     }

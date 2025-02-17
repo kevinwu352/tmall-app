@@ -138,7 +138,7 @@ public extension String {
   var query: [String:String] {
     (split(separator: "?").last ?? "")
       .split(separator: "&")
-      .map { $0.split(separator: "=", omittingEmptySubsequences: false).map({ $0.str }) }
+      .map { $0.split(separator: "=", omittingEmptySubsequences: false).map({ $0.sup }) }
       .filter { $0.count == 2 }
       .reduce([String:String]()) { $0.set($1[1], $1[0]) }
   }

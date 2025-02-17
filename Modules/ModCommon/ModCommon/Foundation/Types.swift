@@ -23,6 +23,14 @@ public struct Err: LocalizedError {
   }
 }
 
+// SubSequence
+public extension Substring {
+  var sup: String { String(self) }
+}
+public extension ArraySlice {
+  var sup: Array<Element> { Array(self) }
+}
+
 
 // MARK: Int / Double / String
 

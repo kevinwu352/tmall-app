@@ -33,12 +33,6 @@ public extension Collection {
     i < 0 ? startIndex : index(startIndex, offsetBy: i, limitedBy: endIndex) ?? endIndex
   }
 
-  // allSatisfy                     []:true
-  // contains(where: )
-  func none(_ h: (Element)->Bool) -> Bool { // [C]
-    !contains(where: h)
-  }
-
 
   // MARK: 获取子内容
 
@@ -66,7 +60,7 @@ public extension Collection {
   // MARK: 检查子内容
 
   // [ ] contains(xxx)
-  // [ ] allSatisfy(xxx)
+  // [ ] allSatisfy(xxx)            []:true
   //
   // [S] hasPrefix(xxx)
   // [S] hasSuffix(xxx)

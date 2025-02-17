@@ -7,20 +7,18 @@
 
 import UIKit
 
-/*
- /Users/shared/
- /Users/shared/Caches/
- /Users/shared/options
-
- /Users/kevin/
- /Users/kevin/Caches/
- /Users/kevin/options
- /Users/kevin/user
-
- /Caches/
- /options
- /defaults
- */
+// /Users/shared/
+// /Users/shared/Caches/
+// /Users/shared/options
+//
+// /Users/kevin/
+// /Users/kevin/Caches/
+// /Users/kevin/options
+// /Users/kevin/user
+//
+// /Caches/
+// /options
+// /defaults
 
 
 // MARK: Path

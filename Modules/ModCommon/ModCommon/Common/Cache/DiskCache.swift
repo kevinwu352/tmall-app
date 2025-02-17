@@ -54,7 +54,7 @@ public class DiskCache<Key: Hashable, Value>: BaseObject, Cachable {
     let config = DiskConfig(name: name,
                             expiry: expiry,
                             maxSize: maxSize,
-                            directory: URL(fileURLWithPath: pathmk("/Caches", dir)),
+                            directory: pathmk("/Caches", dir).furl,
                             protectionType: nil)
     storage = try? DiskStorage<Key,Value>(config: config,
                                           fileManager: FileManager.default,

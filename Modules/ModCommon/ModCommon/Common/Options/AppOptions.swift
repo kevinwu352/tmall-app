@@ -10,7 +10,7 @@ import UIKit
 public class AppOptions {
 
   public static let shared: AppOptions = {
-    let ret = AppOptions(pathmk("/options"))
+    let ret = AppOptions(pathmk("/options", nil))
     return ret
   }()
 

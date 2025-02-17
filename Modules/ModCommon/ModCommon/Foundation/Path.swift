@@ -9,13 +9,13 @@ import UIKit
 
 /*
  /Users/shared/
-   Caches/
-   options
+ /Users/shared/Caches/
+ /Users/shared/options
 
  /Users/kevin/
-   Caches/
-   options
-   user
+ /Users/kevin/Caches/
+ /Users/kevin/options
+ /Users/kevin/user
 
  /Caches/
  /options
@@ -25,13 +25,13 @@ import UIKit
 
 // MARK: Path
 
-public let DOCDIR = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first ?? ""
+public let DOCROOT = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first ?? ""
 
-public func pathmk(_ trail: String, _ uid: String? = nil) -> String { // [F]
+public func pathmk(_ trail: String, _ uid: String?) -> String {
   if let uid = uid, uid.notEmpty {
-    return DOCDIR.addedPathseg(["Users", uid].joined(separator: "/")).addedPathseg(trail)
+    return DOCROOT.addedPathseg(["Users", uid].joined(separator: "/")).addedPathseg(trail)
   } else {
-    return DOCDIR.addedPathseg(trail)
+    return DOCROOT.addedPathseg(trail)
   }
 }
 

@@ -11,7 +11,7 @@ import UIKit
 
 public func data_read(_ path: String?) -> Data? {
   if let path = path, path.notEmpty {
-    return try? Data(contentsOf: URL(fileURLWithPath: path))
+    return try? Data(contentsOf: path.furl)
   }
   return nil
 }
@@ -22,7 +22,7 @@ public func data_write(_ data: Data?, _ path: String?) {
     if !FileManager.default.fileExists(atPath: dir, isDirectory: nil) {
       try? FileManager.default.createDirectory(atPath: dir, withIntermediateDirectories: true, attributes: nil)
     }
-    try? data?.write(to: URL(fileURLWithPath: path), options: [])
+    try? data?.write(to: path.furl, options: [])
   }
 }
 

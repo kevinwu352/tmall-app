@@ -9,7 +9,7 @@ import UIKit
 
 public class Defaults {
 
-  public static let shared = Defaults(pathmk("/defaults"))
+  public static let shared = Defaults(pathmk("/defaults", nil))
 
   let aesKey = "780153a809b071961c6c490c863da3c4076615ec3559509df3d6b8adf40d06ac".hexdat
   let aesIv = "8a9d75c79eac3fa388fd105c1f73bc53".hexdat

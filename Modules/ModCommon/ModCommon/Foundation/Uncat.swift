@@ -67,7 +67,7 @@ public extension DispatchQueue {
 }
 
 @discardableResult
-public func masy(_ time: Double? = nil, _ handler: VoidCb?) -> DispatchWorkItem? { // [F]
+public func masy(_ time: Double?, _ handler: VoidCb?) -> DispatchWorkItem? {
   DispatchQueue.main.delay(time, handler)
 }
 
@@ -93,7 +93,7 @@ public extension URLResponse {
 // =============================================================================
 
 @discardableResult
-public func zip_files(_ at: String?, _ to: String? = nil) -> Bool { // [F]
+public func zip_files(_ at: String?, _ to: String?) -> Bool {
   guard let at = at else { return false }
   let to = to ?? at.addedPathext("zip")
   var error: NSError?

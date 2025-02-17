@@ -25,9 +25,9 @@ public class Labels {
         """
 
     lb4.onLinkTouchUpInside = { _, val in
-      if let link = val as? String {
+      //if let link = val as? String {
         // ...
-      }
+      //}
     }
   }
 

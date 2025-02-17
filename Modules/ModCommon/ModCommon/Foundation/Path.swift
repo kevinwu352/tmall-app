@@ -89,47 +89,6 @@ public extension String {
 }
 
 
-// MARK: Url Query
-
-public extension String {
-  func addedQuery(_ query: String) -> String {
-    guard query.notEmpty else { return self }
-    if contains("?") {
-      if hasSuffix("?") || hasSuffix("&") {
-        return self + query
-      } else {
-        return self + "&" + query
-      }
-    } else {
-      return self + "?" + query
-    }
-  }
-}
-
-public extension String {
-  // key 不解码，value 会解码
-  var query: [String:String] {
-    var dict: [String:String] = [:]
-    split("?")
-      .last?
-      .split("&")
-      .map { $0.split("=") }
-      .filter { $0.count == 2 && $0[0].notEmpty }
-      .forEach { dict[$0[0]] = $0[1].urlDecoded }
-    return dict
-  }
-}
-public extension Dictionary {
-  // key 不编码，value 会编码
-  var query: String {
-    filter { "\($0.key)".notEmpty }
-      .mapValues { "\($0)".urlEncoded }
-      .map { "\($0.key)=\($0.value)" }
-      .joined(separator: "&")
-  }
-}
-
-
 // MARK: Url
 
 public extension URL {
@@ -157,8 +116,37 @@ public extension String {
   }
 }
 
-public extension URL {
-  var isDir: Bool {
-    (try? resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory == true
+
+// MARK: Url Query
+
+public extension String {
+  func addedQuery(_ query: String) -> String {
+    guard query.notEmpty else { return self }
+    if contains("?") {
+      if hasSuffix("?") || hasSuffix("&") {
+        return self + query
+      } else {
+        return self + "&" + query
+      }
+    } else {
+      return self + "?" + query
+    }
+  }
+}
+
+public extension String {
+  var query: [String:String] {
+    (split(separator: "?").last ?? "")
+      .split(separator: "&")
+      .map { $0.split(separator: "=", omittingEmptySubsequences: false).map({ $0.str }) }
+      .filter { $0.count == 2 }
+      .reduce([String:String]()) { $0.set($1[1], $1[0]) }
+  }
+}
+public extension Dictionary {
+  var query: String {
+    mapValues { "\($0)".urlEncoded }
+      .map { "\($0.key)=\($0.value)" }
+      .joined(separator: "&")
   }
 }

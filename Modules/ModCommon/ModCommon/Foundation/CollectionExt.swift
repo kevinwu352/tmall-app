@@ -186,10 +186,17 @@ public extension Collection {
 
 
 public extension Dictionary {
+  func set(_ v: Value?, _ k: Key?) -> Self {
+    guard let k = k else { return self }
+    var ret = self
+    ret[k] = v
+    return ret
+  }
   // removeValue(forKey:)
   // updateValue(_:forKey:) return old value
   // ~~~                    return new value
-  @discardableResult mutating func assignValue(_ v: Value?, _ k: Key?) -> Value? {
+  @discardableResult
+  mutating func assignValue(_ v: Value?, _ k: Key?) -> Value? {
     guard let k = k else { return nil }
     self[k] = v
     return v
@@ -200,11 +207,7 @@ public extension Dictionary {
 public extension Array {
   var toDict: [Int:Element] {
     enumerated()
-      .reduce([Int:Element]()) {
-        var dict = $0
-        dict[$1.offset] = $1.element
-        return dict
-      }
+      .reduce([Int:Element]()) { $0.set($1.element, $1.offset) }
   }
 }
 public extension Dictionary where Key == Int {

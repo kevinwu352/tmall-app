@@ -8,13 +8,13 @@
 import UIKit
 
 // Modhub.register(XXXService.self, instance)
+//
 // let module = Modhub.module(XXXService.self)
 
-
-public let MOD_HOME_PAGE = Modhub.module(HomePageService.self)
-public let MOD_HUA_SUAN = Modhub.module(HuaSuanService.self)
-public let MOD_SHOP_CAR = Modhub.module(ShopCarService.self)
-public let MOD_USER_CENTER = Modhub.module(UserCenterService.self)
+public let HomePageMod = Modhub.module(HomePageService.self)!
+public let HuaSuanMod = Modhub.module(HuaSuanService.self)!
+public let ShopCarMod = Modhub.module(ShopCarService.self)!
+public let UserCenterMod = Modhub.module(UserCenterService.self)!
 
 
 public protocol Modulable: AnyObject {
@@ -27,11 +27,13 @@ public struct Modhub {
   static var modules: [String:Modulable] = [:]
 
   public static func register<S>(_ service: S.Type, _ module: S) {
-    modules["\(service)"] = module as? Modulable
+    let key = String(describing: service)
+    modules[key] = module as? Modulable
   }
 
   public static func module<S>(_ service: S.Type) -> S? {
-    modules["\(service)"] as? S
+    let key = String(describing: service)
+    return modules[key] as? S
   }
 
   public static func setup() {

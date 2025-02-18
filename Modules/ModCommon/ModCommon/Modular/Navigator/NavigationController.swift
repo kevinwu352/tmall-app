@@ -45,9 +45,9 @@ extension NavigationController: UINavigationControllerDelegate {
 extension NavigationController: UIGestureRecognizerDelegate {
   public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
     if interactivePopGestureRecognizer != nil && popGestureEnabled {
-      let popable = viewControllers.count > 1
+      let topNotShown = viewControllers.count > 1
       let popGestureEnabled = (viewControllers.last as? BaseViewController)?.popGestureEnabled ?? true
-      return !pushing && popable && popGestureEnabled
+      return !pushing && topNotShown && popGestureEnabled
     }
     return true
   }

@@ -13,9 +13,8 @@ public struct Navigator {
 
 
   public static func jump(_ link: String) {
-    if let routes = parseLink(link) {
-      jump(routes)
-    }
+    guard let routes = parseLink(link) else { return }
+    jump(routes)
   }
   public static func jump(_ routes: [Route]) {
     guard routes.notEmpty else { return }
@@ -32,9 +31,8 @@ public struct Navigator {
 
 
   public static func append(_ link: String) {
-    if let routes = parseLink(link) {
-      append(routes)
-    }
+    guard let routes = parseLink(link) else { return }
+    append(routes)
   }
   public static func append(_ routes: [Route]) {
     guard routes.notEmpty else { return }
@@ -48,12 +46,11 @@ public struct Navigator {
   }
 
 
-  public static func present(_ link: String, _ style: UIModalPresentationStyle?) { // FUNC
-    if let routes = parseLink(link) {
-      present(routes, style)
-    }
+  public static func present(_ link: String, _ style: UIModalPresentationStyle?) {
+    guard let routes = parseLink(link) else { return }
+    present(routes, style)
   }
-  public static func present(_ routes: [Route], _ style: UIModalPresentationStyle?) { // FUNC
+  public static func present(_ routes: [Route], _ style: UIModalPresentationStyle?) {
     guard routes.notEmpty else { return }
 
     let vcs = parseRoutes(routes, [])
@@ -123,7 +120,7 @@ public struct Navigator {
 
 public extension Navigator {
 
-  static func present(_ vcs: [UIViewController], _ style: UIModalPresentationStyle?) { // FUNC
+  static func present(_ vcs: [UIViewController], _ style: UIModalPresentationStyle?) {
     let nc = NavigationController()
     nc.isNavigationBarHidden = true
     nc.setViewControllers(vcs, animated: false)

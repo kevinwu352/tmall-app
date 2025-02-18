@@ -130,7 +130,7 @@ extension Num: Equatable, Hashable, Comparable {
 }
 
 public extension Num {
-  static func + (lhs: Num, rhs: @autoclosure ()->Any?) -> Num { // [C]
+  static func + (lhs: Num, rhs: @autoclosure ()->Any?) -> Num {
     if let l = lhs.finited?.raw,
        let r = Num(rhs()).finited?.raw
     {
@@ -138,7 +138,7 @@ public extension Num {
     }
     return .nan
   }
-  static func - (lhs: Num, rhs: @autoclosure ()->Any?) -> Num { // [C]
+  static func - (lhs: Num, rhs: @autoclosure ()->Any?) -> Num {
     if let l = lhs.finited?.raw,
        let r = Num(rhs()).finited?.raw
     {
@@ -146,7 +146,7 @@ public extension Num {
     }
     return .nan
   }
-  static func * (lhs: Num, rhs: @autoclosure ()->Any?) -> Num { // [C]
+  static func * (lhs: Num, rhs: @autoclosure ()->Any?) -> Num {
     if let l = lhs.finited?.raw,
        let r = Num(rhs()).finited?.raw
     {
@@ -154,7 +154,7 @@ public extension Num {
     }
     return .nan
   }
-  static func / (lhs: Num, rhs: @autoclosure ()->Any?) -> Num { // [C]
+  static func / (lhs: Num, rhs: @autoclosure ()->Any?) -> Num {
     if let l = lhs.finited?.raw,
        let r = Num(rhs()).finited?.raw
     {

@@ -96,7 +96,7 @@ public typealias Jary = [Any]
 
 public typealias Jobj = [String : Any]
 
-public func json_from_data(_ data: Data?, _ options: JSONSerialization.ReadingOptions = []) -> Any? { // [F]
+public func json_from_data(_ data: Data?, _ options: JSONSerialization.ReadingOptions = []) -> Any? {
   if let data = data, data.notEmpty {
     return json_normalize(try? JSONSerialization.jsonObject(with: data, options: options))
   } else {
@@ -104,7 +104,7 @@ public func json_from_data(_ data: Data?, _ options: JSONSerialization.ReadingOp
   }
 }
 
-public func json_to_data(_ json: Any?, _ options: JSONSerialization.WritingOptions = []) -> Data? { // [F]
+public func json_to_data(_ json: Any?, _ options: JSONSerialization.WritingOptions = []) -> Data? {
   if let json = json, JSONSerialization.isValidJSONObject(json) {
     return try? JSONSerialization.data(withJSONObject: json, options: options)
   } else {

@@ -59,14 +59,14 @@ public extension String {
   }
 
 
-  func prefixed(_ str: String?, _ sep: String? = nil) -> String { // [F]
+  func prefixed(_ str: String?, _ sep: String? = nil) -> String {
     if let str = str, str.notEmpty {
       return str + (sep ?? "") + self
     } else {
       return self
     }
   }
-  func suffixed(_ str: String?, _ sep: String? = nil) -> String { // [F]
+  func suffixed(_ str: String?, _ sep: String? = nil) -> String {
     if let str = str, str.notEmpty {
       return self + (sep ?? "") + str
     } else {
@@ -182,7 +182,7 @@ public extension NSParagraphStyle {
                        alignment: NSTextAlignment? = nil,
                        breakMode: NSLineBreakMode? = nil,
                        lineHeight: Double? = nil
-  ) -> NSMutableParagraphStyle { // [F]
+  ) -> NSMutableParagraphStyle {
     let ret = (base ?? NSMutableParagraphStyle.default).mutableCopy() as? NSMutableParagraphStyle ?? NSMutableParagraphStyle()
     if let alignment = alignment {
       ret.alignment = alignment

@@ -10,7 +10,7 @@ import CommonCrypto
 import CryptoKit
 
 public extension Data {
-  init(random: Int) { // [F]
+  init(random: Int) {
     let bytes = UnsafeMutableRawPointer.allocate(byteCount: random, alignment: 1)
     defer { bytes.deallocate() }
     if CCRandomGenerateBytes(bytes, random) == kCCSuccess {
@@ -78,7 +78,7 @@ fileprivate extension Data {
              key: Data,
              iv: Data,
              data: Data
-  ) -> Data? { // [F]
+  ) -> Data? {
     key.withUnsafeBytes { key_ptr in
       iv.withUnsafeBytes { iv_ptr in
         data.withUnsafeBytes { data_ptr in

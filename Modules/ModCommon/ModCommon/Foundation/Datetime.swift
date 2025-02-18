@@ -18,7 +18,7 @@ public extension Date {
   // 16_2450_3116
   // 10_0000_0000     ≈ 30 years
   // 10_0000_0000_000 ≈ 30000 years
-  init?(ts: Double?) { // [F]
+  init?(ts: Double?) {
     if let ts = ts, ts > 0 {
       self.init(timeIntervalSince1970: ts < 100_0000_0000 ? ts : ts / 1000)
     } else {

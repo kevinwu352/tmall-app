@@ -14,7 +14,6 @@
 		0A534A032A54521B00EDA4BF /* ControlProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349072A54521A00EDA4BF /* ControlProperty.swift */; };
 		0A534A052A54521B00EDA4BF /* CombineExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349092A54521A00EDA4BF /* CombineExt.swift */; };
 		0A534A062A54521B00EDA4BF /* Setted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A53490A2A54521A00EDA4BF /* Setted.swift */; };
-		0A534A072A54521B00EDA4BF /* Combinable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A53490B2A54521A00EDA4BF /* Combinable.swift */; };
 		0A534A092A54521B00EDA4BF /* UserOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A53490F2A54521A00EDA4BF /* UserOptions.swift */; };
 		0A534A0A2A54521B00EDA4BF /* AppOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349102A54521A00EDA4BF /* AppOptions.swift */; };
 		0A534A0E2A54521B00EDA4BF /* UserCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349162A54521A00EDA4BF /* UserCache.swift */; };
@@ -108,7 +107,6 @@
 		0A5349072A54521A00EDA4BF /* ControlProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlProperty.swift; sourceTree = "<group>"; };
 		0A5349092A54521A00EDA4BF /* CombineExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CombineExt.swift; sourceTree = "<group>"; };
 		0A53490A2A54521A00EDA4BF /* Setted.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setted.swift; sourceTree = "<group>"; };
-		0A53490B2A54521A00EDA4BF /* Combinable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Combinable.swift; sourceTree = "<group>"; };
 		0A53490F2A54521A00EDA4BF /* UserOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserOptions.swift; sourceTree = "<group>"; };
 		0A5349102A54521A00EDA4BF /* AppOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppOptions.swift; sourceTree = "<group>"; };
 		0A5349162A54521A00EDA4BF /* UserCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCache.swift; sourceTree = "<group>"; };
@@ -246,10 +244,9 @@
 		0A5349042A54521A00EDA4BF /* Combine */ = {
 			isa = PBXGroup;
 			children = (
-				0A53490B2A54521A00EDA4BF /* Combinable.swift */,
 				0A5349092A54521A00EDA4BF /* CombineExt.swift */,
-				0A53490A2A54521A00EDA4BF /* Setted.swift */,
 				0A5349052A54521A00EDA4BF /* Comb.swift */,
+				0A53490A2A54521A00EDA4BF /* Setted.swift */,
 				0A5349062A54521A00EDA4BF /* ControlEvent.swift */,
 				0A5349072A54521A00EDA4BF /* ControlProperty.swift */,
 				0AEB1CCA2A9766C800A7BC3E /* GestureRecognizer.swift */,
@@ -644,7 +641,6 @@
 				0A534A012A54521B00EDA4BF /* Comb.swift in Sources */,
 				0A534A222A54521B00EDA4BF /* HomePageService.swift in Sources */,
 				0A534A1F2A54521B00EDA4BF /* AccountManager.swift in Sources */,
-				0A534A072A54521B00EDA4BF /* Combinable.swift in Sources */,
 				0A534A532A54521B00EDA4BF /* StringExt.swift in Sources */,
 				0A534A262A54521B00EDA4BF /* Navigator.swift in Sources */,
 				0A534A4B2A54521B00EDA4BF /* BaseView.swift in Sources */,

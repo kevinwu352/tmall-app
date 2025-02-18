@@ -9,13 +9,11 @@ import UIKit
 import Combine
 
 public extension Comb where Base: UIGestureRecognizer {
-
   var publisher: AnyPublisher<UIGestureRecognizer,Never> {
     Publishers
       .GestureRecognizer(recognizer: base)
       .eraseToAnyPublisher()
   }
-
 }
 
 public extension Publishers {

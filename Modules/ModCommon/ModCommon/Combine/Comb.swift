@@ -25,3 +25,19 @@ public extension Combe {
 }
 
 extension NSObject: Combe { }
+
+
+// =============================================================================
+
+public protocol Combinable: AnyObject {
+  var cancellables: Set<AnyCancellable> { get set }
+}
+
+open class BaseObject: Combinable {
+  public init() { }
+  public lazy var cancellables = Set<AnyCancellable>()
+}
+
+open class BaseCocoa: NSObject, Combinable {
+  public lazy var cancellables = Set<AnyCancellable>()
+}

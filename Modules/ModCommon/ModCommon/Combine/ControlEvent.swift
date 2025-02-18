@@ -9,13 +9,11 @@ import UIKit
 import Combine
 
 public extension Comb where Base: UIButton {
-
   var tap: AnyPublisher<Void,Never> {
     Publishers
       .ControlEvent(control: base, event: .touchUpInside)
       .eraseToAnyPublisher()
   }
-
 }
 
 public extension Publishers {

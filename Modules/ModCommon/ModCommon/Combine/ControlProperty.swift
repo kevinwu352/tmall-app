@@ -9,13 +9,11 @@ import UIKit
 import Combine
 
 public extension Comb where Base: UITextField {
-
   var text: AnyPublisher<String?,Never> {
     Publishers
       .ControlProperty(control: base, event: [.editingChanged, .editingDidEnd, .editingDidEndOnExit], keyPath: \.text)
       .eraseToAnyPublisher()
   }
-
 }
 
 public extension Publishers {

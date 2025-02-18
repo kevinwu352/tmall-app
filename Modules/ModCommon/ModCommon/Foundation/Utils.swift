@@ -32,7 +32,7 @@ public enum Haptic {
 
 
 public class Imgsaver: NSObject {
-  public static func save(_ image: UIImage, _ completion: ((Error?)->Void)?) { // CLOS
+  public static func save(_ image: UIImage, _ completion: @escaping (Error?)->Void) {
     let n = shared.counter()
     shared.handlers[n] = completion
     UIImageWriteToSavedPhotosAlbum(image, shared, #selector(image(_:didFinishSavingWithError:contextInfo:)), UnsafeMutableRawPointer(bitPattern: n))
@@ -40,12 +40,12 @@ public class Imgsaver: NSObject {
 
   static let shared = Imgsaver()
 
-  var counter: ()->Int = { // CLOS
+  var counter: ()->Int = {
     var value = 0
     return { value.inc() }
   }()
 
-  var handlers: [Int:(Error?)->Void] = [:] // CLOS
+  var handlers: [Int:(Error?)->Void] = [:]
 
   @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo info: UnsafeRawPointer) {
     let n = Int(bitPattern: info)
@@ -58,7 +58,7 @@ public class Imgsaver: NSObject {
 public class Weachecker {
   public static let shared = Weachecker()
 
-  var counter: ()->Int = { // CLOS
+  var counter: ()->Int = {
     var value = 0
     return { value.inc() }
   }()
@@ -83,9 +83,9 @@ public class Weachecker {
     guard let entry = map[n] else { return }
     if entry.object == nil {
       map[n] = nil
-      DispatchQueue.main.async { entry.completion() }
+      masy(0) { entry.completion() }
     } else {
-      DispatchQueue.main.asyncAfter(deadline: .now() + entry.interval) { [weak self] in self?.check(n) }
+      masy(entry.interval) { [weak self] in self?.check(n) }
     }
   }
 }
@@ -111,13 +111,13 @@ public class Timeouter {
   public var time = 0.0
   public var interval: Timeint
   public var expired: Bool { time <= TIMESTAMP }
-  public init(_ ti: Timeint) {
-    interval = ti
+  public init(_ t: Timeint) {
+    interval = t
   }
   public func renew() {
     time = TIMESTAMP + interval.val
   }
   public func reset() {
-    time = 0
+    time = 0.0
   }
 }

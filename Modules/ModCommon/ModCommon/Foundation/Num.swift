@@ -20,7 +20,6 @@ import UIKit
 // 0.333333333333333248
 
 public struct Num: CustomStringConvertible {
-
   public static let nan = Num(Decimal.nan)
   public static let zero = Num(Decimal.zero)
   public static let one = Num(Decimal(1))
@@ -58,24 +57,18 @@ public struct Num: CustomStringConvertible {
     guard let dcm = finited?.raw else { return nil }
     return Int((dcm as NSDecimalNumber).doubleValue)
   }
-  public var intv: Int {
-    int ?? 0
-  }
+  public var intv: Int { int ?? 0 }
 
   public var dbl: Double? {
     guard let dcm = finited?.raw else { return nil }
     return (dcm as NSDecimalNumber).doubleValue
   }
-  public var dblv: Double {
-    dbl ?? 0.0
-  }
+  public var dblv: Double { dbl ?? 0.0 }
 
   public var str: String? {
     format(.original)
   }
-  public var strv: String {
-    str ?? ""
-  }
+  public var strv: String { str ?? "" }
 
   // String(describing:)
   // print(_:)
@@ -119,32 +112,25 @@ public struct Num: CustomStringConvertible {
   public func format(_ format: Format) -> String? {
     raw.isFinite ? format.str(raw) : nil
   }
-
 }
 
 extension Num: Equatable, Hashable, Comparable {
-
   public static func < (lhs: Num, rhs: Num) -> Bool {
     lhs.isFinite && rhs.isFinite && lhs.raw < rhs.raw
   }
-
   public static func <= (lhs: Num, rhs: Num) -> Bool {
     lhs.isFinite && rhs.isFinite && lhs.raw <= rhs.raw
   }
-
   public static func > (lhs: Num, rhs: Num) -> Bool {
     lhs.isFinite && rhs.isFinite && lhs.raw > rhs.raw
   }
-
   public static func >= (lhs: Num, rhs: Num) -> Bool {
     lhs.isFinite && rhs.isFinite && lhs.raw >= rhs.raw
   }
-
 }
 
 public extension Num {
-
-  static func + (lhs: Num, rhs: @autoclosure ()->Any?) -> Num { // CLOS
+  static func + (lhs: Num, rhs: @autoclosure ()->Any?) -> Num { // [C]
     if let l = lhs.finited?.raw,
        let r = Num(rhs()).finited?.raw
     {
@@ -152,8 +138,7 @@ public extension Num {
     }
     return .nan
   }
-
-  static func - (lhs: Num, rhs: @autoclosure ()->Any?) -> Num { // CLOS
+  static func - (lhs: Num, rhs: @autoclosure ()->Any?) -> Num { // [C]
     if let l = lhs.finited?.raw,
        let r = Num(rhs()).finited?.raw
     {
@@ -161,8 +146,7 @@ public extension Num {
     }
     return .nan
   }
-
-  static func * (lhs: Num, rhs: @autoclosure ()->Any?) -> Num { // CLOS
+  static func * (lhs: Num, rhs: @autoclosure ()->Any?) -> Num { // [C]
     if let l = lhs.finited?.raw,
        let r = Num(rhs()).finited?.raw
     {
@@ -170,8 +154,7 @@ public extension Num {
     }
     return .nan
   }
-
-  static func / (lhs: Num, rhs: @autoclosure ()->Any?) -> Num { // CLOS
+  static func / (lhs: Num, rhs: @autoclosure ()->Any?) -> Num { // [C]
     if let l = lhs.finited?.raw,
        let r = Num(rhs()).finited?.raw
     {
@@ -179,12 +162,10 @@ public extension Num {
     }
     return .nan
   }
-
 }
 
 
 public extension Num {
-
   // 四舍五入，不管正负
   //  1.24=> 1.2,  1.25=> 1.3
   // -1.24=>-1.2, -1.25=>-1.3
@@ -255,7 +236,6 @@ public extension Num {
     guard let p = Num(places).int else { return format(.original) }
     return format(.pad(p, raw >= .zero ? .up : .down))
   }
-
 }
 
 

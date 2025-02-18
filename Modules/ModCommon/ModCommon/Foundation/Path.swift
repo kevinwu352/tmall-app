@@ -23,7 +23,7 @@ import UIKit
 
 // MARK: Path
 
-public let DOCROOT = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first ?? "" // [G]
+public let DOCROOT = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first ?? ""
 
 public func pathmk(_ trail: String, _ uid: String?) -> String {
   if let uid = uid, uid.notEmpty {

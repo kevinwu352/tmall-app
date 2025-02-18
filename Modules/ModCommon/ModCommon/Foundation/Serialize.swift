@@ -7,7 +7,7 @@
 
 import UIKit
 
-// MARK: Data Serialize
+// MARK: File
 
 public func data_read(_ path: String?) -> Data? {
   if let path = path, path.notEmpty {
@@ -19,6 +19,7 @@ public func data_read(_ path: String?) -> Data? {
 public func data_write(_ data: Data?, _ path: String?) {
   if let path = path, path.notEmpty {
     let dir = (path as NSString).deletingLastPathComponent
+    // create dir if needed
     if !FileManager.default.fileExists(atPath: dir, isDirectory: nil) {
       try? FileManager.default.createDirectory(atPath: dir, withIntermediateDirectories: true, attributes: nil)
     }
@@ -27,7 +28,7 @@ public func data_write(_ data: Data?, _ path: String?) {
 }
 
 
-// MARK: JSON - Transform
+// MARK: Transform
 
 public extension Encodable {
   func toData() -> Data? {
@@ -67,7 +68,7 @@ public extension Decodable {
 }
 
 
-// MARK: JSON - Types
+// MARK: Types
 
 // null
 // bool/int/double
@@ -95,7 +96,7 @@ public typealias Jary = [Any]
 
 public typealias Jobj = [String : Any]
 
-public func json_from_data(_ data: Data?, _ options: JSONSerialization.ReadingOptions = []) -> Any? { // FUNC
+public func json_from_data(_ data: Data?, _ options: JSONSerialization.ReadingOptions = []) -> Any? { // [F]
   if let data = data, data.notEmpty {
     return json_normalize(try? JSONSerialization.jsonObject(with: data, options: options))
   } else {
@@ -103,12 +104,7 @@ public func json_from_data(_ data: Data?, _ options: JSONSerialization.ReadingOp
   }
 }
 
-public func json_to_data(_ json: Any?, _ options: JSONSerialization.WritingOptions = []) -> Data? { // FUNC
-//  if let json = json_normalize(json) {
-//    return try? JSONSerialization.data(withJSONObject: json, options: options)
-//  } else {
-//    return nil
-//  }
+public func json_to_data(_ json: Any?, _ options: JSONSerialization.WritingOptions = []) -> Data? { // [F]
   if let json = json, JSONSerialization.isValidJSONObject(json) {
     return try? JSONSerialization.data(withJSONObject: json, options: options)
   } else {
@@ -116,7 +112,7 @@ public func json_to_data(_ json: Any?, _ options: JSONSerialization.WritingOptio
   }
 }
 
-func json_normalize(_ json: Any?) -> Any? {
+public func json_normalize(_ json: Any?) -> Any? {
   if let array = json as? [Any] {
     return array.compactMap { json_normalize($0) }
   } else if let object = json as? [String:Any] {
@@ -142,7 +138,6 @@ extension NSNumber {
   var isBool: Bool {
     CFGetTypeID(self) == CFBooleanGetTypeID()
   }
-
   var isInt: Bool {
     [
       CFNumberType.sInt8Type,
@@ -157,7 +152,6 @@ extension NSNumber {
       CFNumberType.shortType,
     ].contains(CFNumberGetType(self))
   }
-
   var isDouble: Bool {
     [
       CFNumberType.float32Type,

@@ -7,7 +7,7 @@
 
 import UIKit
 
-public var TIMESTAMP: Double { Date().timeIntervalSince1970 } // [G]
+public var TIMESTAMP: Double { Date().timeIntervalSince1970 }
 
 // print(date) // time-zone:0
 // print(df.str(date)) // time-zone:local

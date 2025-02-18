@@ -25,7 +25,7 @@ public extension Subscribers.Completion {
 
 
 public extension Publisher where Failure == Never {
-  func mapToEvent(_ h: @escaping (Output)->Bool) -> AnyPublisher<Void,Never> { // CLOS
+  func mapToEvent(_ h: @escaping (Output)->Bool) -> AnyPublisher<Void,Never> {
     filter(h)
       .map { _ in () }
       .eraseToAnyPublisher()
@@ -33,7 +33,7 @@ public extension Publisher where Failure == Never {
 }
 
 public extension Publisher {
-  func fallth(_ h: @escaping (Output)->Void) -> AnyPublisher<Output,Failure> { // CLOS
+  func fallth(_ h: @escaping (Output)->Void) -> AnyPublisher<Output,Failure> {
     map {
       h($0)
       return $0

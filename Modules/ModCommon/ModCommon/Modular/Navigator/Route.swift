@@ -29,7 +29,7 @@ public enum Route {
 
 
   public init?(_ url: String) {
-    let comps = url.split("?")
+    let comps = url.split(separator: "?", omittingEmptySubsequences: false).map { $0.sup }
     self.init(comps[0], comps.at(1) ?? "")
   }
 

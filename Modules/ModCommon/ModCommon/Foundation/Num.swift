@@ -23,6 +23,7 @@ public struct Num: CustomStringConvertible {
 
   public static let nan = Num(Decimal.nan)
   public static let zero = Num(Decimal.zero)
+  public static let one = Num(Decimal(1))
 
 
   public let raw: Decimal
@@ -101,9 +102,9 @@ public struct Num: CustomStringConvertible {
 
 
   public enum Format {
-    case original                                           // 原始形式
-    case scale(_ places: Int, _ mode: Decimal.RoundingMode) // 保留 n 位小数，采用 RoundingMode
-    case pad(_ places: Int, _ mode: Decimal.RoundingMode)   // 保留 n 位小数，采用 RoundingMode，不足时补 0
+    case original
+    case scale(_ places: Int, _ mode: Decimal.RoundingMode)
+    case pad(_ places: Int, _ mode: Decimal.RoundingMode) // pad 0
     public func str(_ dcm: Decimal) -> String {
       switch self {
       case .original:

@@ -28,7 +28,6 @@ public let SEP_PARA = "\u{2029}"
  */
 
 public extension String {
-
   var charset: CharacterSet {
     CharacterSet(charactersIn: self)
   }
@@ -45,33 +44,29 @@ public extension String {
   }
 
 
-  enum PadStyle {
-    case exact(_ with: String?) // 长切短补
-    case padded(_ with: String?) // 短补
-    case truncated // 长切
-  }
-  func relened(_ length: Int, _ style: PadStyle) -> String {
-    switch style {
-    case let .exact(str):
-      return padding(toLength: length, withPad: str ?? " ", startingAt: 0)
-    case let .padded(str):
-      return count < length ? padding(toLength: length, withPad: str ?? " ", startingAt: 0) : self
-    case .truncated:
-      return count > length ? padding(toLength: length, withPad: "", startingAt: 0) : self
+  // nil:exact / true:pad / false:truncate
+  func relened(_ len: Int, _ with: String?, _ pad: Bool?) -> String {
+    if pad == true {
+      return count < len ? padding(toLength: len, withPad: with ?? " ", startingAt: 0) : self
+    } else if pad == false {
+      return count > len ? padding(toLength: len, withPad: "", startingAt: 0) : self
+    } else {
+      return padding(toLength: len, withPad: with ?? " ", startingAt: 0)
     }
   }
   func trimmed() -> String {
     trimmingCharacters(in: .whitespacesAndNewlines)
   }
 
-  func prefixed(_ str: String?, _ sep: String? = nil) -> String { // FUNC
+
+  func prefixed(_ str: String?, _ sep: String? = nil) -> String { // [F]
     if let str = str, str.notEmpty {
       return str + (sep ?? "") + self
     } else {
       return self
     }
   }
-  func suffixed(_ str: String?, _ sep: String? = nil) -> String { // FUNC
+  func suffixed(_ str: String?, _ sep: String? = nil) -> String { // [F]
     if let str = str, str.notEmpty {
       return self + (sep ?? "") + str
     } else {
@@ -80,17 +75,6 @@ public extension String {
   }
 
 
-  func split(_ sep: Character) -> [String] {
-    split(separator: sep, maxSplits: Int.max, omittingEmptySubsequences: false)
-      .map { String($0) }
-  }
-
-  func indented(_ pre: String?) -> String {
-    split("\n")
-      .map { (pre ?? "") + $0 }
-      .joined(separator: "\n")
-  }
-
   // "$1 $2 $3".feed("aa", nil, "bb")
   // "%c %d %u %f %s".feed("aa", nil, "bb")
   func feed(_ values: String?...) -> String {
@@ -98,79 +82,31 @@ public extension String {
     str = values.enumerated().reduce(str) {
       $0.replacingOccurrences(of: "$\($1.offset + 1)", with: $1.element ?? "")
     }
-    ["%c", "%d", "%u", "%f", "%s"].enumerated().forEach {
-      if values.count > $0.offset {
-        let val = values[$0.offset] ?? ""
-        str = str.replacingOccurrences(of: $0.element, with: val)
-      }
+    str = values.enumerated().reduce(str) {
+      $0.replacingOccurrences(of: ["%c", "%d", "%u", "%f", "%s"].at($1.offset) ?? "", with: $1.element ?? "")
     }
     return str
   }
-
-}
-
-
-// MARK: Regex
-
-public extension String {
-
-  func regexMatch(_ regex: String) -> [Range<Index>] {
-    var list: [Range<Index>] = []
-    if let detector = try? NSRegularExpression(pattern: regex, options: []) {
-      detector.enumerateMatches(in: self, options: [], range: NSMakeRange(0, count)) { result, flags, _ in
-        if let result = result {
-          list.append(result.range.in(self))
-        }
-      }
-    }
-    return list
-  }
-
-  func regexTest(_ regex: String) -> Bool {
-    regexMatch(regex).notEmpty
-  }
-
-  func regexExtract(_ regex: String) -> String? {
-    if let range = regexMatch(regex).first {
-      return self[range].sup
-    }
-    return nil
-  }
-
 }
 
 
 // MARK: Numbers
 
 public extension String {
-
   var numbered: String {
-    let set = "0123456789.-+"
     var str = self
-    str.removeAll { !set.contains($0) }
+    str.removeAll { !"0123456789.-+".contains($0) }
     return str
   }
 
   var plused: String {
-    if hasPrefix("+") || hasPrefix("-") {
-      return self
-    } else {
-      return "+" + self
-    }
+    hasPrefix("+") || hasPrefix("-") ? self : "+" + self
   }
   var unplused: String {
-    if hasPrefix("+") {
-      return suffix(from: idx(1)).sup
-    } else {
-      return self
-    }
+    hasPrefix("+") ? suffix(from: index(after: startIndex)).sup : self
   }
   var unsigned: String {
-    if hasPrefix("+") || hasPrefix("-") {
-      return suffix(from: idx(1)).sup
-    } else {
-      return self
-    }
+    hasPrefix("+") || hasPrefix("-") ? suffix(from: index(after: startIndex)).sup : self
   }
 
   var grouped: String {
@@ -179,17 +115,12 @@ public extension String {
     let begin = str.firstIndex(of: ".") ?? str.endIndex
     var offset = -3
     while let i = str.index(begin, offsetBy: offset, limitedBy: start) {
-      if let c = str[..<i].last {
-        if "0123456789".contains(c) {
-          // ...
-        } else {
-          break
-        }
+      if let c = str[..<i].last, "0123456789".contains(c) {
+        str.insert(",", at: i)
+        offset -= 3
       } else {
         break
       }
-      str.insert(",", at: i)
-      offset -= 3
     }
     return str
   }
@@ -214,14 +145,12 @@ public extension String {
     }
     return str
   }
-
 }
 
 
 // MARK: Sizing
 
 public extension String {
-
   // 单行
   func calcSize(_ font: UIFont?, _ limit: Double?) -> CGSize {
     let size = self.size(withAttributes: [.font: font as Any])
@@ -231,9 +160,10 @@ public extension String {
       return size
     }
   }
-
   // 多段多行/单段多行，宽度一定要限，高度可以不限
-  // truncating 换行模式只能算出单行高度，所以请将 .byTruncatingTail 改成 .byWordWrapping
+  // byTruncatingTail 只能算出单行高度，所以要改成 byWordWrapping
+  // byTruncatingTail 只说了如何截取，它隐含的换行模式是 byWordWrapping
+  // textAlignment 和 lineBreakMode 在 attributed 中也会起作用
   func calcSize(_ attrs: [NSAttributedString.Key:Any], _ limit: CGSize) -> CGSize {
     let rect = self.boundingRect(with: limit.rh(.greatestFiniteMagnitude),
                                  options: [.usesLineFragmentOrigin, .usesFontLeading, .truncatesLastVisibleLine],
@@ -245,16 +175,14 @@ public extension String {
       return CGSize(width: min(limit.width, rect.width), height: rect.height)
     }
   }
-
 }
 
 public extension NSParagraphStyle {
-
   static func fromBase(base: NSParagraphStyle?,
                        alignment: NSTextAlignment? = nil,
                        breakMode: NSLineBreakMode? = nil,
                        lineHeight: Double? = nil
-  ) -> NSMutableParagraphStyle { // FUNC
+  ) -> NSMutableParagraphStyle { // [F]
     let ret = (base ?? NSMutableParagraphStyle.default).mutableCopy() as? NSMutableParagraphStyle ?? NSMutableParagraphStyle()
     if let alignment = alignment {
       ret.alignment = alignment
@@ -267,5 +195,30 @@ public extension NSParagraphStyle {
     }
     return ret
   }
+}
 
+
+// MARK: Regex
+
+public extension String {
+  func regexMatch(_ regex: String) -> [Range<Index>] {
+    var list: [Range<Index>] = []
+    if let detector = try? NSRegularExpression(pattern: regex, options: []) {
+      detector.enumerateMatches(in: self, options: [], range: NSMakeRange(0, count)) { result, flags, _ in
+        if let result = result {
+          list.append(result.range.in(self))
+        }
+      }
+    }
+    return list
+  }
+  func regexTest(_ regex: String) -> Bool {
+    regexMatch(regex).notEmpty
+  }
+  func regexExtract(_ regex: String) -> String? {
+    if let range = regexMatch(regex).first {
+      return self[range].sup
+    }
+    return nil
+  }
 }

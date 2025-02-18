@@ -123,10 +123,6 @@ public class Labels {
 }
 #endif
 
-// NSLineBreakMode.byTruncatingTail 只说了如何截取，它隐含的换行模式是 .byWordWrapping
-
-// textAlignment 和 lineBreakMode 在 attributed 中也会起作用
-
 public class Stylabel: UILabel {
 
   public override var text: String? {

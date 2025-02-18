@@ -26,7 +26,7 @@ class ShadowViewController: BaseViewController {
         }
         stackView.snp.remakeConstraints { make in
             make.pin_top(shadowView, 50)
-            make.pin_waist(20)
+            make.leading.trailing.equalToSuperview().inset(20)
         }
     }
     override func reload() {

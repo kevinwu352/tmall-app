@@ -96,12 +96,12 @@ class PopView: HoverView {
     }
     descLabel.snp.remakeConstraints { make in
       make.pin_top(titleLabel, 5)
-      make.pin_waist(10)
+      make.leading.trailing.equalToSuperview().inset(10)
       make.width.equalTo(SCREEN_WID - 2 * (bubble ? 50 : 10))
     }
     stackView.snp.remakeConstraints { make in
       make.pin_top(descLabel, 5)
-      make.pin_waist(10)
+      make.leading.trailing.equalToSuperview().inset(10)
       make.bottom.equalToSuperview().offset(-20)
     }
   }

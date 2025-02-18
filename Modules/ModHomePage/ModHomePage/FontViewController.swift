@@ -30,11 +30,11 @@ class FontViewController: BaseViewController, UITableViewDataSource, UITableView
     super.layoutViews()
     searchField.snp.remakeConstraints { make in
       make.pin_top(navbar, 5)
-      make.pin_waist(5)
+      make.leading.trailing.equalToSuperview().inset(5)
     }
     infoLabel.snp.remakeConstraints { make in
       make.pin_top(searchField, 5)
-      make.pin_waist(5)
+      make.leading.trailing.equalToSuperview().inset(5)
     }
     tableView.snp.remakeConstraints { make in
       make.leading.trailing.bottom.equalToSuperview()

@@ -172,7 +172,7 @@ class BlurViewController: BaseViewController, UICollectionViewDataSource {
         make.edges.equalToSuperview()
       }
       label.snp.remakeConstraints { make in
-        make.pin_waist(0)
+        make.leading.trailing.equalToSuperview()
         make.centerY.equalToSuperview()
       }
     }

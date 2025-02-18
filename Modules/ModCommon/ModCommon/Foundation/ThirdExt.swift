@@ -10,35 +10,32 @@ import RswiftResources
 import SnapKit
 import Kingfisher
 
-
-public extension String {
-  func addedThemeCode(_ theme: Theme) -> String {
-    if let thm = Theme.allCases.first(where: { hasSuffix($0.code) }) {
-      return dropLast(thm.code.count) + theme.code
-    } else {
-      return self
-    }
-  }
-}
 public extension RswiftResources.ImageResource {
   var cur: UIImage? { to(nil) }
   func to(_ to: Theme?) -> UIImage? {
-    RswiftResources.ImageResource(name: name.addedThemeCode(to ?? THEME),
-                                  path: path,
-                                  bundle: bundle,
-                                  locale: locale,
-                                  onDemandResourceTags: onDemandResourceTags
+    let nm: String
+    if let thm = Theme.allCases.first(where: { name.hasSuffix($0.code) }) {
+      nm = name.dropLast(thm.code.count) + (to ?? THEME).code
+    } else {
+      nm = name
+    }
+    return RswiftResources.ImageResource(name: nm,
+                                         path: path,
+                                         bundle: bundle,
+                                         locale: locale,
+                                         onDemandResourceTags: onDemandResourceTags
     ).callAsFunction()
   }
 }
 public extension RswiftResources.StringResource {
   var cur: String { to(nil) }
   func to(_ to: Language?) -> String {
-    RswiftResources.StringResource(key: key,
-                                   tableName: tableName,
-                                   source: .init(bundle: source.bundle!, tableName: tableName, preferredLanguages: [(to ?? LANGUAGE).code], locale: nil),
-                                   developmentValue: developmentValue,
-                                   comment: comment
+    let cd = (to ?? LANGUAGE).code
+    return RswiftResources.StringResource(key: key,
+                                          tableName: tableName,
+                                          source: .init(bundle: source.bundle!, tableName: tableName, preferredLanguages: [cd], locale: nil),
+                                          developmentValue: developmentValue,
+                                          comment: comment
     ).callAsFunction()
   }
 }
@@ -71,11 +68,7 @@ public extension ConstraintMaker {
     guard let anchor = anchor else { return }
     trailing.equalTo(anchor.snp.leading).offset(offset)
   }
-
-  func pin_waist(_ offset: Double) {
-    leading.equalToSuperview().offset(offset)
-    trailing.equalToSuperview().offset(-offset)
-  }
+  // make.leading.trailing.equalToSuperview().inset(20)
 }
 
 

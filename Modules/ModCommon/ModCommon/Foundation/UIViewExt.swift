@@ -11,30 +11,32 @@ import UIKit
 // autocorrectionType = .no
 // spellCheckingType = .no
 
-// cancelsTouchesInView = true
-// delaysTouchesBegan = false
-// delaysTouchesEnded = true
+// shadowColor
+// shadowRadius   3.0           半径，值越大阴影延伸的越远越淡
+// shadowOpacity  0.0           不透明度，最大值 1
+// shadowOffset   (0.0, -3.0)   偏移量，负值往左上偏移
 
-
-public extension UIViewController {
-  func addSubvc(_ child: UIViewController, _ inView: UIView? = nil) { // FUNC
-    addChild(child)
-    (inView ?? view).addSubview(child.view)
-    child.didMove(toParent: self)
-  }
-  func removeSubvc(_ child: UIViewController) {
-    child.willMove(toParent: nil)
-    child.view.removeFromSuperview()
-    child.removeFromParent()
-  }
-}
-
+// cancelsTouchesInView = true  手势识别成功后是否取消视图的触摸事件，通过发送 touch cancelled
+// delaysTouchesBegan = false   手势识别成功后视图收不到触摸事件，失败后才会发 touch began 给视图
+// delaysTouchesEnded = true    手势识别成功后视图收到 touch cancelled，失败后才会发 touch ended 给视图
 
 public extension UIView {
-  // for cells
+  var isShown: Bool {
+    get { !isHidden }
+    set { isHidden = !newValue }
+  }
+
+  var imageRep: UIImage {
+    UIGraphicsImageRenderer(bounds: bounds).image {
+      layer.render(in: $0.cgContext)
+    }
+  }
+
+  // for cell
   static var reuseId: String {
     String(describing: self)
   }
+
 
   var owner: UIViewController? {
     var responder: UIResponder? = self
@@ -55,17 +57,6 @@ public extension UIView {
       }
     }
     return nil
-  }
-
-  var imageRep: UIImage {
-    UIGraphicsImageRenderer(bounds: bounds).image {
-      layer.render(in: $0.cgContext)
-    }
-  }
-
-  var isShown: Bool {
-    get { !isHidden }
-    set { isHidden = !newValue }
   }
 
 
@@ -131,27 +122,12 @@ public extension UIView {
   }
 
 
-  // shadowColor    black       颜色
-  // shadowRadius   3.0         半径，值越大阴影延伸的越远越淡
-  // shadowOpacity  0.0         不透明度，最大值 1
-  // shadowOffset   (0.0,-3.0)  偏移量，负值往左上偏移
-
-  func setRadius(_ radius: Double) {
-    layer.cornerRadius = radius
-    layer.masksToBounds = true
-  }
-  func setBorder(_ width: Double, _ color: UIColor) {
-    layer.borderWidth = width
-    layer.borderColor = color.cgColor
-  }
-
-
   // view.addPushTransition(.fromLeft) { print("push done") }
   // view.backgroundColor = .red
   //
   // navigationController?.view.addPushTransition(.fromRight) { print("pop done") }
   // navigationController?.popViewController(animated: false)
-  func addPushTransition(_ subtype: CATransitionSubtype, _ completion: VoidCb? = nil) { // FUNC
+  func addPushTransition(_ subtype: CATransitionSubtype, _ completion: VoidCb?) {
     CATransaction.begin()
     let transition = CATransition()
     transition.duration = 0.35
@@ -190,8 +166,9 @@ public extension UIView {
       }
   }
 }
+
 public extension NSLayoutConstraint.Axis {
-  var inversed: Self {
+  var next: Self {
     self == .vertical ? .horizontal : .vertical
   }
   var isVertical: Bool {
@@ -210,24 +187,18 @@ public extension UIStackView {
   func removeAllArrangedSubviews() {
     arrangedSubviews.forEach { $0.removeFromSuperview() }
   }
-  // fill([30, lb1, 10, lb2, lb3])
-//  func fill(_ list: [Any]) {
-//    var list = list
-//    while let i = list.firstIndex(where: { n2d($0) != nil }) {
-//      let stack = UIStackView()
-//      stack.axis = axis
-//      stack.alignment = alignment
-//      stack.distribution = distribution
-//      stack.spacing = n2d(list[i]) ?? 0
-//      stack.addArrangedSubviews([
-//        list.at(i-1) as? UIView ?? UILabel(),
-//        list.at(i+1) as? UIView ?? UILabel(),
-//      ])
-//      list.replaceSubrange(max(i-1, 0)..<min(i+2, list.count), with: [stack])
-//    }
-//    removeAllArrangedSubviews()
-//    if let list = list as? [UIView] {
-//      addArrangedSubviews(list)
-//    }
-//  }
+}
+
+
+public extension UIViewController {
+  func addSubvc(_ child: UIViewController, _ inView: UIView?) {
+    addChild(child)
+    (inView ?? view).addSubview(child.view)
+    child.didMove(toParent: self)
+  }
+  func removeSubvc(_ child: UIViewController) {
+    child.willMove(toParent: nil)
+    child.view.removeFromSuperview()
+    child.removeFromParent()
+  }
 }

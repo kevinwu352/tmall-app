@@ -88,12 +88,14 @@ class ButtonViewController: BaseViewController {
 
   lazy var iv1: UIImageView = {
     let ret = UIImageView()
-    ret.setBorder(2, .red)
+    ret.layer.borderWidth = 2
+    ret.layer.borderColor = UIColor.red.cgColor
     return ret
   }()
   lazy var iv2: UIImageView = {
     let ret = UIImageView()
-    ret.setBorder(2, .red)
+    ret.layer.borderWidth = 2
+    ret.layer.borderColor = UIColor.red.cgColor
     return ret
   }()
 

@@ -107,7 +107,8 @@ class PopView: HoverView {
   }
   var bubble = false {
     didSet {
-      setRadius(bubble ? 16 : 0)
+      layer.cornerRadius = bubble ? 16 : 0
+      layer.masksToBounds = true
       setNeedsUpdateConstraints()
     }
   }

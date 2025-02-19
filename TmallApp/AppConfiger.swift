@@ -33,11 +33,11 @@ class AppConfiger: BaseObject {
     CommonConfiger.shared.afterCreateWindow()
   }
 
-  func beforeLaunch(_ networkOk: Bool) {
-    CommonConfiger.shared.beforeLaunch(networkOk)
+  func beforeLaunch() {
+    CommonConfiger.shared.beforeLaunch()
   }
-  func afterLaunch(_ networkOk: Bool) {
-    CommonConfiger.shared.afterLaunch(networkOk)
+  func afterLaunch() {
+    CommonConfiger.shared.afterLaunch()
   }
 
 }

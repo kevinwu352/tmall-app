@@ -19,10 +19,9 @@ public class NetworkMonitor {
 
   public static let shared = NetworkMonitor()
 
+  var manager: NetworkReachabilityManager?
 
   @Setted public private(set) var status: NetworkReachabilityManager.NetworkReachabilityStatus = .unknown
-
-  var manager: NetworkReachabilityManager?
 
   public func startMonitoring() {
     guard manager == nil else { return }
@@ -52,7 +51,6 @@ public class NetworkMonitor {
   }
 
 }
-
 
 public extension NetworkReachabilityManager.NetworkReachabilityStatus {
   var isReachable: Bool {

@@ -34,9 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
   func run() {
-    AppConfiger.shared.beforeLaunch(true)
+    AppConfiger.shared.beforeLaunch()
     window?.rootViewController = RootViewController()
-    AppConfiger.shared.afterLaunch(true)
+    AppConfiger.shared.afterLaunch()
 
 //    [
 //      "https://www.baidu.com",
@@ -66,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //      }
 //      .contains(true)
 //      .sink { [weak self] value in
-//        AppConfiger.shared.beforeLaunch(value)
+//        AppConfiger.shared.beforeLaunch()
 ////        if value {
 ////          print("[App  ] show main page, network: \(value)")
 ////          self?.window?.rootViewController = RootViewController()
@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 ////          self?.window?.rootViewController = FailureViewController()
 ////        }
 //        self?.window?.rootViewController = RootViewController()
-//        AppConfiger.shared.afterLaunch(value)
+//        AppConfiger.shared.afterLaunch()
 //      }
 //      .store(in: &cancellables)
   }

@@ -40,9 +40,9 @@ public class CommonConfiger: BaseObject {
   public func afterCreateWindow() {
   }
 
-  public func beforeLaunch(_ networkOk: Bool) {
+  public func beforeLaunch() {
   }
-  public func afterLaunch(_ networkOk: Bool) {
+  public func afterLaunch() {
   }
 
 }

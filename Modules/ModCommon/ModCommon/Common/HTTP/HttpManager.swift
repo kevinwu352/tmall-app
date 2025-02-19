@@ -150,7 +150,7 @@ open class HttpManager<Status>: BaseObject {
 
   public lazy var monitors: [EventMonitor] = {
 #if DEBUG
-    return [HttpLogger.shared]
+    return [HttpLogger()]
 #else
     return []
 #endif

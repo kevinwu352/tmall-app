@@ -28,7 +28,7 @@ public class AccountManager {
   @Setted public private(set) var username: String?
   @Setted public private(set) var user: UserModel?
 
-  // $user 难以控制触发的顺序，所以：
+  // $user 难以控制触发的顺序
   // a)内部底层一些重要工作由 hook 先触发
   // b)其它只关心内容本身，或者说与顺序无关的工作，用 $user 触发
   //
@@ -36,14 +36,11 @@ public class AccountManager {
   // 2::user-cache::in-memory
   // 2::user-cache::on-disk
   // 3::main-http::manager
-  public var userHooks: [String:(UserModel?)->Void] = [:] // CLOS
+  public var userHooks: [String:(UserModel?)->Void] = [:]
   func invokeHooks(_ user: UserModel?) {
     userHooks.enumerated()
       .sorted { $0.element.key < $1.element.key }
-      .forEach {
-        print("[Commo] invoke user hook: \($0.element.key)")
-        $0.element.value(user)
-      }
+      .forEach { $0.element.value(user) }
   }
 
 
@@ -72,8 +69,8 @@ public class AccountManager {
   public func addLogin(_ username: String, _ password: String?, _ user: UserModel) {
     guard username.notEmpty else { return }
     path_create_directory(pathmk("", username))
-    addCurrentAccount(username, user)
     addLoginedAccount(username, password)
+    addCurrentAccount(username, user)
     lastUsername = username
     NotificationCenter.default.post(name: .AccountDidLogin, object: username)
     NotificationCenter.default.post(name: .AccountDidChange, object: username)
@@ -81,9 +78,16 @@ public class AccountManager {
   public func removeLogin() {
     guard let username = username else { return }
     lastUsername = nil
-    removeLoginedAccount(username)
     removeCurrentAccount()
+    removeLoginedAccount(username)
     path_delete(pathmk("", username))
+    NotificationCenter.default.post(name: .AccountDidLogout, object: username)
+    NotificationCenter.default.post(name: .AccountDidChange, object: username)
+  }
+  public func logout() {
+    guard let username = username else { return }
+    lastUsername = nil
+    removeCurrentAccount()
     NotificationCenter.default.post(name: .AccountDidLogout, object: username)
     NotificationCenter.default.post(name: .AccountDidChange, object: username)
   }
@@ -99,10 +103,10 @@ public class AccountManager {
     guard let user = user else { return }
     user.toFile(pathmk("/user", username))
   }
-  func addCurrentAccount(_ username: String, _ user: UserModel) {
-    invokeHooks(user)
-    self.username = username
-    self.user = user
+  func addCurrentAccount(_ uname: String, _ usr: UserModel) {
+    invokeHooks(usr)
+    username = uname
+    user = usr
     saveCurrentAccount()
   }
   func removeCurrentAccount() {
@@ -124,7 +128,6 @@ public class AccountManager {
   }
   public func addLoginedAccount(_ username: String, _ password: String?) {
     guard username.notEmpty else { return }
-
     var accounts = loginedAccounts
     accounts.removeAll { $0.username == username }
     accounts.insert(Account(username: username, password: password), at: 0)
@@ -132,17 +135,15 @@ public class AccountManager {
   }
   public func removeLoginedAccount(_ username: String) {
     guard username.notEmpty else { return }
-
     var accounts = loginedAccounts
     accounts.removeAll { $0.username == username }
     loginedAccounts = accounts
   }
   public func removeLoginedPassword(_ username: String) {
     guard username.notEmpty else { return }
-
     var accounts = loginedAccounts
-    if let index = accounts.firstIndex(where: { $0.username == username }) {
-      accounts[index].password = nil
+    if let i = accounts.firstIndex(where: { $0.username == username }) {
+      accounts[i].password = nil
     }
     loginedAccounts = accounts
   }

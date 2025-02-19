@@ -9,12 +9,12 @@ import UIKit
 
 public struct UserModel: AnyModel, Codable {
 
-  public var uid = ""
-  public var name = ""
-  public var age = 0
-  public var token = ""
+  public var uid: String?
+  public var name: String?
+  public var age: Int?
+  public var token: String?
 
-  public var homeDir: String { uid }
+  public var homeDir: String? { uid }
 
   public init() { }
 

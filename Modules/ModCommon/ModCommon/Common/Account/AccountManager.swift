@@ -32,10 +32,10 @@ public class AccountManager {
   // a)内部底层一些重要工作由 hook 先触发
   // b)其它只关心内容本身，或者说与顺序无关的工作，用 $user 触发
   //
-  // 1::user-options::shared
-  // 2::user-cache::in-memory
-  // 2::user-cache::on-disk
-  // 3::main-http::manager
+  // 01::user-options::shared
+  // 02::user-cache::in-memory
+  // 02::user-cache::on-disk
+  // 03::main-http::manager
   public var userHooks: [String:(UserModel?)->Void] = [:]
   func invokeHooks(_ user: UserModel?) {
     userHooks.enumerated()

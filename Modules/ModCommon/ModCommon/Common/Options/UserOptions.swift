@@ -26,8 +26,16 @@ public class UserOptions {
     defaults = Defaults(pathmk("/options", user?.homeDir ?? HOME_SHARED))
   }
 
+  // =============================================================================
+
+
   func load() {
+    //currencyList = defaults.getObject("currency_list") ?? []
   }
 
+
+  //@Setted public var currencyList: [CurrencyModel] = [] {
+  //  willSet { defaults.setObject(newValue, "currency_list") }
+  //}
 
 }

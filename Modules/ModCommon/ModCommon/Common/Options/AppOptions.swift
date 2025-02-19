@@ -22,13 +22,16 @@ public class AppOptions {
     didSet { load() }
   }
 
+  // =============================================================================
+
+
   func load() {
-//    currencyList = defaults.getObject("currency_list") ?? []
+    //currencyList = defaults.getObject("currency_list") ?? []
   }
 
 
-//  @Setted public var currencyList: [CurrencyModel] = [] {
-//    willSet { defaults.setObject(newValue, "currency_list") }
-//  }
+  //@Setted public var currencyList: [CurrencyModel] = [] {
+  //  willSet { defaults.setObject(newValue, "currency_list") }
+  //}
 
 }

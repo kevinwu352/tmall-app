@@ -17,8 +17,6 @@
 		0A534A092A54521B00EDA4BF /* UserOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A53490F2A54521A00EDA4BF /* UserOptions.swift */; };
 		0A534A0A2A54521B00EDA4BF /* AppOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349102A54521A00EDA4BF /* AppOptions.swift */; };
 		0A534A0E2A54521B00EDA4BF /* UserCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349162A54521A00EDA4BF /* UserCache.swift */; };
-		0A534A0F2A54521B00EDA4BF /* MemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349172A54521A00EDA4BF /* MemoryCache.swift */; };
-		0A534A102A54521B00EDA4BF /* DiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349182A54521A00EDA4BF /* DiskCache.swift */; };
 		0A534A112A54521B00EDA4BF /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349192A54521A00EDA4BF /* Cache.swift */; };
 		0A534A122A54521B00EDA4BF /* AppCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A53491A2A54521A00EDA4BF /* AppCache.swift */; };
 		0A534A132A54521B00EDA4BF /* AnyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A53491C2A54521A00EDA4BF /* AnyModel.swift */; };
@@ -110,8 +108,6 @@
 		0A53490F2A54521A00EDA4BF /* UserOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserOptions.swift; sourceTree = "<group>"; };
 		0A5349102A54521A00EDA4BF /* AppOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppOptions.swift; sourceTree = "<group>"; };
 		0A5349162A54521A00EDA4BF /* UserCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCache.swift; sourceTree = "<group>"; };
-		0A5349172A54521A00EDA4BF /* MemoryCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCache.swift; sourceTree = "<group>"; };
-		0A5349182A54521A00EDA4BF /* DiskCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiskCache.swift; sourceTree = "<group>"; };
 		0A5349192A54521A00EDA4BF /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		0A53491A2A54521A00EDA4BF /* AppCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCache.swift; sourceTree = "<group>"; };
 		0A53491C2A54521A00EDA4BF /* AnyModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyModel.swift; sourceTree = "<group>"; };
@@ -280,8 +276,6 @@
 			isa = PBXGroup;
 			children = (
 				0A5349192A54521A00EDA4BF /* Cache.swift */,
-				0A5349172A54521A00EDA4BF /* MemoryCache.swift */,
-				0A5349182A54521A00EDA4BF /* DiskCache.swift */,
 				0A53491A2A54521A00EDA4BF /* AppCache.swift */,
 				0A5349162A54521A00EDA4BF /* UserCache.swift */,
 			);
@@ -677,7 +671,6 @@
 				0A534A432A54521B00EDA4BF /* UIScrollView_Container.swift in Sources */,
 				0A534A612A54521B00EDA4BF /* Utils.swift in Sources */,
 				0A534A162A54521B00EDA4BF /* HttpLogger.swift in Sources */,
-				0A534A0F2A54521B00EDA4BF /* MemoryCache.swift in Sources */,
 				0A534A122A54521B00EDA4BF /* AppCache.swift in Sources */,
 				0A534A092A54521B00EDA4BF /* UserOptions.swift in Sources */,
 				0A534A602A54521B00EDA4BF /* Datetime.swift in Sources */,
@@ -694,7 +687,6 @@
 				0A534A372A54521B00EDA4BF /* StateErrorView.swift in Sources */,
 				253548FC2CF866C800471D54 /* UtilsView.swift in Sources */,
 				0A534A362A54521B00EDA4BF /* KeyboardAvoiding.swift in Sources */,
-				0A534A102A54521B00EDA4BF /* DiskCache.swift in Sources */,
 				0A534A422A54521B00EDA4BF /* UITableView_Header.swift in Sources */,
 				0AEB1CCB2A9766C800A7BC3E /* GestureRecognizer.swift in Sources */,
 				0A534A5D2A54521B00EDA4BF /* Num.swift in Sources */,

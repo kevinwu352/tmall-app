@@ -62,7 +62,7 @@ public class LanguageManager {
 
   init() {
     let diskCode = Defaults.shared.getString("language_code")
-    print("[Commo] language code befor: \(diskCode ?? "none") (\(Bundle.main.preferredLocalizations.first ?? "none"))")
+    print("[Common] language code befor: \(diskCode ?? "none") (\(Bundle.main.preferredLocalizations.first ?? "none"))")
     if let diskCode = diskCode, diskCode.notEmpty, diskCode != "FOLLOW_SYSTEM" {
       // use choosed
       language = Language(diskCode) ?? .default
@@ -70,7 +70,7 @@ public class LanguageManager {
       // use system
       language = Language(Bundle.main.preferredLocalizations.first) ?? .default
     }
-    print("[Commo] language code after: \(language.code)")
+    print("[Common] language code after: \(language.code)")
   }
 
 

@@ -11,31 +11,27 @@ public class Defaults {
 
   public static let shared = Defaults(pathmk("/defaults", nil))
 
-  let aesKey = "780153a809b071961c6c490c863da3c4076615ec3559509df3d6b8adf40d06ac".hexdat
-  let aesIv = "8a9d75c79eac3fa388fd105c1f73bc53".hexdat
-
   public let path: String
   public private(set) var raw: [String:Any] {
-      didSet { work = queue.delay(1) { [weak self] in self?.synchronize() } }
+    didSet { work = queue.delay(1) { [weak self] in self?.synchronize() } }
   }
   var work: DispatchWorkItem? {
     didSet { oldValue?.cancel() }
   }
   let queue: DispatchQueue
 
-  public init(_ path: String) {
+  public init(_ p: String) {
+    path = p
     path_create_file(path)
 
-    self.path = path
-
     if let data = data_read(path),
-       let aesKey = aesKey, let aesIv = aesIv, let decrypted = data.aesCBCDecrypt(aesKey, aesIv, true),
+       let aeskey = aeskey, let aesiv = aesiv, let decrypted = data.aesCBCDecrypt(aeskey, aesiv, true),
        let obj = json_from_data(decrypted) as? Jobj
     {
-      print("[Commo] defaults load, \(decrypted.str)")
+      print("[Common] defaults load, \(decrypted.str)")
       self.raw = obj
     } else {
-      print("[Commo] defaults load, __")
+      print("[Common] defaults load, __")
       self.raw = [:]
     }
 
@@ -44,12 +40,15 @@ public class Defaults {
 
   func synchronize() {
     if let data = json_to_data(raw),
-       let aesKey = aesKey, let aesIv = aesIv, let encrypted = data.aesCBCEncrypt(aesKey, aesIv, true)
+       let aeskey = aeskey, let aesiv = aesiv, let encrypted = data.aesCBCEncrypt(aeskey, aesiv, true)
     {
-      print("[Commo] defaults save, \(data.str)")
+      print("[Common] defaults save, \(data.str)")
       data_write(encrypted, path)
     }
   }
+
+  let aeskey = "780153a809b071961c6c490c863da3c4076615ec3559509df3d6b8adf40d06ac".hexdat
+  let aesiv = "8a9d75c79eac3fa388fd105c1f73bc53".hexdat
 }
 
 public extension Defaults {

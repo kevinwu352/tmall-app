@@ -103,7 +103,7 @@ class WebViewController: BaseViewController {
 
   deinit {
     delegate.removeAllHandlers()
-    print("[Commo] web view controller deinit")
+    print("[Common] web view controller deinit")
   }
 }
 
@@ -148,6 +148,6 @@ class WebContentDelegate: NSObject, WKScriptMessageHandler {
 
 
   deinit {
-    print("[Commo] web content delegate deinit")
+    print("[Common] web content delegate deinit")
   }
 }

@@ -35,26 +35,17 @@ import UIKit
 
 public extension UIViewController {
 
-  var ancestor: UIViewController? {
-    var ret = self
-    while let vc = ret.parent {
-      ret = vc
-    }
-    return ret
-  }
-
-
   var navPrev: UIViewController? {
-    if let idx = navigationController?.viewControllers.firstIndex(of: self),
-       let vc = navigationController?.viewControllers.at(idx - 1)
+    if let i = navigationController?.viewControllers.firstIndex(of: self),
+       let vc = navigationController?.viewControllers.at(i - 1)
     {
       return vc
     }
     return nil
   }
   var navNext: UIViewController? {
-    if let idx = navigationController?.viewControllers.firstIndex(of: self),
-       let vc = navigationController?.viewControllers.at(idx + 1)
+    if let i = navigationController?.viewControllers.firstIndex(of: self),
+       let vc = navigationController?.viewControllers.at(i + 1)
     {
       return vc
     }
@@ -64,7 +55,7 @@ public extension UIViewController {
   var canPopSelf: Bool {
     navPrev != nil
   }
-  func popSelf(_ animated: Bool, _ completion: VoidCb? = nil) { // FUNC
+  func popSelf(_ animated: Bool, _ completion: VoidCb?) {
     if let prev = navPrev {
       navigationController?.popToViewController(prev, animated: animated)
       masy(animated ? 0.5 : 0.2, completion)
@@ -72,7 +63,7 @@ public extension UIViewController {
       masy(0.2, completion)
     }
   }
-  func popToSelf(_ animated: Bool, _ completion: VoidCb? = nil) { // FUNC
+  func popToSelf(_ animated: Bool, _ completion: VoidCb?) {
     if navNext != nil {
       navigationController?.popToViewController(self, animated: animated)
       masy(animated ? 0.5 : 0.2, completion)
@@ -85,7 +76,7 @@ public extension UIViewController {
   var canDismissSelf: Bool {
     presentingViewController != nil
   }
-  func dismissSelf(_ animated: Bool, _ completion: VoidCb? = nil) { // FUNC
+  func dismissSelf(_ animated: Bool, _ completion: VoidCb?) {
     if let prev = presentingViewController {
       prev.dismiss(animated: animated, completion: completion)
       //if prev.presentedViewController?.modalPresentationStyle == .pageSheet { prev.invokeLifecycle(true) }
@@ -93,7 +84,7 @@ public extension UIViewController {
       masy(0.2, completion)
     }
   }
-  func dismissToSelf(_ animated: Bool, _ completion: VoidCb? = nil) { // FUNC
+  func dismissToSelf(_ animated: Bool, _ completion: VoidCb?) {
     if let ancestor = ancestor, ancestor.presentedViewController != nil {
       ancestor.dismiss(animated: animated, completion: completion)
       //if next.modalPresentationStyle == .pageSheet { outmost.invokeLifecycle(true) }
@@ -103,15 +94,11 @@ public extension UIViewController {
   }
 
 
-  func backSelf(_ animated: Bool, _ completion: VoidCb? = nil) { // FUNC
+  func backSelf(_ animated: Bool, _ completion: VoidCb?) {
     if navPrev != nil {
       popSelf(animated, completion)
     } else {
-      if presentingViewController != nil {
-        dismissSelf(animated, completion)
-      } else {
-        masy(0.2, completion)
-      }
+      dismissSelf(animated, completion)
     }
   }
 
@@ -120,14 +107,9 @@ public extension UIViewController {
 //    beginAppearanceTransition(appearing, animated: true)
 //    endAppearanceTransition()
 //  }
-
 }
 
 public extension UINavigationController {
-
-  var root: UIViewController? { viewControllers.at(0) }
-  var top: UIViewController? { topViewController }
-
   func pop(_ count: Int, _ animated: Bool) {
     guard count >= 1 else { return }
     guard viewControllers.count >= 2 else { return }
@@ -142,16 +124,4 @@ public extension UINavigationController {
       }
     }
   }
-
-  func removeVc(_ vc: UIViewController?, _ count: Int) {
-    guard let vc = vc else { return }
-    var vcs = viewControllers
-    if let end = vcs.firstIndex(of: vc),
-       let begin = vcs.index(end, offsetBy: 1 - count, limitedBy: vcs.startIndex)
-    {
-      vcs.removeSubrange(begin...end)
-      setViewControllers(vcs, animated: false)
-    }
-  }
-
 }

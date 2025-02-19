@@ -195,7 +195,7 @@ public extension UIViewController {
     nb.kangYa(.required, nil)
 
     nb.backAction = { [weak self] in
-      self?.backSelf(true)
+      self?.backSelf(true, nil)
     }
   }
 

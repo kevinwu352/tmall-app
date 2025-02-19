@@ -60,7 +60,6 @@ public struct Navigator {
   }
 
 
-  // 能解析出正确的路由
   public static func canOpen(_ link: String) -> Bool {
     parseLink(link) != nil
   }
@@ -68,7 +67,6 @@ public struct Navigator {
 
   static func parseLink(_ link: String) -> [Route]? {
     var urls = link.split(separator: "/", omittingEmptySubsequences: false).map { $0.sup }
-    // /a/b/c/ 删除前后空路由
     if let url = urls.first, url.isEmpty {
       urls.removeFirst()
     }

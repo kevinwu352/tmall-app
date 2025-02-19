@@ -37,16 +37,6 @@ public extension UIView {
     String(describing: self)
   }
 
-
-  var owner: UIViewController? {
-    var responder: UIResponder? = self
-    while !(responder is UIViewController) {
-      responder = responder?.next
-      if responder == nil { break }
-    }
-    return (responder as? UIViewController)
-  }
-
   var responder: UIResponder? {
     if isFirstResponder {
       return self
@@ -201,4 +191,29 @@ public extension UIViewController {
     child.view.removeFromSuperview()
     child.removeFromParent()
   }
+}
+
+
+public extension UIView {
+  var owner: UIViewController? {
+    var responder: UIResponder? = self
+    while !(responder is UIViewController) {
+      responder = responder?.next
+      if responder == nil { break }
+    }
+    return (responder as? UIViewController)
+  }
+}
+public extension UIViewController {
+  var ancestor: UIViewController? {
+    var ret = self
+    while let vc = ret.parent {
+      ret = vc
+    }
+    return ret
+  }
+}
+public extension UINavigationController {
+  var root: UIViewController? { viewControllers.at(0) }
+  var top: UIViewController? { topViewController }
 }

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftyJSON
 
 public struct UserModel: AnyModel, Codable {
 
@@ -15,12 +14,16 @@ public struct UserModel: AnyModel, Codable {
   public var age = 0
   public var token = ""
 
-  public var homeDir: String {
-    uid
-  }
+  public var homeDir: String { uid }
 
   public init() { }
 
-  public init(any: Any?) { }
+  public init(any: Any?) {
+    // let json = JSON(any: any)
+    // uid = json["uid"].string
+    // name = json["name"].string
+    // age = json["age"].int
+    // token = json["token"].string
+  }
 
 }

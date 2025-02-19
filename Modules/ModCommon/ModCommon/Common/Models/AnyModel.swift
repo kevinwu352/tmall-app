@@ -9,7 +9,7 @@ import UIKit
 import SwiftyJSON
 
 public extension JSON {
-  init(any: Any?) { // FUNC
+  init(any: Any?) {
     if let val = any as? JSON {
       self.init(val.rawValue)
     } else if let val = any as? String {
@@ -21,23 +21,8 @@ public extension JSON {
 }
 
 
-/*
- public struct FoobarModel: AnyModel {
-   var name: String?
-   var age: Int?
-
-   public init() { }
-
-   public init(any: Any?) {
-     let json = JSON(any: any)
-     name = json["name"].string
-     age = json["age"].int
-   }
- }
- */
-
 public protocol AnyModel {
-  init(any: Any?) // FUNC
+  init(any: Any?)
 }
 
 extension Array: AnyModel where Element: AnyModel {

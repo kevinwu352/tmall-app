@@ -175,26 +175,26 @@ open class BaseViewController: UIViewController, Combinable {
 
   // MARK: Touch
 
-  public func setupTap(_ to: UIView? = nil) { // FUNC
+  public func setupTap(_ to: UIView?) {
     (to ?? view)?.addGestureRecognizer(tapRec)
-  }
-  @objc open func tapped(_ sender: UIGestureRecognizer) {
-    guard sender.state == .ended else { return }
   }
   public lazy var tapRec: UITapGestureRecognizer = {
     let ret = UITapGestureRecognizer(target: self, action: #selector(tapped))
     return ret
   }()
-
-  public func setupPress(_ to: UIView? = nil) { // FUNC
-    (to ?? view)?.addGestureRecognizer(pressRec)
+  @objc open func tapped(_ sender: UIGestureRecognizer) {
+    guard sender.state == .ended else { return }
   }
-  @objc open func pressed(_ sender: UIGestureRecognizer) {
+
+  public func setupPress(_ to: UIView?) {
+    (to ?? view)?.addGestureRecognizer(pressRec)
   }
   public lazy var pressRec: UILongPressGestureRecognizer = {
     let ret = UILongPressGestureRecognizer(target: self, action: #selector(pressed))
     return ret
   }()
+  @objc open func pressed(_ sender: UIGestureRecognizer) {
+  }
 
 
   // MARK: Status Bar

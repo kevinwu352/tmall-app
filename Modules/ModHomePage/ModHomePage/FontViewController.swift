@@ -16,7 +16,7 @@ class FontViewController: BaseViewController, UITableViewDataSource, UITableView
     view.addSubview(infoLabel)
     view.addSubview(tableView)
 
-    setupTap()
+    setupTap(nil)
     tapRec.cancelsTouchesInView = false
 
     navbar?.trailingStack.removeAllArrangedSubviews()
@@ -189,7 +189,7 @@ class FontViewController: BaseViewController, UITableViewDataSource, UITableView
       backgroundColor = .lightGray
       addSubview(label)
       addSubview(line)
-      setupTap()
+      setupTap(nil)
     }
     override func layoutViews() {
       super.layoutViews()

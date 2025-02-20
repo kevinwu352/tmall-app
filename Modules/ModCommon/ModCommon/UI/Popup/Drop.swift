@@ -29,7 +29,7 @@ class DropView: BaseView {
     backgroundColor = state.backgroundColor
     addSubview(label)
 
-    setupTap()
+    setupTap(nil)
   }
   override func layoutSubviews() {
     super.layoutSubviews()

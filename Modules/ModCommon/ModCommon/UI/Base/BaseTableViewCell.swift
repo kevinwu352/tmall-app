@@ -41,7 +41,6 @@ open class BaseTableViewCell: UITableViewCell, Combinable {
   }
 
   open func setup() {
-    // backgroundColor = .clear
   }
   open func layoutViews() {
   }

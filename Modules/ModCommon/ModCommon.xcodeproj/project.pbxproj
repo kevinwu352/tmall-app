@@ -24,7 +24,6 @@
 		0A534A162A54521B00EDA4BF /* HttpLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349202A54521A00EDA4BF /* HttpLogger.swift */; };
 		0A534A172A54521B00EDA4BF /* MainHTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349212A54521A00EDA4BF /* MainHTTP.swift */; };
 		0A534A192A54521B00EDA4BF /* HttpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349232A54521A00EDA4BF /* HttpError.swift */; };
-		0A534A1B2A54521B00EDA4BF /* TigerHTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349252A54521A00EDA4BF /* TigerHTTP.swift */; };
 		0A534A1D2A54521B00EDA4BF /* HttpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349272A54521A00EDA4BF /* HttpManager.swift */; };
 		0A534A1E2A54521B00EDA4BF /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349282A54521A00EDA4BF /* NetworkMonitor.swift */; };
 		0A534A1F2A54521B00EDA4BF /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A53492A2A54521A00EDA4BF /* AccountManager.swift */; };
@@ -115,7 +114,6 @@
 		0A5349202A54521A00EDA4BF /* HttpLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpLogger.swift; sourceTree = "<group>"; };
 		0A5349212A54521A00EDA4BF /* MainHTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainHTTP.swift; sourceTree = "<group>"; };
 		0A5349232A54521A00EDA4BF /* HttpError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpError.swift; sourceTree = "<group>"; };
-		0A5349252A54521A00EDA4BF /* TigerHTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TigerHTTP.swift; sourceTree = "<group>"; };
 		0A5349272A54521A00EDA4BF /* HttpManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpManager.swift; sourceTree = "<group>"; };
 		0A5349282A54521A00EDA4BF /* NetworkMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		0A53492A2A54521A00EDA4BF /* AccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
@@ -299,7 +297,6 @@
 				0A5349232A54521A00EDA4BF /* HttpError.swift */,
 				0A5349272A54521A00EDA4BF /* HttpManager.swift */,
 				0A5349212A54521A00EDA4BF /* MainHTTP.swift */,
-				0A5349252A54521A00EDA4BF /* TigerHTTP.swift */,
 				0A98D7CE2C91731800308F47 /* HttpProp.swift */,
 			);
 			path = HTTP;
@@ -694,7 +691,6 @@
 				0A534A5C2A54521B00EDA4BF /* Path.swift in Sources */,
 				0A534A132A54521B00EDA4BF /* AnyModel.swift in Sources */,
 				0A534A272A54521B00EDA4BF /* Route.swift in Sources */,
-				0A534A1B2A54521B00EDA4BF /* TigerHTTP.swift in Sources */,
 				0A534A392A54521B00EDA4BF /* StateLoadingView.swift in Sources */,
 				0A534A5B2A54521B00EDA4BF /* Uncat.swift in Sources */,
 				0A534A2F2A54521B00EDA4BF /* Hud.swift in Sources */,

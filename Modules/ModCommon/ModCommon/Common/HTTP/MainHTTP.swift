@@ -70,9 +70,6 @@ public class MainHTTP: HttpManager<MainHTTP.ServiceStatus> {
   }
 }
 
-
-// MARK: Api
-
 public extension MainHTTP {
   struct Api {
     public var path: String
@@ -85,7 +82,7 @@ public extension MainHTTP {
                 parameters: [String:Any] = [:],
                 paraenc: Paraenc? = nil,
                 headers: [String:String] = [:]
-    ) { // FUNC
+    ) {
       self.path = path
       self.method = method
       self.parameters = parameters
@@ -93,7 +90,7 @@ public extension MainHTTP {
       self.headers = headers
     }
   }
-  static func publish<T: AnyModel>(api: Api, object: T.Type = T.self, queue: DispatchQueue = .main) -> AnyPublisher<Response<T>,Never> { // FUNC
+  static func publish<T: AnyModel>(api: Api, object: T.Type = T.self, queue: DispatchQueue = .main) -> AnyPublisher<Response<T>,Never> {
     publish(path: api.path,
             method: api.method,
             parameters: api.parameters,
@@ -102,7 +99,7 @@ public extension MainHTTP {
             object: object,
             queue: queue)
   }
-  static func request<T: AnyModel>(api: Api, object: T.Type = T.self, queue: DispatchQueue = .main, completion: @escaping (Response<T>)->Void) { // FUNC CLOS
+  static func request<T: AnyModel>(api: Api, object: T.Type = T.self, queue: DispatchQueue = .main, completion: @escaping (Response<T>)->Void) {
     request(path: api.path,
             method: api.method,
             parameters: api.parameters,

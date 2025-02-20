@@ -111,6 +111,7 @@ public extension MainHTTP {
   }
 }
 
+
 public extension MainHTTP.Api {
   static func success() -> Self {
     .init(path: "/v3/dbe087fd-1eaa-4c37-94ce-5ec2e336934c", method: "GET", parameters: [:], paraenc: nil, headers: [:])
@@ -123,6 +124,6 @@ public extension MainHTTP.Api {
     .init(path: "/v3/bb4ec3e6-8772-4295-b5ec-97623ffd2821", method: "GET", parameters: [:], paraenc: nil, headers: [:])
   }
   static func lst() -> Self {
-    .init(path: "/v3/65b1de27-85aa-4793-b686-e254660b7b46", method: "POST", parameters: ["k":2], paraenc: nil, headers: ["t":"123"])
+    .init(path: "/v3/65b1de27-85aa-4793-b686-e254660b7b46", method: "POST", parameters: ["k":2], paraenc: .json, headers: ["t":"123"])
   }
 }

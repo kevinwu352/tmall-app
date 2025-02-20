@@ -25,7 +25,7 @@ public class NetworkMonitor {
 
   public func startMonitoring() {
     guard manager == nil else { return }
-    manager = NetworkReachabilityManager() // (host: "www.baidu.com")
+    manager = NetworkReachabilityManager()
     manager?.startListening { [weak self] status in
       switch status {
       case .unknown:
@@ -49,7 +49,6 @@ public class NetworkMonitor {
     manager?.stopListening()
     manager = nil
   }
-
 }
 
 public extension NetworkReachabilityManager.NetworkReachabilityStatus {

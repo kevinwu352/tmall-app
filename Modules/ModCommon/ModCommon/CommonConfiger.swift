@@ -23,13 +23,12 @@ public class CommonConfiger: BaseObject {
     _ = AppOptions.shared
     _ = UserOptions.shared
 
-    _ = AppCache.inMemory
-    _ = AppCache.onDisk
-    _ = UserCache.inMemory
-    _ = UserCache.onDisk
+    //_ = AppCache.inMemory
+    //_ = AppCache.onDisk
+    //_ = UserCache.inMemory
+    //_ = UserCache.onDisk
 
     _ = MainHTTP.shared
-    _ = TigerHTTP.shared
 
     NetworkMonitor.shared.startMonitoring()
 

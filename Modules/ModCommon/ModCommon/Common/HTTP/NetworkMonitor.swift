@@ -29,15 +29,15 @@ public class NetworkMonitor {
     manager?.startListening { [weak self] status in
       switch status {
       case .unknown:
-        print("[Common] network unknown")
+        print("[common] network unknown")
       case .notReachable:
-        print("[Common] network not reachable")
+        print("[common] network not reachable")
       case let .reachable(type):
         switch type {
         case .ethernetOrWiFi:
-          print("[Common] network reachable via wifi")
+          print("[common] network reachable via wifi")
         case .cellular:
-          print("[Common] network reachable via wwan")
+          print("[common] network reachable via wwan")
         }
       }
       self?.status = status

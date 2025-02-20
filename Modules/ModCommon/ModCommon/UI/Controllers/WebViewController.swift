@@ -26,7 +26,7 @@ import SnapKit
 //</body>
 //</html>
 
-public var COMMON_WEB_HANDLERS: [String:(WKScriptMessage,WKWebView?)->Void] = [:] // CLOS
+public var COMMON_WEB_HANDLERS: [String:(WKScriptMessage,WKWebView?)->Void] = [:]
 
 
 class WebViewController: BaseViewController {
@@ -66,16 +66,15 @@ class WebViewController: BaseViewController {
       }
       .store(in: &cancellables)
   }
-
-
   override func reload() {
     super.reload()
     guard initialized else { return }
 
-    if let url = URL(string: url ?? "") {
+    if let url = url?.url {
       webView.load(URLRequest(url: url))
     }
   }
+
 
   func clearAllCaches() {
     WKWebsiteDataStore.default().removeData(ofTypes: [WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeMemoryCache],
@@ -103,7 +102,7 @@ class WebViewController: BaseViewController {
 
   deinit {
     delegate.removeAllHandlers()
-    print("[Common] web view controller deinit")
+    print("[common] web view controller deinit")
   }
 }
 
@@ -122,9 +121,9 @@ class WebContentDelegate: NSObject, WKScriptMessageHandler {
   }
 
 
-  var handlers: [String:(WKScriptMessage,WKWebView?)->Void] = [:] // CLOS
+  var handlers: [String:(WKScriptMessage,WKWebView?)->Void] = [:]
 
-  func add(_ name: String, _ handler: @escaping (WKScriptMessage,WKWebView?)->Void) { // CLOS
+  func add(_ name: String, _ handler: @escaping (WKScriptMessage,WKWebView?)->Void) {
     guard name.notEmpty else { return }
     if handlers.updateValue(handler, forKey: name) == nil {
       webView?.configuration.userContentController.add(self, name: name)
@@ -148,6 +147,6 @@ class WebContentDelegate: NSObject, WKScriptMessageHandler {
 
 
   deinit {
-    print("[Common] web content delegate deinit")
+    print("[common] web content delegate deinit")
   }
 }

@@ -352,8 +352,8 @@
 				0A5349512A54521A00EDA4BF /* Controllers */,
 				0A5349422A54521A00EDA4BF /* Change */,
 				0A53493D2A54521A00EDA4BF /* Popup */,
-				0A53494A2A54521A00EDA4BF /* StateView */,
 				0A5349472A54521A00EDA4BF /* TextInput */,
+				0A53494A2A54521A00EDA4BF /* StateView */,
 			);
 			path = UI;
 			sourceTree = "<group>";

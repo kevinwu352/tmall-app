@@ -46,7 +46,7 @@ public class ThemeManager {
   init() {
     let dark = UITraitCollection.current.userInterfaceStyle == .dark
     let diskCode = Defaults.shared.getString("theme_code")
-    print("[Common] theme code befor: \(diskCode ?? "none") (\(dark ? "ngt" : "day"))")
+    print("[common] theme code befor: \(diskCode ?? "none") (\(dark ? "ngt" : "day"))")
     if let diskCode = diskCode, diskCode.notEmpty, diskCode != "FOLLOW_SYSTEM" {
       // use choosed
       theme = Theme(diskCode) ?? .default
@@ -54,7 +54,7 @@ public class ThemeManager {
       // use system
       theme = dark ? .ngt : .day
     }
-    print("[Common] theme code after: \(theme.code)")
+    print("[common] theme code after: \(theme.code)")
   }
 
 

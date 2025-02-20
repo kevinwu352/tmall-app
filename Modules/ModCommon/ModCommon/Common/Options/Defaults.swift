@@ -28,10 +28,10 @@ public class Defaults {
        let aeskey = aeskey, let aesiv = aesiv, let decrypted = data.aesCBCDecrypt(aeskey, aesiv, true),
        let obj = json_from_data(decrypted) as? Jobj
     {
-      print("[Common] defaults load, \(decrypted.str)")
+      print("[common] defaults load, \(decrypted.str)")
       self.raw = obj
     } else {
-      print("[Common] defaults load, __")
+      print("[common] defaults load, __")
       self.raw = [:]
     }
 
@@ -42,7 +42,7 @@ public class Defaults {
     if let data = json_to_data(raw),
        let aeskey = aeskey, let aesiv = aesiv, let encrypted = data.aesCBCEncrypt(aeskey, aesiv, true)
     {
-      print("[Common] defaults save, \(data.str)")
+      print("[common] defaults save, \(data.str)")
       data_write(encrypted, path)
     }
   }

@@ -59,8 +59,27 @@ public class Navbar: BaseView {
     leadingStack.removeAllArrangedSubviews()
     leadingStack.addArrangedSubview(backBtn)
   }
+
   public var backAction: VoidCb?
+
   public lazy var backEvent = PassthroughSubject<Void,Never>()
+
+  public lazy var backBtn: UIButton = {
+    let ret = UIButton(configuration: .plain())
+    ret.configurationUpdateHandler = {
+      var config = $0.configuration
+      config?.image = R.image.navbar.back_day.cur
+      config?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
+      $0.configuration = config
+    }
+    ret.chg.theme { $0.setNeedsUpdateConfiguration() }
+    ret.addTarget(self, action: #selector(backClicked), for: .touchUpInside)
+    return ret
+  }()
+  @objc func backClicked() {
+    backAction?()
+    backEvent.send()
+  }
 
 
   // MARK: Layout
@@ -142,24 +161,6 @@ public class Navbar: BaseView {
     ret.distribution = .equalSpacing
     ret.spacing = 0
     ret.addArrangedSubview(UILabel())
-    return ret
-  }()
-
-  public lazy var backBtn: UIButton = {
-    let ret = UIButton(configuration: .plain())
-    ret.configurationUpdateHandler = {
-      var config = $0.configuration
-      config?.image = R.image.navbar.back_day.cur
-      config?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
-      $0.configuration = config
-    }
-    ret.chg.theme { $0.setNeedsUpdateConfiguration() }
-    ret.cmb.tap
-      .sink { [weak self] in
-        self?.backAction?()
-        self?.backEvent.send()
-      }
-      .store(in: &cancellables)
     return ret
   }()
 

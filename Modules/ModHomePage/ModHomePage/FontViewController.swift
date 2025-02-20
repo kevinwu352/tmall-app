@@ -159,7 +159,7 @@ class FontViewController: BaseViewController, UITableViewDataSource, UITableView
         make.center.equalToSuperview()
       }
     }
-    @objc func valueAction() {
+    @objc func valueClicked() {
       label.text = steper.value.s.zeroTrimmed()
       valueAct?()
     }
@@ -170,7 +170,7 @@ class FontViewController: BaseViewController, UITableViewDataSource, UITableView
       ret.maximumValue = 32
       ret.stepValue = 1
       ret.value = 14
-      ret.addTarget(self, action: #selector(valueAction), for: .valueChanged)
+      ret.addTarget(self, action: #selector(valueClicked), for: .valueChanged)
       return ret
     }()
     lazy var label: UILabel = {

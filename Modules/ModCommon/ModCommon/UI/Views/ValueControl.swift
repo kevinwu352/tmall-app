@@ -15,7 +15,7 @@ import UIKit
    reload(nil, false)
  }
 
- @objc func buttonAction(_ sender: UIButton) {
+ @objc func buttonClicked(_ sender: UIButton) {
    reset(sender.tag, true, true)
  }
 

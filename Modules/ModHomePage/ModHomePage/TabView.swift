@@ -19,7 +19,7 @@ class TabView: BaseView, ValueControl {
       bt.setTitle("\(i)\(i)\(i)", for: .normal)
       bt.setTitleColor(.blue, for: .normal)
       bt.backgroundColor = .lightGray
-      bt.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+      bt.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
       stackView.addArrangedSubview(bt)
     }
   }
@@ -38,7 +38,7 @@ class TabView: BaseView, ValueControl {
 
 
 
-  @objc func buttonAction(_ sender: UIButton) {
+  @objc func buttonClicked(_ sender: UIButton) {
     reset(sender.tag, true, true)
   }
 

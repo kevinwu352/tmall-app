@@ -152,11 +152,11 @@ class ShadowViewController: BaseViewController {
         @objc func valueChanged() {
             loadValueText()
         }
-        @objc func minusAction() {
+        @objc func minusClicked() {
             value = max(Double(valueSlider.minimumValue), value - step)
             valueSlider.sendActions(for: .valueChanged)
         }
-        @objc func plusAction() {
+        @objc func plusClicked() {
             value = min(Double(valueSlider.maximumValue), value + step)
             valueSlider.sendActions(for: .valueChanged)
         }
@@ -184,13 +184,13 @@ class ShadowViewController: BaseViewController {
         lazy var minusBtn: UIButton = {
             let ret = UIButton(type: .system)
             ret.setTitle("-", for: .normal)
-            ret.addTarget(self, action: #selector(minusAction), for: .touchUpInside)
+            ret.addTarget(self, action: #selector(minusClicked), for: .touchUpInside)
             return ret
         }()
         lazy var plusBtn: UIButton = {
             let ret = UIButton(type: .system)
             ret.setTitle("+", for: .normal)
-            ret.addTarget(self, action: #selector(plusAction), for: .touchUpInside)
+            ret.addTarget(self, action: #selector(plusClicked), for: .touchUpInside)
             return ret
         }()
     }

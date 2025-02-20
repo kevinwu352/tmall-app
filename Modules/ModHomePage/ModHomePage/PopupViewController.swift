@@ -112,10 +112,10 @@ class PopView: HoverView {
       setNeedsUpdateConstraints()
     }
   }
-  @objc func cancelAction() {
+  @objc func cancelClicked() {
     dismiss(false)
   }
-  @objc func confirmAction() {
+  @objc func confirmClicked() {
     dismiss(true)
   }
   lazy var titleLabel: UILabel = {
@@ -148,13 +148,13 @@ class PopView: HoverView {
   lazy var cancelBtn: UIButton = {
     let ret = UIButton(type: .system)
     ret.setTitle("Cancel", for: .normal)
-    ret.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
+    ret.addTarget(self, action: #selector(cancelClicked), for: .touchUpInside)
     return ret
   }()
   lazy var confirmBtn: UIButton = {
     let ret = UIButton(type: .system)
     ret.setTitle("Confirm", for: .normal)
-    ret.addTarget(self, action: #selector(confirmAction), for: .touchUpInside)
+    ret.addTarget(self, action: #selector(confirmClicked), for: .touchUpInside)
     return ret
   }()
 }

@@ -117,9 +117,53 @@ open class BaseViewController: UIViewController, Combinable {
   public lazy var firstViewDidDisappearPub = viewDidDisappearPub.combineLatest($viewAppearedEver).mapToEvent { !$1 }
 
 
-  // MARK: Pop Gesture
+  // MARK: Gestures
+
+  public func setupTap(_ to: UIView?) {
+    (to ?? view)?.addGestureRecognizer(tapRec)
+  }
+  public lazy var tapRec: UITapGestureRecognizer = {
+    let ret = UITapGestureRecognizer(target: self, action: #selector(tapped))
+    return ret
+  }()
+  @objc open func tapped(_ sender: UIGestureRecognizer) {
+    guard sender.state == .ended else { return }
+  }
+
+  public func setupPress(_ to: UIView?) {
+    (to ?? view)?.addGestureRecognizer(pressRec)
+  }
+  public lazy var pressRec: UILongPressGestureRecognizer = {
+    let ret = UILongPressGestureRecognizer(target: self, action: #selector(pressed))
+    return ret
+  }()
+  @objc open func pressed(_ sender: UIGestureRecognizer) {
+  }
 
   public var popGestureEnabled = true
+
+
+  // MARK: Status Bar
+
+  public var statusBarHidden: Bool? = nil {
+    didSet { setNeedsStatusBarAppearanceUpdate() }
+  }
+  public override var prefersStatusBarHidden: Bool {
+    if let statusBarHidden = statusBarHidden {
+      return statusBarHidden
+    }
+    return false
+  }
+
+  public var statusBarStyle: UIStatusBarStyle? = nil {
+    didSet { setNeedsStatusBarAppearanceUpdate() }
+  }
+  public override var preferredStatusBarStyle: UIStatusBarStyle {
+    if let statusBarStyle = statusBarStyle {
+      return statusBarStyle
+    }
+    return THEME == .ngt ? .lightContent : .darkContent
+  }
 
 
   // MARK: Navbar
@@ -161,62 +205,6 @@ open class BaseViewController: UIViewController, Combinable {
         navbar?.padding_top = STATUS_BAR_HET
       }
     }
-  }
-
-
-  // MARK: State View
-
-  public lazy var stateView: StateView = {
-    let ret = StateView()
-    ret.container = view
-    return ret
-  }()
-
-
-  // MARK: Touch
-
-  public func setupTap(_ to: UIView?) {
-    (to ?? view)?.addGestureRecognizer(tapRec)
-  }
-  public lazy var tapRec: UITapGestureRecognizer = {
-    let ret = UITapGestureRecognizer(target: self, action: #selector(tapped))
-    return ret
-  }()
-  @objc open func tapped(_ sender: UIGestureRecognizer) {
-    guard sender.state == .ended else { return }
-  }
-
-  public func setupPress(_ to: UIView?) {
-    (to ?? view)?.addGestureRecognizer(pressRec)
-  }
-  public lazy var pressRec: UILongPressGestureRecognizer = {
-    let ret = UILongPressGestureRecognizer(target: self, action: #selector(pressed))
-    return ret
-  }()
-  @objc open func pressed(_ sender: UIGestureRecognizer) {
-  }
-
-
-  // MARK: Status Bar
-
-  public var statusBarHidden: Bool? = nil {
-    didSet { setNeedsStatusBarAppearanceUpdate() }
-  }
-  public override var prefersStatusBarHidden: Bool {
-    if let statusBarHidden = statusBarHidden {
-      return statusBarHidden
-    }
-    return false
-  }
-
-  public var statusBarStyle: UIStatusBarStyle? = nil {
-    didSet { setNeedsStatusBarAppearanceUpdate() }
-  }
-  public override var preferredStatusBarStyle: UIStatusBarStyle {
-    if let statusBarStyle = statusBarStyle {
-      return statusBarStyle
-    }
-    return THEME == .ngt ? .lightContent : .darkContent
   }
 
 }

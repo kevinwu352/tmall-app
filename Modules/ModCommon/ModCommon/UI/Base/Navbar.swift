@@ -205,16 +205,10 @@ public extension UIViewController {
   }
 
 
-  func showNavbar(_ animated: Bool,
-                  _ layout: ((ConstraintMaker)->Void)? = nil // CLOS
-  ) { // FUNC
+  func showNavbar(_ animated: Bool) {
     navbar?.isHidden = false
-    if let layout = layout {
-      navbar?.snp.remakeConstraints(layout)
-    } else {
-      navbar?.snp.remakeConstraints { make in
-        make.leading.trailing.top.equalToSuperview()
-      }
+    navbar?.snp.remakeConstraints { make in
+      make.leading.trailing.top.equalToSuperview()
     }
     if animated {
       UIView.animate(withDuration: 0.35, delay: 0, options: [.allowUserInteraction, .curveEaseOut]) {
@@ -225,16 +219,10 @@ public extension UIViewController {
     }
   }
 
-  func hideNavbar(_ animated: Bool,
-                  _ layout: ((ConstraintMaker)->Void)? = nil // CLOS
-  ) { // FUNC
-    if let layout = layout {
-      navbar?.snp.remakeConstraints(layout)
-    } else {
-      navbar?.snp.remakeConstraints { make in
-        make.leading.trailing.equalToSuperview()
-        make.bottom.equalTo(view.snp.top)
-      }
+  func hideNavbar(_ animated: Bool) {
+    navbar?.snp.remakeConstraints { make in
+      make.leading.trailing.equalToSuperview()
+      make.bottom.equalTo(view.snp.top)
     }
     if animated {
       UIView.animate(withDuration: 0.35, delay: 0, options: [.allowUserInteraction, .curveEaseIn]) {

@@ -22,8 +22,8 @@ public struct Alert {
 
 
   public func info(_ gotit: String?,
-                   _ completion: (()->Void)? = nil // CLOS
-  ) { // FUNC
+                   _ completion: (()->Void)?
+  ) {
     controller.addAction(gotit ?? R.string.shared.alert_gotit.cur, .default) { _ in
       completion?()
     }
@@ -32,8 +32,8 @@ public struct Alert {
 
   public func confirm(_ cancel: String?,
                       _ confirm: String?,
-                      _ completion: ((Bool)->Void)? = nil // CLOS
-  ) { // FUNC
+                      _ completion: ((Bool)->Void)?
+  ) {
     controller.addAction(cancel ?? R.string.shared.alert_cancel.cur, .cancel) { _ in
       completion?(false)
     }
@@ -46,8 +46,8 @@ public struct Alert {
   public func input(_ text: String?,
                     _ cancel: String?,
                     _ confirm: String?,
-                    _ completion: ((Bool,String?)->Void)? = nil // CLOS
-  ) { // FUNC
+                    _ completion: ((Bool,String?)->Void)?
+  ) {
     controller.addTextField {
       $0.text = text
     }
@@ -62,11 +62,11 @@ public struct Alert {
 
   public func option(_ options: [String],
                      _ cancel: String?,
-                     _ completion: ((Int?,String?)->Void)? = nil // CLOS
-  ) { // FUNC
-    options.enumerated().forEach { index, item in
-      controller.addAction(item, .default) { _ in
-        completion?(index, item)
+                     _ completion: ((Int?,String?)->Void)?
+  ) {
+    options.enumerated().forEach { it in
+      controller.addAction(it.element, .default) { _ in
+        completion?(it.offset, it.element)
       }
     }
     controller.addAction(cancel ?? R.string.shared.alert_cancel.cur, .cancel) { _ in
@@ -78,10 +78,8 @@ public struct Alert {
 }
 
 extension UIAlertController {
-
-  func addAction(_ title: String?, _ style: UIAlertAction.Style, _ handler: ((UIAlertAction)->Void)?) { // CLOS
+  func addAction(_ title: String?, _ style: UIAlertAction.Style, _ handler: ((UIAlertAction)->Void)?) {
     let action = UIAlertAction(title: title, style: style, handler: handler)
     addAction(action)
   }
-
 }

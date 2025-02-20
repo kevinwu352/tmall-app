@@ -30,29 +30,22 @@ class ChangeManager: NSObject {
       hasher.combine(id)
     }
   }
-  var entries: [Entry:[String:(Any)->Void]] = [:] // CLOS
+  var entries: [Entry:[String:(Any)->Void]] = [:]
 
-#if DEBUG
-  var obj_n = 0
-  var han_n = 0
-#endif
-  func set(_ object: NSObject, _ key: String, _ handler: @escaping (Any)->Void) { // CLOS
+  func set(_ object: NSObject, _ key: String, _ handler: @escaping (Any)->Void) {
     entries = entries.filter { $0.key.raw != nil }
 
     let item = entries.first { $0.key.id == ObjectIdentifier(object) }
-#if DEBUG
-    if item?.key == nil { obj_n += 1 }
-#endif
+
     let entry = item?.key ?? Entry(object)
 
-    var map = entries[entry] ?? [:]
-#if DEBUG
-    if map[key] == nil { han_n += 1 }
-#endif
+    var map = item?.value ?? [:]
     map[key] = handler
 
     entries[entry] = map
 #if DEBUG
+    if item?.key == nil { obj_n += 1 }
+    if item?.value[key] == nil { han_n += 1 }
     setNeeds(#selector(log))
 #endif
   }
@@ -64,9 +57,6 @@ class ChangeManager: NSObject {
         $0.value(item.key.raw as Any)
       }
     }
-#if DEBUG
-    setNeeds(#selector(log))
-#endif
   }
 
 #if DEBUG
@@ -77,9 +67,17 @@ class ChangeManager: NSObject {
     var instance = ""
     var names = ""
     init(_ k: Entry, _ v: any Collection<String>) {
+      let custom: (UIView?)->UIView? = {
+        let cs = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".charset.inverted
+        var ret = $0
+        while (dev_obj_clsname(ret) ?? "").trimmingCharacters(in: cs).hasPrefix("UI") {
+          ret = ret?.superview
+        }
+        return ret
+      }
       time = String(format: "[%6d]", TIMESTAMP.i - k.time)
       cname = o2s(k.raw as? UIViewController ?? (k.raw as? UIView)?.owner)
-      vname = o2s((k.raw as? UIView)?.custom)
+      vname = o2s(custom(k.raw as? UIView))
       instance = o2s(k.raw)
       names = v.joined(separator: ", ")
     }
@@ -105,23 +103,18 @@ class ChangeManager: NSObject {
       }
     }
   }
+  var obj_n = 0 // ever object count
+  var han_n = 0 // ever handler count
   @objc func log() {
     let list = entries
       .map { Line($0.key, $0.value.keys) }
       .sorted { $0 > $1 }
-    print("[chang] \(list.count) (\(obj_n):\(han_n)) ========================================")
-    list.forEach { print("[chang] \($0)") }
+    print("[change] \(list.count) (\(obj_n):\(han_n)) ========================================")
+    list.forEach { print("[change] \($0)") }
   }
 #endif
 }
-#if DEBUG
-fileprivate extension UIView {
-  var custom: UIView? {
-    let name = dev_obj_clsname(self)?.trimmingCharacters(in: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".charset.inverted) ?? ""
-    return name.hasPrefix("UI") ? superview?.custom : self
-  }
-}
-#endif
+
 
 // =============================================================================
 
@@ -148,7 +141,7 @@ extension NSObject: Changable { }
 
 public extension Change where Base: NSObject {
 
-  func theme(_ key: String = "theme", _ h: @escaping (Base)->Void) { // FUNC CLOS
+  func theme(_ key: String = "theme", _ h: @escaping (Base)->Void) {
     h(base)
     let cb: (Any)->Void = {
       if let obj = $0 as? Base {
@@ -158,7 +151,7 @@ public extension Change where Base: NSObject {
     ChangeManager.theme.set(base, key, cb)
   }
 
-  func language(_ key: String = "language", _ h: @escaping (Base)->Void) { // FUNC CLOS
+  func language(_ key: String = "language", _ h: @escaping (Base)->Void) {
     h(base)
     let cb: (Any)->Void = {
       if let obj = $0 as? Base {
@@ -168,7 +161,7 @@ public extension Change where Base: NSObject {
     ChangeManager.language.set(base, key, cb)
   }
 
-  func both(_ key: String = "both", _ h: @escaping (Base)->Void) { // FUNC CLOS
+  func both(_ key: String = "both", _ h: @escaping (Base)->Void) {
     h(base)
     let cb: (Any)->Void = {
       if let obj = $0 as? Base {

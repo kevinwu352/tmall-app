@@ -13,8 +13,6 @@ public extension Collection {
 }
 
 
-// MARK: UIView
-
 public extension Change where Base: UIView {
   func backgroundColor(_ h: @escaping @autoclosure ()->UIColor?) {
     theme(#function) { $0.backgroundColor = h() }
@@ -24,15 +22,11 @@ public extension Change where Base: UIView {
   }
 }
 
-// MARK: CALayer
-
 public extension Change where Base: CALayer {
   func backgroundColor(_ h: @escaping @autoclosure ()->CGColor?) {
     theme(#function) { $0.backgroundColor = h() }
   }
 }
-
-// MARK: UILabel
 
 public extension Change where Base: UILabel {
   func text(_ h: @escaping @autoclosure ()->String?) {
@@ -46,15 +40,14 @@ public extension Change where Base: UILabel {
   }
 }
 
-// MARK: UIImageView
-
 public extension Change where Base: UIImageView {
   func image(_ h: @escaping @autoclosure ()->UIImage?) {
     theme(#function) { $0.image = h() }
   }
 }
 
-// MARK: UIButton
+
+// =============================================================================
 
 public extension Change where Base: UIButton {
   func setTitle(_ h: @escaping @autoclosure ()->String?, _ state: UIControl.State) {
@@ -70,11 +63,6 @@ public extension Change where Base: UIButton {
     theme(#function) { $0.setBackgroundImage(h(), for: state) }
   }
 }
-
-
-// =============================================================================
-
-// MARK: UIActivityIndicatorView
 
 public extension Change where Base: UIActivityIndicatorView {
   func color(_ h: @escaping @autoclosure ()->UIColor?) {

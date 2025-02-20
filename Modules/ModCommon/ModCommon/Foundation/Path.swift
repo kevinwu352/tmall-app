@@ -118,8 +118,8 @@ public extension String {
 // MARK: Url Query
 
 public extension String {
-  func addedQuery(_ query: String) -> String {
-    guard query.notEmpty else { return self }
+  func addedQuery(_ query: String?) -> String {
+    guard let query = query, query.notEmpty else { return self }
     if contains("?") {
       if hasSuffix("?") || hasSuffix("&") {
         return self + query

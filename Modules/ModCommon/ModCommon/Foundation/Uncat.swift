@@ -83,9 +83,13 @@ public extension Result {
   }
 }
 public extension URLResponse {
+  var code: Int? {
+    guard let response = self as? HTTPURLResponse else { return nil }
+    return response.statusCode
+  }
   var isHTTPSuccess: Bool {
-    guard let response = self as? HTTPURLResponse else { return false }
-    return (200..<300).contains(response.statusCode)
+    guard let code = code else { return false }
+    return (200..<300).contains(code)
   }
 }
 

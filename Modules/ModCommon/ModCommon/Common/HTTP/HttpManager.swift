@@ -32,26 +32,33 @@ public func http_req(path: String,
                      parameters: [String:Any]? = nil,
                      headers: [String:String]? = nil,
                      completion: @escaping (Data?,URLResponse?,Error?)->Void
-) -> URLSessionDataTask? { // FUNC
-  var url: URL? = path.url
-  var body: Data? = nil
-  if let query = parameters?.query, query.notEmpty {
-    if method == "POST" {
-      //url =
-      body = query.dat
-    } else { // GET
-      url = path.addedQuery(query).url
-      // body =
-    }
+) -> URLSessionDataTask? {
+  let addr: String
+  let body: Data?
+  if method == "POST" {
+    addr = path
+    body = parameters?.query.dat
+  } else {
+    addr = path.addedQuery(parameters?.query)
+    body = nil
   }
-  guard let url = url else { return nil }
+  guard let url = addr.url else { return nil }
 
+#if DEBUG
+  let n = HttpLogger.shared.begin(addr, method, headers, body?.str)
+#endif
   var req = URLRequest(url: url)
   req.httpMethod = method
   req.allHTTPHeaderFields = headers
   req.httpBody = body
+  req.timeoutInterval = 10.0
 
-  let task = URLSession.shared.dataTask(with: req, completionHandler: completion)
+  let task = URLSession.shared.dataTask(with: req) { dat, res, err in
+#if DEBUG
+    HttpLogger.shared.end(n, res?.code, err?.localizedDescription ?? dat?.str)
+#endif
+    completion(dat, res, err)
+  }
   task.resume()
 
   return task
@@ -148,19 +155,8 @@ open class HttpManager<Status>: BaseObject {
     return ret
   }()
 
-  public lazy var monitors: [EventMonitor] = {
-#if DEBUG
-    return [HttpLogger()]
-#else
-    return []
-#endif
-  }()
-
   public lazy var session: Session = {
-    let ret = Session(configuration: config,
-                      serverTrustManager: trust,
-                      eventMonitors: monitors
-    )
+    let ret = Session(configuration: config, serverTrustManager: trust)
     return ret
   }()
 

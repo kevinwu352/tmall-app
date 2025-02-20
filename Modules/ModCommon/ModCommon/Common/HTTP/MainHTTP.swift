@@ -126,6 +126,6 @@ public extension MainHTTP.Api {
     .init(path: "/v3/bb4ec3e6-8772-4295-b5ec-97623ffd2821", method: "GET", parameters: [:], paraenc: nil, headers: [:])
   }
   static func lst() -> Self {
-    .init(path: "/v3/6a9d1c1d-caac-4069-b6f1-629cbe4703d5", method: "GET", parameters: [:], paraenc: nil, headers: [:])
+    .init(path: "/v3/65b1de27-85aa-4793-b686-e254660b7b46", method: "POST", parameters: ["k":2], paraenc: nil, headers: ["t":"123"])
   }
 }

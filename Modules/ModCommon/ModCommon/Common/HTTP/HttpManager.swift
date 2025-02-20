@@ -31,7 +31,7 @@ public func http_req(path: String,
                      method: String = "GET",
                      parameters: [String:Any]? = nil,
                      headers: [String:String]? = nil,
-                     completion: @escaping (Data?,URLResponse?,Error?)->Void
+                     completion: @escaping (URLResponse?,Data?,Error?)->Void
 ) -> URLSessionDataTask? {
   let addr: String
   let body: Data?
@@ -45,7 +45,8 @@ public func http_req(path: String,
   guard let url = addr.url else { return nil }
 
 #if DEBUG
-  let n = HttpLogger.shared.begin(addr, method, headers, body?.str)
+  let n = HttpLogger.shared.order
+  HttpLogger.shared.begin(n, addr, method, headers, body?.str)
 #endif
   var req = URLRequest(url: url)
   req.httpMethod = method
@@ -57,7 +58,7 @@ public func http_req(path: String,
 #if DEBUG
     HttpLogger.shared.end(n, res?.code, err?.localizedDescription ?? dat?.str)
 #endif
-    completion(dat, res, err)
+    completion(res, dat, err)
   }
   task.resume()
 
@@ -166,16 +167,15 @@ open class HttpManager<Status>: BaseObject {
     public var code: Int?
     public var message: String?
     public var data: Any?
-    public var status: Status?
     public var err: HttpError?
     public var object: T?
-    public var isSuccess: Bool { err == nil }
+    public var status: Status?
     public init(raw: Jobj = [:],
                 code: Int? = nil,
                 message: String? = nil,
                 data: Any? = nil,
                 err: HttpError? = nil
-    ) { // FUNC
+    ) {
       self.raw = raw
       self.code = code
       self.message = message
@@ -183,6 +183,7 @@ open class HttpManager<Status>: BaseObject {
       self.err = err
       object = data != nil ? .init(any: data) : nil
     }
+    public var isSuccess: Bool { err == nil }
   }
 
   public static func publish<T: AnyModel>(path: String,
@@ -192,17 +193,26 @@ open class HttpManager<Status>: BaseObject {
                                           headers: [String:String]? = nil,
                                           object: T.Type = T.self,
                                           queue: DispatchQueue = .main
-  ) -> AnyPublisher<Response<T>,Never> { // FUNC
-    shared.session.request(shared.url(path),
-                           method: HTTPMethod(rawValue: method.uppercased()),
-                           parameters: parameters,
-                           encoding: (paraenc ?? shared.paraenc).value,
-                           headers: shared.headers(headers),
-                           interceptor: nil,
-                           requestModifier: nil)
+  ) -> AnyPublisher<Response<T>,Never> {
+#if DEBUG
+    let n = HttpLogger.shared.order
+#endif
+    return shared.session.request(shared.url(path),
+                                  method: HTTPMethod(rawValue: method.uppercased()),
+                                  parameters: parameters,
+                                  encoding: (paraenc ?? shared.paraenc).value,
+                                  headers: shared.headers(headers),
+                                  interceptor: HttpLoginter(n),
+                                  requestModifier: nil)
     .validate()
     .publishData(queue: .userInitiated)
-    .map { shared.parse($0) }
+    .map {
+#if DEBUG
+      HttpLogger.shared.end(n, $0.response?.statusCode, $0.data?.str)
+#endif
+      let response: Response<T> = shared.parse($0)
+      return response
+    }
     .receive(on: queue)
     .eraseToAnyPublisher()
   }
@@ -214,17 +224,23 @@ open class HttpManager<Status>: BaseObject {
                                           headers: [String:String]? = nil,
                                           object: T.Type = T.self,
                                           queue: DispatchQueue = .main,
-                                          completion: @escaping (Response<T>)->Void // CLOS
-  ) { // FUNC
+                                          completion: @escaping (Response<T>)->Void
+  ) {
+#if DEBUG
+    let n = HttpLogger.shared.order
+#endif
     shared.session.request(shared.url(path),
                            method: HTTPMethod(rawValue: method.uppercased()),
                            parameters: parameters,
                            encoding: (paraenc ?? shared.paraenc).value,
                            headers: shared.headers(headers),
-                           interceptor: nil,
+                           interceptor: HttpLoginter(n),
                            requestModifier: nil)
     .validate()
     .responseData(queue: DispatchQueue.userInitiated) {
+#if DEBUG
+      HttpLogger.shared.end(n, $0.response?.statusCode, $0.data?.str)
+#endif
       let response: Response<T> = shared.parse($0)
       queue.async { completion(response) }
     }
@@ -233,14 +249,9 @@ open class HttpManager<Status>: BaseObject {
   open func parse<T: AnyModel>(_ response: AFDataResponse<Data>) -> Response<T> {
     switch response.result {
     case let .success(dat):
-      let raw = json_from_data(dat) as? Jobj ?? [:]
-      return decode(raw)
+      return decode(json_from_data(dat) as? Jobj ?? [:])
     case let .failure(err):
-      if NETWORK_STATUS.isNetworkError {
-        return .init(err: .networkError)
-      } else {
-        return .init(err: HttpError(err))
-      }
+      return .init(err: HttpError(err))
     }
   }
 

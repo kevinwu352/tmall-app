@@ -14,21 +14,27 @@ class HttpLogger {
 
   static let shared = HttpLogger()
 
-  func begin(_ url: String, _ method: String, _ headers: [String:String]?, _ body: String?) -> Int? {
-    queue.sync { [weak self] in
-      guard let self = self else { return nil }
-      let n = self.counter()
-      let entry = Entry(id: n, url: url, method: method, headers: headers, body: body)
-      self.entries.append(entry)
-      print("=>:[\(n)] \(method) \(url)")
-      self.dump()
-      return n
+  var order: Int {
+    queue.sync { counter() }
+  }
+  var counter: ()->Int = {
+    var value = 0
+    return { value.inc() }
+  }()
+
+  func begin(_ id: Int?, _ url: String?, _ method: String?, _ headers: [String:String]?, _ body: String?) {
+    queue.sync {
+      if let id = id {
+        let entry = Entry(id: id, url: url, method: method, headers: headers, body: body)
+        entries.append(entry)
+        print("=>:[\(id)] \(method ?? "--") \(url ?? "--")")
+        dump()
+      }
     }
   }
 
   func end(_ id: Int?, _ status: Int?, _ response: String?) {
-    queue.sync { [weak self] in
-      guard let self = self else { return }
+    queue.sync {
       if let i = self.entries.firstIndex(where: { $0.id == id }) {
         var entry = entries[i]
         entries.remove(at: i)
@@ -40,11 +46,6 @@ class HttpLogger {
     }
   }
 
-  var counter: ()->Int = {
-    var value = 0
-    return { value.inc() }
-  }()
-
   var queue = DispatchQueue(label: "http-logger-queue")
 
   func dump() {
@@ -52,7 +53,7 @@ class HttpLogger {
     let items = entries.filter { $0.elapsed > 5000 }
     let info = [
       "=>: \(items.count) / \(entries.count)",
-      items.map({ "\($0.elapsed/1000)s [\($0.id)] \($0.url)" }).joined(separator: "\n"),
+      items.map({ "\($0.elapsed/1000)s [\($0.id)] \($0.url ?? "--")" }).joined(separator: "\n"),
     ]
       .filter { $0.notEmpty }
       .joined(separator: "\n")
@@ -63,8 +64,8 @@ class HttpLogger {
 
   struct Entry: Codable {
     var id: Int
-    var url: String
-    var method: String
+    var url: String?
+    var method: String?
     var headers: [String:String]?
     var body: String?
     var beginTime = (TIMESTAMP * 1000).i
@@ -80,8 +81,8 @@ class HttpLogger {
     var info: String {
       """
       ⌜------------------------------------------------------------------------------⌝
-      [\(id)] \(url)
-      \(method) \(status?.s ?? "--") \(duration?.s.grouped.suffixed("ms") ?? "--")
+      [\(id)] \(url ?? "--")
+      \(method ?? "--") \(status?.s ?? "--") \(duration?.s.grouped.suffixed("ms") ?? "--")
       \(headers?.map({ "\($0.key): \($0.value)" }).joined(separator: "\n") ?? "--")
       \(body ?? "--")
       \(response ?? "--")
@@ -93,3 +94,20 @@ class HttpLogger {
 }
 
 #endif
+
+class HttpLoginter: @unchecked Sendable, RequestInterceptor {
+  let order: Int
+  init(_ n: Int) {
+    order = n
+  }
+  func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, any Error>) -> Void) {
+#if DEBUG
+    HttpLogger.shared.begin(order,
+                            urlRequest.url?.absoluteString,
+                            urlRequest.method?.rawValue,
+                            urlRequest.allHTTPHeaderFields,
+                            urlRequest.httpBody?.str)
+#endif
+    completion(.success(urlRequest))
+  }
+}

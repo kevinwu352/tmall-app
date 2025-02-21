@@ -29,6 +29,8 @@ public var MODALTOP: UIViewController? {
 
 // https://www.screensizes.app/?compare=iphone
 
+public let SCREEN_SCL = UIScreen.main.scale == 3.0 ? 3 : 2
+
 public let SCREEN_WID = Double(UIScreen.main.bounds.width)
 public let SCREEN_HET = Double(UIScreen.main.bounds.height)
 

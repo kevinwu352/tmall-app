@@ -21,7 +21,6 @@ public protocol TableViewHeader: UIView {
 }
 
 public extension UITableView {
-
   func setTableHeader<Header: TableViewHeader>(_ header: Header, _ width: Double?) {
     header.reloadTableHeader = { [weak self, weak header] in
       guard let self = self else { return }
@@ -30,14 +29,11 @@ public extension UITableView {
       self.tableHeaderView = header
     }
   }
-
 }
 
 public extension UIView {
-
   func fitToSystemSize(_ width: Double) {
     let size = systemLayoutSizeFitting(CGSize(width: width, height: UIView.layoutFittingCompressedSize.height))
     frame = CGRect(x: 0, y: 0, width: width, height: size.height)
   }
-
 }

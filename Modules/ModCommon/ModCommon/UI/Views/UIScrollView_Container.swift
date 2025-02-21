@@ -69,41 +69,36 @@ public extension UIScrollView {
 
 
 public extension UIScrollView {
-
   var pageIndexX: Int {
     guard frame.width > 0 else { return 0 }
     if contentOffset.x + frame.width >= contentSize.width {
       let total = contentSize.width / frame.width
-      let index = total.trailed ? Int(total) : Int(total - 1.0)
-      return max(index, 0)
+      let index = total.fractions ? total.i : max(total - 1.0, 0.0).i
+      return index
     } else {
-      let index = floor(contentOffset.x / frame.width)
-      return Int(index)
+      let index = (contentOffset.x / frame.width).i
+      return index
     }
   }
-
   var pageIndexY: Int {
     guard frame.height > 0 else { return 0 }
     if contentOffset.y + frame.height >= contentSize.height {
       let total = contentSize.height / frame.height
-      let index = total.trailed ? Int(total) : Int(total - 1.0)
-      return max(index, 0)
+      let index = total.fractions ? total.i : max(total - 1.0, 0.0).i
+      return index
     } else {
-      let index = floor(contentOffset.y / frame.height)
-      return Int(index)
+      let index = (contentOffset.y / frame.height).i
+      return index
     }
   }
-
-  // func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-  //   guard !decelerate else { return }
-  // }
-  // func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) { }
-  // func scrollViewDidScrollToTop(_ scrollView: UIScrollView) { }
 }
-// 2.01 => true
-// 2.00 => false
+// 2.01:true, 2.00:false
 public extension FloatingPoint {
-  var trailed: Bool {
-    self != floor(self)
-  }
+  var fractions: Bool { self != floor(self) }
 }
+
+// func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//   guard !decelerate else { return }
+// }
+// func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) { }
+// func scrollViewDidScrollToTop(_ scrollView: UIScrollView) { }

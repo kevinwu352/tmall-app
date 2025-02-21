@@ -12,12 +12,12 @@ import MJRefresh
 fileprivate var kHeadHandlerKey: UInt8 = 0
 fileprivate var kHeadPublisherKey: UInt8 = 0
 
+fileprivate class SpinnerView: UIView { }
 fileprivate let kHeadImages: [[UIImage]] = {
-  let base = Bundle(for: BaseView.self).bundlePath
-  let scale = UIScreen.main.scale == 3.0 ? 3 : 2
-  return ["day", "ngt"]
-    .map { code in (1...30).map { String(format: "/refresh/spinner_%02d_%@@%dx.png", $0, code, scale) } }
-    .map { $0.compactMap { UIImage(contentsOfFile: base.addedPathseg($0)) } }
+  Theme.allCases
+    .map { $0.code }
+    .map { code in (1...30).map({ String(format: "/refresh/spinner_%02d_%@@%dx.png", $0, code, SCREEN_SCL) }) }
+    .map { $0.compactMap({ UIImage(contentsOfFile: Bundle(for: SpinnerView.self).bundlePath.addedPathseg($0)) }) }
 }()
 
 public extension UIScrollView {
@@ -75,8 +75,7 @@ public extension UIScrollView {
   }
 
   func headBeginRefreshing() {
-    // 会触发 handler
-    mj_header?.beginRefreshing()
+    mj_header?.beginRefreshing() // will trigger handler
   }
 
   func headEndRefreshing() {

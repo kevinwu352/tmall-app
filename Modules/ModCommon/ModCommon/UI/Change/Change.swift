@@ -33,8 +33,7 @@ class ChangeManager: NSObject {
   var entries: [Entry:[String:(Any)->Void]] = [:]
 
   func set(_ object: NSObject, _ key: String, _ handler: @escaping (Any)->Void) {
-    entries = entries.filter { $0.key.raw != nil }
-
+    cleanup()
     let item = entries.first { $0.key.id == ObjectIdentifier(object) }
 
     let entry = item?.key ?? Entry(object)
@@ -51,11 +50,16 @@ class ChangeManager: NSObject {
   }
 
   func fire() {
-    entries = entries.filter { $0.key.raw != nil }
+    cleanup()
     entries.forEach { item in
       item.value.forEach {
         $0.value(item.key.raw as Any)
       }
+    }
+  }
+  func cleanup() {
+    entries = entries.filter {
+      $0.key.raw != nil
     }
   }
 
@@ -106,11 +110,12 @@ class ChangeManager: NSObject {
   var obj_n = 0 // ever object count
   var han_n = 0 // ever handler count
   @objc func log() {
-    let list = entries
+    cleanup()
+    let items = entries
       .map { Line($0.key, $0.value.keys) }
       .sorted { $0 > $1 }
-    print("[change] \(list.count) (\(obj_n):\(han_n)) ========================================")
-    list.forEach { print("[change] \($0)") }
+    print("[change] \(items.count) (\(obj_n):\(han_n)) ========================================")
+    items.forEach { print("[change] \($0)") }
   }
 #endif
 }

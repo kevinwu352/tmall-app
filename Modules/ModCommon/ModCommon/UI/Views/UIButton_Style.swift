@@ -48,7 +48,7 @@ public extension UIButton {
       } else if state == .disabled {
         self = .disabled
       } else {
-        if state.rawValue == 5 { // Highlighted | Selected
+        if state.rawValue == UIControl.State.highlighted.rawValue | UIControl.State.selected.rawValue { // 5
           self = .highlighted
         } else {
           self = .normal

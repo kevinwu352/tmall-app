@@ -8,7 +8,7 @@
 import UIKit
 import ModCommon
 
-class TabView: BaseView, ValueControl {
+class TabView: BaseView {
 
   override func setup() {
     super.setup()
@@ -36,14 +36,21 @@ class TabView: BaseView, ValueControl {
     reload(nil, false)
   }
 
-
-
   @objc func buttonClicked(_ sender: UIButton) {
     reset(sender.tag, true, true)
   }
 
-  var current = 0
+  private(set) var current = 0
   var didChange: ((Int)->Void)?
+
+  func reset(_ value: Int, _ animated: Bool, _ notify: Bool) {
+    let oldValue = current
+    current = value
+    reload(oldValue, animated)
+    if notify {
+      didChange?(value)
+    }
+  }
   func reload(_ old: Int?, _ animated: Bool) {
     stackView.arrangedSubviews
       .compactMap { $0 as? UIButton }

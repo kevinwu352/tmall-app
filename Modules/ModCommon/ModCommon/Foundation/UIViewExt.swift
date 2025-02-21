@@ -217,3 +217,29 @@ public extension UINavigationController {
   var root: UIViewController? { viewControllers.at(0) }
   var top: UIViewController? { topViewController }
 }
+
+
+// ValueControl
+//
+// private(set) var current = 0
+// var didChange: ((Int)->Void)?
+//
+// func reset(_ value: Int, _ animated: Bool, _ notify: Bool) {
+//   let oldValue = current
+//   current = value
+//   reload(oldValue, animated)
+//   if notify {
+//     didChange?(value)
+//   }
+// }
+// func reload(_ old: Int?, _ animated: Bool) {
+//   stackView.arrangedSubviews
+//     .compactMap { $0 as? UIButton }
+//     .forEach { $0.setTitleColor($0.tag == current ? .red : .blue, for: .normal) }
+// }
+//
+// // init
+// reload(nil, false)
+//
+// // fire
+// reset(sender.tag, true, true)

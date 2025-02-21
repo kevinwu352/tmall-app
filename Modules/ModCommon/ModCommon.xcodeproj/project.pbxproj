@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A00D1662BEC644F00F8C1CA /* ValueControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A00D1652BEC644F00F8C1CA /* ValueControl.swift */; };
 		0A3EE97A2B98A55400206B1F /* UIViewController_Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3EE9792B98A55400206B1F /* UIViewController_Navigator.swift */; };
 		0A534A012A54521B00EDA4BF /* Comb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349052A54521A00EDA4BF /* Comb.swift */; };
 		0A534A022A54521B00EDA4BF /* ControlEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349062A54521A00EDA4BF /* ControlEvent.swift */; };
@@ -96,7 +95,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0A00D1652BEC644F00F8C1CA /* ValueControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueControl.swift; sourceTree = "<group>"; };
 		0A3EE9792B98A55400206B1F /* UIViewController_Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController_Navigator.swift; sourceTree = "<group>"; };
 		0A53487A2A544E4B00EDA4BF /* ModCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ModCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A5349052A54521A00EDA4BF /* Comb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comb.swift; sourceTree = "<group>"; };
@@ -406,7 +404,6 @@
 				0A5349582A54521A00EDA4BF /* UITableView_Header.swift */,
 				0A5349572A54521A00EDA4BF /* UIButton_Style.swift */,
 				0A5349552A54521A00EDA4BF /* Stylabel.swift */,
-				0A00D1652BEC644F00F8C1CA /* ValueControl.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -639,7 +636,6 @@
 				0A534A5E2A54521B00EDA4BF /* Defaults.swift in Sources */,
 				0A534A402A54521B00EDA4BF /* UIScrollView_Spinner.swift in Sources */,
 				0A534A352A54521B00EDA4BF /* TextLimiter.swift in Sources */,
-				0A00D1662BEC644F00F8C1CA /* ValueControl.swift in Sources */,
 				0A534A4A2A54521B00EDA4BF /* BaseControl.swift in Sources */,
 				0A534A202A54521B00EDA4BF /* CommonConfiger.swift in Sources */,
 				0A534A252A54521B00EDA4BF /* UserCenterService.swift in Sources */,

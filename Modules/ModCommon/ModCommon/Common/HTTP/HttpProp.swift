@@ -8,23 +8,21 @@
 import UIKit
 import SwiftyJSON
 
-/*
- sv.headReset(true)
-
- sv.headHandler = { [weak self] in self?.begin(nil) }
- sv.headEndRefreshing()
-
- sv.headHandler = { [weak self] in self?.begin(.first) }
- sv.footHandler = { [weak self] in self?.begin(.next) }
- sv.headEndRefreshing()
- sv.footReset(more, more)
-
- .map { () -> AnyPublisher<HttpResponse<Obj<Person>>,Never> in
-   MainHTTP
-     .publish(api: .obj(), object: Obj<Person>.self)
-     .eraseToAnyPublisher()
- }
- */
+// sv.headReset(true)
+//
+// sv.headHandler = { [weak self] in self?.begin(nil) }
+// sv.headEndRefreshing()
+//
+// sv.headHandler = { [weak self] in self?.begin(.first) }
+// sv.footHandler = { [weak self] in self?.begin(.next) }
+// sv.headEndRefreshing()
+// sv.footReset(more, more)
+//
+// .map { () -> AnyPublisher<HttpResponse<Obj<Person>>,Never> in
+//   MainHTTP
+//     .publish(api: .obj(), object: Obj<Person>.self)
+//     .eraseToAnyPublisher()
+// }
 
 public protocol Ret: AnyModel {
   associatedtype Model: AnyModel

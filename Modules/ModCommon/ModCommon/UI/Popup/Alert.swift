@@ -9,70 +9,70 @@ import UIKit
 
 public struct Alert {
 
-  // .default: normal font
-  // .cancel: bold font
-  // .destructive: normal font + red
-
-
-  let controller: UIAlertController
-
-  public init(_ title: String?, _ message: String?, _ style: UIAlertController.Style) {
-    controller = UIAlertController(title: title, message: message, preferredStyle: style)
-  }
-
-
-  public func info(_ gotit: String?,
-                   _ completion: (()->Void)?
+  public static func info(title: String?,
+                          message: String?,
+                          gotit: String? = nil,
+                          completion: (()->Void)?
   ) {
-    controller.addAction(gotit ?? R.string.shared.alert_gotit.cur, .default) { _ in
+    let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    ac.addAction(gotit ?? R.string.shared.alert_gotit.cur, .default) { _ in
       completion?()
     }
-    MODALTOP?.present(controller, animated: true, completion: nil)
+    MODALTOP?.present(ac, animated: true, completion: nil)
   }
 
-  public func confirm(_ cancel: String?,
-                      _ confirm: String?,
-                      _ completion: ((Bool)->Void)?
+  public static func confirm(title: String?,
+                             message: String?,
+                             cancel: String? = nil,
+                             confirm: String? = nil,
+                             completion: ((Bool)->Void)?
   ) {
-    controller.addAction(cancel ?? R.string.shared.alert_cancel.cur, .cancel) { _ in
+    let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    ac.addAction(cancel ?? R.string.shared.alert_cancel.cur, .cancel) { _ in
       completion?(false)
     }
-    controller.addAction(confirm ?? R.string.shared.alert_confirm.cur, .default) { _ in
+    ac.addAction(confirm ?? R.string.shared.alert_confirm.cur, .default) { _ in
       completion?(true)
     }
-    MODALTOP?.present(controller, animated: true, completion: nil)
+    MODALTOP?.present(ac, animated: true, completion: nil)
   }
 
-  public func input(_ text: String?,
-                    _ cancel: String?,
-                    _ confirm: String?,
-                    _ completion: ((Bool,String?)->Void)?
+  public static func input(title: String?,
+                           message: String?,
+                           text: String?,
+                           cancel: String? = nil,
+                           confirm: String? = nil,
+                           completion: ((Bool,String?)->Void)?
   ) {
-    controller.addTextField {
+    let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    ac.addTextField {
       $0.text = text
     }
-    controller.addAction(cancel ?? R.string.shared.alert_cancel.cur, .cancel) { [weak controller] _ in
-      completion?(false, controller?.textFields?.first?.text)
+    ac.addAction(cancel ?? R.string.shared.alert_cancel.cur, .cancel) { [weak ac] _ in
+      completion?(false, ac?.textFields?.first?.text)
     }
-    controller.addAction(confirm ?? R.string.shared.alert_confirm.cur, .default) { [weak controller] _ in
-      completion?(true, controller?.textFields?.first?.text)
+    ac.addAction(confirm ?? R.string.shared.alert_confirm.cur, .default) { [weak ac] _ in
+      completion?(true, ac?.textFields?.first?.text)
     }
-    MODALTOP?.present(controller, animated: true, completion: nil)
+    MODALTOP?.present(ac, animated: true, completion: nil)
   }
 
-  public func option(_ options: [String],
-                     _ cancel: String?,
-                     _ completion: ((Int?,String?)->Void)?
+  public static func option(title: String?,
+                            message: String?,
+                            options: [String],
+                            cancel: String? = nil,
+                            completion: ((Int?,String?)->Void)?
   ) {
+    let ac = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
     options.enumerated().forEach { it in
-      controller.addAction(it.element, .default) { _ in
+      ac.addAction(it.element, .default) { _ in
         completion?(it.offset, it.element)
       }
     }
-    controller.addAction(cancel ?? R.string.shared.alert_cancel.cur, .cancel) { _ in
+    ac.addAction(cancel ?? R.string.shared.alert_cancel.cur, .cancel) { _ in
       completion?(nil, nil)
     }
-    MODALTOP?.present(controller, animated: true, completion: nil)
+    MODALTOP?.present(ac, animated: true, completion: nil)
   }
 
 }

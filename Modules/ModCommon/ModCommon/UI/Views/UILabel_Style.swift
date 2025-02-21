@@ -1,5 +1,5 @@
 //
-//  Stylb.swift
+//  UILabel_Style.swift
 //  ModCommon
 //
 //  Created by Kevin Wu on 2022/1/1.
@@ -14,20 +14,30 @@ public class Labels {
   public init() { }
 
   public func run() {
+    lb1.text = ""
+
+    lb2.fnt = { .boldSystemFont(ofSize: 14) }
+    lb2.clr = { .green }
+    lb2.alignment = .right
+    lb2.breakMode = .byCharWrapping
+    lb2.lineHeight = 20
+    lb2.lineSpacing = 20
+    lb2.paragraphSpacing = (10, 10)
+    lb2.config = {
+      $0[.underlineStyle] = NSUnderlineStyle.thick.rawValue
+      $0[.underlineColor] = UIColor.red
+    }
     lb2.text = "aa bb cc"
 
     lb3.text = "aa <b>bb</b> cc <p>dd</p> ee"
 
     lb4.text = """
-        It is called <a href="http://www.atributika.com">Atributika</a>. @all I
-        found #swift #nsattributedstring really nice framework to manage attributed strings.
-        Call me if you want to <b>know</b> <p>more</p> (123)456-7890 https://github.com/psharanda/Atributika
-        """
-
+      It is called <a href="http://www.atributika.com">Atributika</a>. @all I
+      found #swift #nsattributedstring really nice framework to manage attributed strings.
+      Call me if you want to <b>know</b> <p>more</p> (123)456-7890 https://github.com/psharanda/Atributika
+      """
     lb4.onLinkTouchUpInside = { _, val in
-      //if let link = val as? String {
-        // ...
-      //}
+      //let link = val as? String
     }
   }
 
@@ -67,18 +77,6 @@ public class Labels {
     ret.numberOfLines = 0
     return ret
   }()
-  /*
-   lb2.fnt = .boldSystemFont(ofSize: 14)
-   lb2.clr = .green
-   lb2.alignment = .right
-   lb2.breakMode = .byCharWrapping
-   lb2.lineSpacing = 20
-   lb2.paragraphSpacing = (10, 10)
-   lb2.config = {
-   $0[.underlineStyle] = NSUnderlineStyle.thick.rawValue
-   $0[.underlineColor] = UIColor.red
-   }
-   */
 
   // different style for each markup
   public lazy var lb3: Stylb = {
@@ -171,7 +169,7 @@ public class Stylb: UILabel {
     didSet { setNeedsRefresh() }
   }
 
-  public var reloadText: ((String?)->Void)? // CLOS
+  public var reloadText: ((String?)->Void)?
 
   public func setTextStyles(font: @escaping (String?)->UIFont?,
                             color: @escaping (String?)->UIColor?,
@@ -181,7 +179,7 @@ public class Stylb: UILabel {
                             lineSpacing: Double? = nil,
                             paragraphSpacing: (Double?,Double?)? = nil,
                             config: ((inout [NSAttributedString.Key:Any])->Void)? = nil
-  ) { // FUNC
+  ) {
     reloadMarkup = nil
     reloadText = { [weak self] in
       guard let self = self else { return }
@@ -224,7 +222,7 @@ public class Stylb: UILabel {
                             lineSpacing: Double? = nil,
                             paragraphSpacing: (Double?,Double?)? = nil,
                             config: ((inout [NSAttributedString.Key:Any])->Void)? = nil
-  ) { // FUNC
+  ) {
     setTextStyles(font: { _ in font() },
                   color: { _ in color() },
                   alignment: alignment,
@@ -244,11 +242,11 @@ public class Stylb: UILabel {
     didSet { setNeedsRefresh() }
   }
 
-  public var reloadMarkup: ((String?)->Void)? // CLOS
+  public var reloadMarkup: ((String?)->Void)?
 
   public func setMarkupStyles(tags: @escaping (String?)->[String:Attrs],
                               base: @escaping (String?)->Attrs
-  ) { // FUNC
+  ) {
     reloadText = nil
     reloadMarkup = { [weak self] in
       guard let self = self else { return }
@@ -262,7 +260,7 @@ public class Stylb: UILabel {
   }
   public func setMarkupStyles(tags: @escaping @autoclosure ()->[String:Attrs],
                               base: @escaping @autoclosure ()->Attrs
-  ) { // FUNC
+  ) {
     setMarkupStyles(tags: { _ in tags() }, base: { _ in base() })
   }
   func styles(_ attrs: Attrs) -> Attrs {
@@ -337,13 +335,13 @@ public class Attlabel: AttributedLabel {
 
   public var linkDetectionEnabled = true
 
-  public var reloadMarkup: ((String?)->Void)? // CLOS
+  public var reloadMarkup: ((String?)->Void)?
 
   // a, @, #
   public func setMarkupStyles(tags: @escaping (String?)->[String:Attrs],
                               high: @escaping (String?)->Attrs,
                               base: @escaping (String?)->Attrs
-  ) { // FUNC
+  ) {
     reloadMarkup = { [weak self] in
       guard let self = self else { return }
       let str = $0 ?? ""
@@ -357,23 +355,25 @@ public class Attlabel: AttributedLabel {
           Attrs(a).akaLink($0.tag.attributes["href"] ?? "")
         }
       }
-      var builder = str.style(tags: tags)
+      var asb = str
+        .style(tags: tags)
+      //.styleLinks(dt)
+      //.styleMentions(dt)
+      //.styleHashtags(dt)
+      //.styleBase(...)
       if let link = link as? Attrs, linkDetectionEnabled {
-        builder = builder.styleLinks(DetectionTuner(style: {
-          Attrs(link).akaLink($0.text)
-        }))
+        let dt = DetectionTuner { Attrs(link).akaLink($0.text) }
+        asb = asb.styleLinks(dt)
       }
       if let mention = mention as? Attrs {
-        builder = builder.styleMentions(DetectionTuner(style: {
-          Attrs(mention).akaLink($0.text)
-        }))
+        let dt = DetectionTuner { Attrs(mention).akaLink($0.text) }
+        asb = asb.styleMentions(dt)
       }
       if let hashtag = hashtag as? Attrs {
-        builder = builder.styleHashtags(DetectionTuner(style: {
-          Attrs(hashtag).akaLink($0.text)
-        }))
+        let dt = DetectionTuner { Attrs(hashtag).akaLink($0.text) }
+        asb = asb.styleHashtags(dt)
       }
-      self.attributedText = builder
+      self.attributedText = asb
         .styleBase(self.base?() ?? base(str))
         .attributedString
     }
@@ -382,7 +382,7 @@ public class Attlabel: AttributedLabel {
   public func setMarkupStyles(tags: @escaping @autoclosure ()->[String:Attrs],
                               high: @escaping @autoclosure ()->Attrs,
                               base: @escaping @autoclosure ()->Attrs
-  ) { // FUNC
+  ) {
     setMarkupStyles(tags: { _ in tags() }, high: { _ in high() }, base: { _ in base() })
   }
 }

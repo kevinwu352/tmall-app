@@ -7,35 +7,33 @@
 
 import UIKit
 
-/*
- class Copyline: Infoline {
-   override func setup() {
-     super.setup()
-     traiView.addSubview(copyBtn)
-   }
-   override func layoutViews() {
-     super.layoutViews()
-     copyBtn.snp.remakeConstraints { make in
-       make.trailing.equalToSuperview()
-       make.centerY.equalToSuperview()
-       make.top.greaterThanOrEqualToSuperview()
-       make.bottom.lessThanOrEqualToSuperview()
-     }
-     infoLabel.snp.remakeConstraints { make in
-       make.pin_trailing(copyBtn, -5)
-       make.leading.greaterThanOrEqualToSuperview()
-       make.centerY.equalToSuperview()
-       make.top.greaterThanOrEqualToSuperview()
-       make.bottom.lessThanOrEqualToSuperview()
-     }
-   }
-   lazy var copyBtn: UIButton = {
-     let ret = UIButton(type: .custom)
-     ret.setImage(R.image.com.icon_cross.cur, for: .normal)
-     return ret
-   }()
- }
- */
+// class Copyline: Infoline {
+//   override func setup() {
+//     super.setup()
+//     traiView.addSubview(copyBtn)
+//   }
+//   override func layoutViews() {
+//     super.layoutViews()
+//     copyBtn.snp.remakeConstraints { make in
+//       make.trailing.equalToSuperview()
+//       make.centerY.equalToSuperview()
+//       make.top.greaterThanOrEqualToSuperview()
+//       make.bottom.lessThanOrEqualToSuperview()
+//     }
+//     infoLabel.snp.remakeConstraints { make in
+//       make.pin_trailing(copyBtn, -5)
+//       make.leading.greaterThanOrEqualToSuperview()
+//       make.centerY.equalToSuperview()
+//       make.top.greaterThanOrEqualToSuperview()
+//       make.bottom.lessThanOrEqualToSuperview()
+//     }
+//   }
+//   lazy var copyBtn: UIButton = {
+//     let ret = UIButton(type: .custom)
+//     ret.setImage(R.image.com.icon_cross.cur, for: .normal)
+//     return ret
+//   }()
+// }
 
 open class Infoline: BaseStackView {
   open override func setup() {

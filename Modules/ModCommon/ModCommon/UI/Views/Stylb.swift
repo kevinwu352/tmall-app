@@ -1,5 +1,5 @@
 //
-//  Stylabel.swift
+//  Stylb.swift
 //  ModCommon
 //
 //  Created by Kevin Wu on 2022/1/1.
@@ -42,8 +42,8 @@ public class Labels {
   }()
 
   // same style for entire string
-  public lazy var lb2: Stylabel = {
-    let ret = Stylabel()
+  public lazy var lb2: Stylb = {
+    let ret = Stylb()
     ret.setTextStyles(font: .systemFont(ofSize: 14),
                       color: .red,
                       alignment: .left,
@@ -81,8 +81,8 @@ public class Labels {
    */
 
   // different style for each markup
-  public lazy var lb3: Stylabel = {
-    let ret = Stylabel()
+  public lazy var lb3: Stylb = {
+    let ret = Stylb()
     ret.setMarkupStyles(
       tags: [
         "b": .init().font(.boldSystemFont(ofSize: 14)),
@@ -123,7 +123,7 @@ public class Labels {
 }
 #endif
 
-public class Stylabel: UILabel {
+public class Stylb: UILabel {
 
   public override var text: String? {
     get { txt }

@@ -51,8 +51,8 @@ class ObjectTableViewController: BaseViewController {
 
   lazy var vm = ObjectViewModel()
 
-  lazy var valueBtn: Stybutton = {
-    let ret = Stybutton(configuration: .plain())
+  lazy var valueBtn: Stybtn = {
+    let ret = Stybtn(configuration: .plain())
     ret.style(image: nil,
               title: .init("", .head, .red).high()
     )

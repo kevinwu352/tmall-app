@@ -53,7 +53,7 @@
 		0A534A3C2A54521B00EDA4BF /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349502A54521A00EDA4BF /* Colors.swift */; };
 		0A534A3D2A54521B00EDA4BF /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349522A54521A00EDA4BF /* WebViewController.swift */; };
 		0A534A3E2A54521B00EDA4BF /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349532A54521A00EDA4BF /* NavigationController.swift */; };
-		0A534A3F2A54521B00EDA4BF /* Stylabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349552A54521A00EDA4BF /* Stylabel.swift */; };
+		0A534A3F2A54521B00EDA4BF /* Stylb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349552A54521A00EDA4BF /* Stylb.swift */; };
 		0A534A402A54521B00EDA4BF /* UIScrollView_Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349562A54521A00EDA4BF /* UIScrollView_Spinner.swift */; };
 		0A534A412A54521B00EDA4BF /* UIButton_Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349572A54521A00EDA4BF /* UIButton_Style.swift */; };
 		0A534A422A54521B00EDA4BF /* UITableView_Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349582A54521A00EDA4BF /* UITableView_Header.swift */; };
@@ -142,7 +142,7 @@
 		0A5349502A54521A00EDA4BF /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		0A5349522A54521A00EDA4BF /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		0A5349532A54521A00EDA4BF /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
-		0A5349552A54521A00EDA4BF /* Stylabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stylabel.swift; sourceTree = "<group>"; };
+		0A5349552A54521A00EDA4BF /* Stylb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stylb.swift; sourceTree = "<group>"; };
 		0A5349562A54521A00EDA4BF /* UIScrollView_Spinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIScrollView_Spinner.swift; sourceTree = "<group>"; };
 		0A5349572A54521A00EDA4BF /* UIButton_Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButton_Style.swift; sourceTree = "<group>"; };
 		0A5349582A54521A00EDA4BF /* UITableView_Header.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableView_Header.swift; sourceTree = "<group>"; };
@@ -403,7 +403,7 @@
 				0A5349562A54521A00EDA4BF /* UIScrollView_Spinner.swift */,
 				0A5349582A54521A00EDA4BF /* UITableView_Header.swift */,
 				0A5349572A54521A00EDA4BF /* UIButton_Style.swift */,
-				0A5349552A54521A00EDA4BF /* Stylabel.swift */,
+				0A5349552A54521A00EDA4BF /* Stylb.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -674,7 +674,7 @@
 				0A534A2E2A54521B00EDA4BF /* Hover.swift in Sources */,
 				0A534A232A54521B00EDA4BF /* HuaSuanService.swift in Sources */,
 				253548F42CF85ABA00471D54 /* BaseStackView.swift in Sources */,
-				0A534A3F2A54521B00EDA4BF /* Stylabel.swift in Sources */,
+				0A534A3F2A54521B00EDA4BF /* Stylb.swift in Sources */,
 				0A534A582A54521B00EDA4BF /* UIViewExt.swift in Sources */,
 				0A534A472A54521B00EDA4BF /* BaseTableViewCell.swift in Sources */,
 				0A534A372A54521B00EDA4BF /* StateErrorView.swift in Sources */,

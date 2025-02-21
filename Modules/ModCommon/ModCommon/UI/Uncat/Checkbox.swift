@@ -168,8 +168,8 @@ public class Checkbox: BaseControl {
       }
     }
   }
-  public lazy var textLabel: Stylabel = {
-    let ret = Stylabel()
+  public lazy var textLabel: Stylb = {
+    let ret = Stylb()
     ret.setTextStyles(font: .systemFont(ofSize: 14),
                       color: .black
     )

@@ -92,7 +92,7 @@ public extension UIScrollView {
     }
   }
 }
-// 2.01:true, 2.00:false
+// 2.01: true, 2.00: false
 public extension FloatingPoint {
   var fractions: Bool { self != floor(self) }
 }

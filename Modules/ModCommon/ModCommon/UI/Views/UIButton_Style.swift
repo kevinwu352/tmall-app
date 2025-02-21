@@ -8,18 +8,14 @@
 import UIKit
 import CoreImage.CIFilterBuiltins
 
-public extension UIButton {
-
-  static func primary(_ title: @escaping @autoclosure ()->String?) -> UIButton {
-    let ret = UIButton(configuration: .plain())
-    ret.style(image: .init({ _ in (R.image.shared.alien.cur?.template, .red) }).high(),
-              title: .init({ _ in title() }, { _ in .h1 }, { _ in .red }).high(),
-              background: .init({ _ in (R.image.shared.alien.cur, UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)) }).high()
-    )
-    return ret
-  }
-
-}
+// static func primary(_ title: @escaping @autoclosure ()->String?) -> UIButton {
+//   let ret = UIButton(configuration: .plain())
+//   ret.style(image: .init({ _ in (R.image.shared.alien.cur?.template, .red) }).high(),
+//             title: .init({ _ in title() }, { _ in .h1 }, { _ in .red }).high(),
+//             background: .init({ _ in (R.image.shared.alien.cur, UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)) }).high()
+//   )
+//   return ret
+// }
 
 public extension UIControl.State {
   var name: String {
@@ -208,12 +204,12 @@ public extension UIButton {
              subtitle: Text? = nil,
              background: Background? = nil,
              insets: NSDirectionalEdgeInsets? = nil
-  ) { // [FUNC]
+  ) {
     configurationUpdateHandler = { [weak self] in
       var config = $0.configuration ?? .plain()
       let status = Status($0.state)
 
-      if let img = (self as? Stybutton)?.image {
+      if let img = (self as? Stybtn)?.image {
         config.image = img.0
         config.baseForegroundColor = img.1
       } else if let img_h = image?.image {
@@ -237,7 +233,7 @@ public extension UIButton {
         config.imagePlacement = alignment
       }
 
-      if let txt = (self as? Stybutton)?.title ?? title?.str(status) {
+      if let txt = (self as? Stybtn)?.title ?? title?.str(status) {
         config.attributedTitle = txt.attributed(
           title?.font(status),
           title?.color(status)?.turn(status.high && title?.autohigh == true)
@@ -250,7 +246,7 @@ public extension UIButton {
         config.titleAlignment = alignment
       }
 
-      if let txt = (self as? Stybutton)?.subtitle ?? subtitle?.str(status) {
+      if let txt = (self as? Stybtn)?.subtitle ?? subtitle?.str(status) {
         config.attributedSubtitle = txt.attributed(
           subtitle?.font(status),
           subtitle?.color(status)?.turn(status.high && subtitle?.autohigh == true)
@@ -258,12 +254,12 @@ public extension UIButton {
       }
 
       // config.baseBackgroundColor
-      if let clr = (self as? Stybutton)?.bgcolor {
+      if let clr = (self as? Stybtn)?.bgcolor {
         config.background.backgroundColor = clr
       } else if let clr_h = background?.color {
         config.background.backgroundColor = clr_h(status)?.turn(status.high && background?.autohigh == true)
       }
-      if let img = (self as? Stybutton)?.bgimage {
+      if let img = (self as? Stybtn)?.bgimage {
         config.background.image = img.0?.inset(img.1)
       } else if let img_h = background?.image {
         let img = img_h(status)
@@ -289,7 +285,7 @@ public extension UIButton {
 
 }
 
-public class Stybutton: UIButton {
+public class Stybtn: UIButton {
   public var image: (UIImage?,UIColor?)? {
     didSet { setNeedsUpdateConfiguration() }
   }

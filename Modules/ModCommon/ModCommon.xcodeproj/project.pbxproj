@@ -352,8 +352,7 @@
 				0A5349512A54521A00EDA4BF /* Controllers */,
 				0A5349422A54521A00EDA4BF /* Change */,
 				0A53493D2A54521A00EDA4BF /* Popup */,
-				0A5349472A54521A00EDA4BF /* TextInput */,
-				0A53494A2A54521A00EDA4BF /* StateView */,
+				0AC1ADC12D6859BB004E4298 /* Uncat */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -378,15 +377,6 @@
 				0A5349442A54521A00EDA4BF /* ChangeExt.swift */,
 			);
 			path = Change;
-			sourceTree = "<group>";
-		};
-		0A5349472A54521A00EDA4BF /* TextInput */ = {
-			isa = PBXGroup;
-			children = (
-				0A5349492A54521A00EDA4BF /* KeyboardAvoiding.swift */,
-				0A5349482A54521A00EDA4BF /* TextLimiter.swift */,
-			);
-			path = TextInput;
 			sourceTree = "<group>";
 		};
 		0A53494A2A54521A00EDA4BF /* StateView */ = {
@@ -417,9 +407,6 @@
 				0A5349572A54521A00EDA4BF /* UIButton_Style.swift */,
 				0A5349552A54521A00EDA4BF /* Stylabel.swift */,
 				0A00D1652BEC644F00F8C1CA /* ValueControl.swift */,
-				253548FB2CF866C800471D54 /* UtilsView.swift */,
-				0A53495B2A54521A00EDA4BF /* Checkbox.swift */,
-				253548F52CF85C2A00471D54 /* Infoline.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -471,6 +458,19 @@
 				0A5349FC2A54521B00EDA4BF /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		0AC1ADC12D6859BB004E4298 /* Uncat */ = {
+			isa = PBXGroup;
+			children = (
+				253548FB2CF866C800471D54 /* UtilsView.swift */,
+				0A53495B2A54521A00EDA4BF /* Checkbox.swift */,
+				253548F52CF85C2A00471D54 /* Infoline.swift */,
+				0A5349492A54521A00EDA4BF /* KeyboardAvoiding.swift */,
+				0A5349482A54521A00EDA4BF /* TextLimiter.swift */,
+				0A53494A2A54521A00EDA4BF /* StateView */,
+			);
+			path = Uncat;
 			sourceTree = "<group>";
 		};
 		6D6304A51E1907042D557A0E /* Frameworks */ = {

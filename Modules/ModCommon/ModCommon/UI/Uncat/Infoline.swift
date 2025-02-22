@@ -64,7 +64,7 @@ open class Infoline: BaseStackView {
     public var icon: Any?
     public var title: String?
     public var info: String?
-    public init(icon: Any? = nil, title: String? = nil, info: String? = nil) { // FUNC
+    public init(icon: Any? = nil, title: String? = nil, info: String? = nil) {
       self.icon = icon
       self.title = title
       self.info = info

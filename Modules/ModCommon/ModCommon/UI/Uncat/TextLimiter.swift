@@ -9,7 +9,7 @@ import UIKit
 
 open class TextLimiter: NSObject, UITextFieldDelegate {
 
-  public init(maxLength: Int?, allowedCharset: CharacterSet?) { // FUNC
+  public init(maxLength: Int?, allowedCharset: CharacterSet?) {
     super.init()
     self.maxLength = maxLength
     self.allowedCharset = allowedCharset
@@ -47,7 +47,7 @@ open class TextLimiter: NSObject, UITextFieldDelegate {
 
 open class NumberLimiter: TextLimiter {
 
-  public init(style: Style, min: String? = nil, max: String? = nil) { // FUNC
+  public init(style: Style, min: String? = nil, max: String? = nil) {
     self.style = style
     self.min = min
     self.max = max

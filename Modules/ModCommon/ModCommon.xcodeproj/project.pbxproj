@@ -358,9 +358,9 @@
 		0A53493D2A54521A00EDA4BF /* Popup */ = {
 			isa = PBXGroup;
 			children = (
+				0A53493F2A54521A00EDA4BF /* Hover.swift */,
 				0A53493E2A54521A00EDA4BF /* Alert.swift */,
 				0A5349412A54521A00EDA4BF /* Drop.swift */,
-				0A53493F2A54521A00EDA4BF /* Hover.swift */,
 				0A5349402A54521A00EDA4BF /* Hud.swift */,
 			);
 			path = Popup;

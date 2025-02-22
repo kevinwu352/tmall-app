@@ -8,16 +8,16 @@
 import UIKit
 
 public struct Drop {
-  public static func info(_ text: String, _ completion: VoidCb? = nil) { // FUNC
+  public static func info(_ text: String, _ completion: VoidCb? = nil) {
     DropView.display(.info, text, completion)
   }
-  public static func success(_ text: String, _ completion: VoidCb? = nil) { // FUNC
+  public static func success(_ text: String, _ completion: VoidCb? = nil) {
     DropView.display(.success, text, completion)
   }
-  public static func warning(_ text: String, _ completion: VoidCb? = nil) { // FUNC
+  public static func warning(_ text: String, _ completion: VoidCb? = nil) {
     DropView.display(.warning, text, completion)
   }
-  public static func error(_ text: String, _ completion: VoidCb? = nil) { // FUNC
+  public static func error(_ text: String, _ completion: VoidCb? = nil) {
     DropView.display(.error, text, completion)
   }
 }
@@ -35,6 +35,13 @@ class DropView: BaseView {
     super.layoutSubviews()
     label.frame = CGRect(x: 10, y: STATUS_BAR_HET, width: SCREEN_WID-10*2, height: NAV_BAR_HET)
   }
+  override var intrinsicContentSize: CGSize {
+    CGSize(width: UIView.noIntrinsicMetric, height: TOP_HET)
+  }
+  override func sizeThatFits(_ size: CGSize) -> CGSize {
+    CGSize(width: UIView.noIntrinsicMetric, height: TOP_HET)
+  }
+
 
   enum State {
     case info
@@ -54,14 +61,21 @@ class DropView: BaseView {
     didSet { backgroundColor = state.backgroundColor }
   }
 
-  func show(_ animated: Bool,
-            _ completion: VoidCb?
-  ) {
+
+  static func display(_ state: State, _ text: String, _ completion: VoidCb?) {
+    let dv = DropView()
+    dv.state = state
+    dv.label.text = text
+    dv.show(true, nil)
+    dv.delayHide(4, true, completion)
+  }
+
+  func show(_ animated: Bool, _ completion: VoidCb?) {
     if animated {
       frame = CGRect(x: 0, y: -TOP_HET, width: SCREEN_WID, height: TOP_HET)
       layoutIfNeeded()
       WINDOW?.addSubview(self)
-      UIView.animate(withDuration: 0.35, delay: 0, options: [.allowUserInteraction, .curveEaseOut]) {
+      UIView.animate(withDuration: 0.15, delay: 0, options: [.allowUserInteraction, .curveEaseOut]) {
         self.frame = CGRect(x: 0, y: 0, width: SCREEN_WID, height: TOP_HET)
       } completion: { _ in
         completion?()
@@ -72,11 +86,9 @@ class DropView: BaseView {
       completion?()
     }
   }
-  func hide(_ animated: Bool,
-            _ completion: VoidCb?
-  ) {
+  func hide(_ animated: Bool, _ completion: VoidCb?) {
     if animated {
-      UIView.animate(withDuration: 0.35, delay: 0, options: [.allowUserInteraction, .curveEaseIn]) {
+      UIView.animate(withDuration: 0.15, delay: 0, options: [.allowUserInteraction, .curveEaseIn]) {
         self.frame = CGRect(x: 0, y: -TOP_HET, width: SCREEN_WID, height: TOP_HET)
       } completion: { _ in
         self.removeFromSuperview()
@@ -88,25 +100,15 @@ class DropView: BaseView {
     }
   }
 
-  var hideWork: DispatchWorkItem? {
-    didSet { oldValue?.cancel() }
-  }
-  func delayHide(_ time: Double,
-                 _ animated: Bool,
-                 _ completion: VoidCb?
-  ) {
+
+  func delayHide(_ time: Double, _ animated: Bool, _ completion: VoidCb?) {
     hideWork = masy(time) { [weak self] in self?.hide(animated, completion) }
   }
   func cancelDelayHide() {
     hideWork = nil
   }
-
-  static func display(_ state: State, _ text: String, _ completion: VoidCb?) {
-    let dv = DropView()
-    dv.state = state
-    dv.label.text = text
-    dv.show(true, nil)
-    dv.delayHide(4, true, completion)
+  var hideWork: DispatchWorkItem? {
+    didSet { oldValue?.cancel() }
   }
 
   override func tapped(_ sender: UIGestureRecognizer) {
@@ -116,12 +118,6 @@ class DropView: BaseView {
     hide(true, nil)
   }
 
-  override var intrinsicContentSize: CGSize {
-    CGSize(width: UIView.noIntrinsicMetric, height: TOP_HET)
-  }
-  override func sizeThatFits(_ size: CGSize) -> CGSize {
-    CGSize(width: UIView.noIntrinsicMetric, height: TOP_HET)
-  }
 
   lazy var label: UILabel = {
     let ret = UILabel()

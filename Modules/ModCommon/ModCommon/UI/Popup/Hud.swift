@@ -12,7 +12,7 @@ public struct Hud {
 
   public static func activity(_ info: String?,
                               _ view: UIView? = nil
-  ) { // FUNC
+  ) {
     current?.removeFromSuperview()
 
     let hud = HudView.ActivityView()
@@ -26,7 +26,7 @@ public struct Hud {
   public static func message(_ info: String?,
                              _ view: UIView? = nil,
                              _ completion: VoidCb? = nil
-  ) { // FUNC
+  ) {
     guard info?.notEmpty == true else { return }
 
     current?.removeFromSuperview()
@@ -42,7 +42,7 @@ public struct Hud {
 
   public static func hide(_ animated: Bool,
                           _ completion: VoidCb? = nil
-  ) { // FUNC
+  ) {
     current?.hide(animated, completion)
     current = nil
   }

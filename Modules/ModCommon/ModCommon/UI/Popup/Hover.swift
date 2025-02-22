@@ -59,7 +59,7 @@ open class HoverView: BaseView {
   public func enroll() {
     Hover.shared.enroll(self)
   }
-  public func dismiss(_ confirm: Bool?, _ completion: VoidCb? = nil) { // FUNC
+  public func dismiss(_ confirm: Bool?, _ completion: VoidCb?) {
     guard let name = attrs.name else { return }
     Hover.shared.dismiss(name, confirm, completion)
   }
@@ -118,7 +118,7 @@ public class Hover {
   public func dismiss(_ name: String,
                       _ confirm: Bool?,
                       _ completion: VoidCb? = nil
-  ) { // FUNC
+  ) {
     if let entry = currentEntry, entry.attrs.name == name {
       entry.reason = .dismiss
       entry.complete(confirm)
@@ -259,7 +259,7 @@ extension EKAttributes.StatusBar {
 extension EKAttributes.Animation {
   static var slide: Self {
     .init(
-      translate: .init(duration: 0.35, spring: .standard)
+      translate: .init(duration: 0.15)
     )
   }
   static var alertIn: Self {

@@ -113,10 +113,10 @@ class PopView: HoverView {
     }
   }
   @objc func cancelClicked() {
-    dismiss(false)
+    dismiss(false, nil)
   }
   @objc func confirmClicked() {
-    dismiss(true)
+    dismiss(true, nil)
   }
   lazy var titleLabel: UILabel = {
     let ret = UILabel()

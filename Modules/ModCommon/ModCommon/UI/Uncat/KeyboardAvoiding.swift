@@ -203,7 +203,7 @@ public class KeyboardAvoiding {
   func animate(_ offset: Double,
                _ options: UIView.AnimationOptions? = nil,
                _ duration: TimeInterval? = nil
-  ) { // FUNC
+  ) {
     guard let avoidView = avoidView, avoidView.superview != nil else { return }
 
     displacement = offset

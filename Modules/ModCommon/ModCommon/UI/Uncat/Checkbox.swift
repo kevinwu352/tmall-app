@@ -127,10 +127,10 @@ public class Checkbox: BaseControl {
     }
   }
 
-  public var ofDisabled: ()->UIImage? = { R.image.checkbox.standard_of_d.cur } // CLOS
-  public var ofEnabled:  ()->UIImage? = { R.image.checkbox.standard_of_e.cur } // CLOS
-  public var onDisabled: ()->UIImage? = { R.image.checkbox.standard_on_d.cur } // CLOS
-  public var onEnabled:  ()->UIImage? = { R.image.checkbox.standard_on_e.cur } // CLOS
+  public var ofDisabled: ()->UIImage? = { R.image.checkbox.standard_of_d.cur }
+  public var ofEnabled:  ()->UIImage? = { R.image.checkbox.standard_of_e.cur }
+  public var onDisabled: ()->UIImage? = { R.image.checkbox.standard_on_d.cur }
+  public var onEnabled:  ()->UIImage? = { R.image.checkbox.standard_on_e.cur }
 
 
   public lazy var stackView: UIStackView = {

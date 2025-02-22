@@ -14,13 +14,14 @@ class HttpLogger {
 
   static let shared = HttpLogger()
 
-  var order: Int {
-    queue.sync { counter() }
+  init() {
+    queue.asyncAfter(deadline: .now() + 60.0) { [weak self] in self?.log() }
   }
-  var counter: ()->Int = {
-    var value = 0
-    return { value.inc() }
-  }()
+
+  var order: Int {
+    queue.sync { total.inc() }
+  }
+  var total = 0
 
   func begin(_ id: Int?, _ url: String?, _ method: String?, _ headers: [String:String]?, _ body: String?) {
     queue.sync {
@@ -28,7 +29,6 @@ class HttpLogger {
         let entry = Entry(id: id, url: url, method: method, headers: headers, body: body)
         entries.append(entry)
         print("=>:[\(id)] \(method ?? "--") \(url ?? "--")")
-        dump()
       }
     }
   }
@@ -48,19 +48,17 @@ class HttpLogger {
 
   var queue = DispatchQueue(label: "http-logger-queue")
 
-  func dump() {
-    guard TIMESTAMP - dumptime > 30 else { return }
+  func log() {
     let items = entries.filter { $0.elapsed > 5000 }
     let info = [
-      "=>: \(items.count) / \(entries.count)",
+      "=>: \(items.count) / \(entries.count) / \(total)",
       items.map({ "\($0.elapsed/1000)s [\($0.id)] \($0.url ?? "--")" }).joined(separator: "\n"),
     ]
       .filter { $0.notEmpty }
       .joined(separator: "\n")
     print(info)
-    dumptime = TIMESTAMP
+    queue.asyncAfter(deadline: .now() + 60.0) { [weak self] in self?.log() }
   }
-  var dumptime = 0.0
 
   struct Entry: Codable {
     var id: Int

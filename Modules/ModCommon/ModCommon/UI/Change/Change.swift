@@ -7,11 +7,17 @@
 
 import UIKit
 
-class ChangeManager: NSObject {
+class ChangeManager {
 
   static let theme = ChangeManager()
 
   static let language = ChangeManager()
+
+#if DEBUG
+  init() {
+    masy(60) { [weak self] in self?.log() }
+  }
+#endif
 
   struct Entry: Hashable {
     init(_ obj: NSObject) {
@@ -45,7 +51,6 @@ class ChangeManager: NSObject {
 #if DEBUG
     if item?.key == nil { obj_n += 1 }
     if item?.value[key] == nil { han_n += 1 }
-    setNeeds(#selector(log))
 #endif
   }
 
@@ -109,13 +114,14 @@ class ChangeManager: NSObject {
   }
   var obj_n = 0 // ever object count
   var han_n = 0 // ever handler count
-  @objc func log() {
+  func log() {
     cleanup()
     let items = entries
       .map { Line($0.key, $0.value.keys) }
       .sorted { $0 > $1 }
     print("[change] \(items.count) (\(obj_n):\(han_n)) ========================================")
     items.forEach { print("[change] \($0)") }
+    masy(60) { [weak self] in self?.log() }
   }
 #endif
 }

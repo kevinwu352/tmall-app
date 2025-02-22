@@ -160,6 +160,9 @@ open class HttpManager<Status>: BaseObject {
     let ret = Session(configuration: config, serverTrustManager: trust)
     return ret
   }()
+  public func cancelAllTasks() {
+    session.cancelAllRequests()
+  }
 
 
   public struct Response<T: AnyModel> {

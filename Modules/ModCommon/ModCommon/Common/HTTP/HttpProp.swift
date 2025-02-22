@@ -53,7 +53,7 @@ public struct Lst<T: AnyModel>: Ret {
 
 public enum Pager {
   // nil, obj
-  // >=1, lst, xxx page
+  // >=1, lst, xxxx page
   // <=0, lst, next page
   case page(_ i: Int)
   public static let first: Pager = .page(1)

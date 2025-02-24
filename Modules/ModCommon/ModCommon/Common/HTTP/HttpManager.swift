@@ -199,13 +199,16 @@ open class HttpManager<Status>: BaseObject {
   ) -> AnyPublisher<Response<T>,Never> {
 #if DEBUG
     let n = HttpLogger.shared.order
+    let inter = HttpLoginter(n)
+#else
+    let inter: RequestInterceptor? = nil
 #endif
     return shared.session.request(shared.url(path),
                                   method: HTTPMethod(rawValue: method.uppercased()),
                                   parameters: parameters,
                                   encoding: (paraenc ?? shared.paraenc).value,
                                   headers: shared.headers(headers),
-                                  interceptor: HttpLoginter(n),
+                                  interceptor: inter,
                                   requestModifier: nil)
     .validate()
     .publishData(queue: .userInitiated)
@@ -231,13 +234,16 @@ open class HttpManager<Status>: BaseObject {
   ) {
 #if DEBUG
     let n = HttpLogger.shared.order
+    let inter = HttpLoginter(n)
+#else
+    let inter: RequestInterceptor? = nil
 #endif
     shared.session.request(shared.url(path),
                            method: HTTPMethod(rawValue: method.uppercased()),
                            parameters: parameters,
                            encoding: (paraenc ?? shared.paraenc).value,
                            headers: shared.headers(headers),
-                           interceptor: HttpLoginter(n),
+                           interceptor: inter,
                            requestModifier: nil)
     .validate()
     .responseData(queue: DispatchQueue.userInitiated) {

@@ -15,7 +15,10 @@ class HttpLogger {
   static let shared = HttpLogger()
 
   init() {
-    queue.asyncAfter(deadline: .now() + 60.0) { [weak self] in self?.log() }
+    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { [weak self] _ in
+      guard let self = self else { return }
+      self.queue.async { [weak self] in self?.log() }
+    }
   }
 
   var order: Int {
@@ -57,7 +60,6 @@ class HttpLogger {
       .filter { $0.notEmpty }
       .joined(separator: "\n")
     print(info)
-    queue.asyncAfter(deadline: .now() + 60.0) { [weak self] in self?.log() }
   }
 
   struct Entry: Codable {
@@ -91,21 +93,19 @@ class HttpLogger {
   var entries: [Entry] = []
 }
 
-#endif
-
 class HttpLoginter: @unchecked Sendable, RequestInterceptor {
   let order: Int
   init(_ n: Int) {
     order = n
   }
   func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, any Error>) -> Void) {
-#if DEBUG
     HttpLogger.shared.begin(order,
                             urlRequest.url?.absoluteString,
                             urlRequest.method?.rawValue,
                             urlRequest.allHTTPHeaderFields,
                             urlRequest.httpBody?.str)
-#endif
     completion(.success(urlRequest))
   }
 }
+
+#endif

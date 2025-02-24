@@ -15,7 +15,7 @@ class ChangeManager {
 
 #if DEBUG
   init() {
-    masy(60) { [weak self] in self?.log() }
+    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { [weak self] _ in self?.log() }
   }
 #endif
 
@@ -121,7 +121,6 @@ class ChangeManager {
       .sorted { $0 > $1 }
     print("[change] \(items.count) (\(obj_n):\(han_n)) ========================================")
     items.forEach { print("[change] \($0)") }
-    masy(60) { [weak self] in self?.log() }
   }
 #endif
 }

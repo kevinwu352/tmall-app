@@ -33,8 +33,15 @@ public extension Publisher where Failure == Never {
 }
 
 public extension Publisher {
-  func fallth(_ h: @escaping (Output)->Void) -> AnyPublisher<Output,Failure> {
+  func fallVal(_ h: @escaping (Output)->Void) -> AnyPublisher<Output,Failure> {
     map {
+      h($0)
+      return $0
+    }
+    .eraseToAnyPublisher()
+  }
+  func fallErr(_ h: @escaping (Failure)->Void) -> AnyPublisher<Output,Failure> {
+    mapError {
       h($0)
       return $0
     }

@@ -76,7 +76,7 @@ class ObjectViewModel: BaseObject {
   func transform(_ input: Input) -> Output {
 
     input.tap.merge(with: input.appear)
-      .fallth { [weak self] in self?.user.begin(nil) }
+      .fallVal { [weak self] in self?.user.begin(nil) }
       .map {
         MainHTTP
           .publish(api: .obj(), object: Obj<Person>.self)

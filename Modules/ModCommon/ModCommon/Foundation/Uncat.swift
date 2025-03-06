@@ -54,13 +54,14 @@ public extension DispatchQueue {
   static var `default`: DispatchQueue { .global(qos: .default) }
   static var utility: DispatchQueue { .global(qos: .utility) }
   static var background: DispatchQueue { .global(qos: .background) }
+  @discardableResult
   func delay(_ time: Double?, _ handler: VoidCb?) -> DispatchWorkItem? {
     guard let handler = handler else { return nil }
     let item = DispatchWorkItem(block: handler)
     if let time = time, time > 0.0 {
-      DispatchQueue.main.asyncAfter(deadline: .now() + time, execute: item)
+      asyncAfter(deadline: .now() + time, execute: item)
     } else {
-      DispatchQueue.main.async(execute: item)
+      async(execute: item)
     }
     return item
   }

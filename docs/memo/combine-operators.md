@@ -56,6 +56,24 @@ flatMapLatest 等于下面两句
 flatMap(maxPublishers:_:) 只会降维，不能选择只保留最后的
 
 
+
+哪个线程发，后续就在哪个线程，除非手动改改
+  pub.send(xxx)
+
+URLSession.shared.dataTaskPublisher(for: url)
+  .sink { _ in } // false com.apple.NSURLSession-delegate 任何队列发起都如此
+
+URLSession.shared.dataTaskPublisher(for: url)
+  .timeout(.seconds(3), scheduler: DispatchQueue.utility) // 会修改后续响应的队列，不超时也会改，就算在 map 里面也能改外面
+  .sink { _ in } // false com.apple.root.utility-qos
+
+.subscribe(on: xxx)
+  修改 subscribe / request / cancel 这些操作的线程，改改自定义的还行，UI 相关的还是不要改了，会报警告
+  数据的分发还是遵守原来的规则：哪个线程发，后续就在哪个线程
+  改不了 URLSession 的发送队列
+  放在 sink 前面任何位置都行
+
+
 ## 映射
 
 map(_:) / tryMap(_:)

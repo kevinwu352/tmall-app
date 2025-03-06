@@ -91,7 +91,7 @@ class ListViewModel: BaseObject {
   func transform(_ input: Input) -> Output {
 
     input.head
-      .fallth { [weak self] in self?.users.begin(.first) }
+      .fallVal { [weak self] in self?.users.begin(.first) }
       .map {
         MainHTTP
           .publish(api: .lst(), object: Lst<Person>.self)

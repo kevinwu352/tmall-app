@@ -20,7 +20,7 @@ open class BaseViewController: UIViewController, Combinable {
     loadData()
     initialized = true
     reload()
-    routinePubs["view-did-load"]?.send()
+    routinePubs["view-did-load"]?.send(viewAppearedEver)
   }
 
   open override func updateViewConstraints() {
@@ -54,67 +54,54 @@ open class BaseViewController: UIViewController, Combinable {
 
   open override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    routinePubs["view-will-appear"]?.send()
+    routinePubs["view-will-appear"]?.send(viewAppearedEver)
   }
   open override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     viewAppearing = true
-    routinePubs["view-did-appear"]?.send()
+    routinePubs["view-did-appear"]?.send(viewAppearedEver)
   }
   open override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    routinePubs["view-will-disappear"]?.send()
+    routinePubs["view-will-disappear"]?.send(viewAppearedEver)
   }
   open override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
     viewAppearing = false
-    setAppearedEver()
-    routinePubs["view-did-disappear"]?.send()
+    routinePubs["view-did-disappear"]?.send(viewAppearedEver)
+    setNeeds(#selector(setAppearedEver))
   }
-  func setAppearedEver() {
-    guard !viewAppearedEver else { return }
-    setNeeds(#selector(appearedEver))
-  }
-  @objc func appearedEver() {
+  @objc func setAppearedEver() {
     viewAppearedEver = true
   }
 
-  lazy var routinePubs: [String:PassthroughSubject<Void,Never>] = [:]
+  lazy var routinePubs: [String:PassthroughSubject<Bool,Never>] = [:]
 
-  public lazy var viewDidLoadPub: PassthroughSubject<Void,Never> = {
-    let ret = PassthroughSubject<Void,Never>()
+  public lazy var viewDidLoadPub: PassthroughSubject<Bool,Never> = {
+    let ret = PassthroughSubject<Bool,Never>()
     routinePubs["view-did-load"] = ret
     return ret
   }()
-  public lazy var firstViewDidLoadPub = viewDidLoadPub.combineLatest($viewAppearedEver).mapToEvent { !$1 }
-
-  public lazy var viewWillAppearPub: PassthroughSubject<Void,Never> = {
-    let ret = PassthroughSubject<Void,Never>()
+  public lazy var viewWillAppearPub: PassthroughSubject<Bool,Never> = {
+    let ret = PassthroughSubject<Bool,Never>()
     routinePubs["view-will-appear"] = ret
     return ret
   }()
-  public lazy var firstViewWillAppearPub = viewWillAppearPub.combineLatest($viewAppearedEver).mapToEvent { !$1 }
-
-  public lazy var viewDidAppearPub: PassthroughSubject<Void,Never> = {
-    let ret = PassthroughSubject<Void,Never>()
+  public lazy var viewDidAppearPub: PassthroughSubject<Bool,Never> = {
+    let ret = PassthroughSubject<Bool,Never>()
     routinePubs["view-did-appear"] = ret
     return ret
   }()
-  public lazy var firstViewDidAppearPub = viewDidAppearPub.combineLatest($viewAppearedEver).mapToEvent { !$1 }
-
-  public lazy var viewWillDisappearPub: PassthroughSubject<Void,Never> = {
-    let ret = PassthroughSubject<Void,Never>()
+  public lazy var viewWillDisappearPub: PassthroughSubject<Bool,Never> = {
+    let ret = PassthroughSubject<Bool,Never>()
     routinePubs["view-will-disappear"] = ret
     return ret
   }()
-  public lazy var firstViewWillDisappearPub = viewWillDisappearPub.combineLatest($viewAppearedEver).mapToEvent { !$1 }
-
-  public lazy var viewDidDisappearPub: PassthroughSubject<Void,Never> = {
-    let ret = PassthroughSubject<Void,Never>()
+  public lazy var viewDidDisappearPub: PassthroughSubject<Bool,Never> = {
+    let ret = PassthroughSubject<Bool,Never>()
     routinePubs["view-did-disappear"] = ret
     return ret
   }()
-  public lazy var firstViewDidDisappearPub = viewDidDisappearPub.combineLatest($viewAppearedEver).mapToEvent { !$1 }
 
 
   // MARK: Gestures

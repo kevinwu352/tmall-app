@@ -44,7 +44,7 @@ class ObjectTableViewController: BaseViewController {
 
     _ = vm.transform(.init(
       tap: valueBtn.cmb.tap,
-      appear: viewDidAppearPub.eraseToAnyPublisher()
+      appear: viewDidAppearPub.mapToEvent({ !$0 }).eraseToAnyPublisher()
     ))
 
   }

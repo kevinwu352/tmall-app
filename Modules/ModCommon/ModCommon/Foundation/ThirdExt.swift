@@ -82,3 +82,11 @@ public extension UIImageView {
     }
   }
 }
+//public extension UIImage {
+//  func process() -> UIImage? {
+//    let processor = RoundCornerImageProcessor(radius: .widthFraction(0.5), targetSize: CGSize(width: 200, height: 200))
+//                    |> BorderImageProcessor(border: .init(color: UIColor.red, lineWidth: 1, radius: .widthFraction(0.5), roundingCorners: .all))
+//    let image = processor.process(item: .image(self), options: .init(KingfisherManager.shared.defaultOptions))
+//    return image
+//  }
+//}

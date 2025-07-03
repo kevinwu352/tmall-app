@@ -9,6 +9,27 @@ import UIKit
 
 public var TIMESTAMP: Double { Date().timeIntervalSince1970 }
 
+// now.formatted() 用的是系统选择的日期格式
+// now.formatted(.dateTime) 9/20/2025, 12:21
+// now.formatted(.iso8601) 2025-09-10T04:21:46Z
+// now.formatted(date: .complete, time: .complete)
+
+// DateFormatter 不知怎么使用系统选择的日期格式
+// df.dateStyle = .full
+// df.timeStyle = .full
+// df.locale = Locale(identifier: "zh_TW") 结果会包含中文
+
+// .full:   Thursday, September 11, 2025
+// .long:   September 11, 2025
+// .medium: Sep 11, 2025
+// .short:  11.09.2025
+
+// .full:   09:46:57 China Standard Time
+// .long:   09:46:57 GMT+8
+// .medium: 09:46:57
+// .short:  09:46
+
+
 // print(date) // time-zone:0
 // print(df.str(date)) // time-zone:local
 //

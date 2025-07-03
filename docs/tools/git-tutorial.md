@@ -104,10 +104,12 @@ git cherry-pick --continue
 ## 其它
 
 ```
-# 放到工作区
+# 放到工作区，同时会保留本地未提交的内容
 git reset --mixed HEAD^
-# 放到暂存区
+# 放到暂存区，同时会保留本地未提交的内容
 git reset --soft HEAD^
-# 直接删除两个提交
+# 撤销两个提交，放回暂存区
 git reset --soft HEAD~2
+# 删除两个提交，不会放到哪
+git reset --hard HEAD~2
 ```

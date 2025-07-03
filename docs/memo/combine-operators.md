@@ -53,7 +53,7 @@ flatMapLatest 等于下面两句
 .map { publisher }
 .switchToLatest() 只要 map 上面有新的数据过来，map 将它转化为一个流，就会切换到这个新的流
 而
-flatMap(maxPublishers:_:) 只会降维，不能选择只保留最后的
+flatMap(maxPublishers::) 只会降维，不能选择只保留最后的
 
 
 
@@ -67,6 +67,10 @@ URLSession.shared.dataTaskPublisher(for: url)
   .timeout(.seconds(3), scheduler: DispatchQueue.utility) // 会修改后续响应的队列，不超时也会改，就算在 map 里面也能改外面
   .sink { _ in } // false com.apple.root.utility-qos
 
+subscribe(on: )
+  Specifies the scheduler on which to perform subscribe, cancel, and request operations.
+receive(on: )
+
 .subscribe(on: xxx)
   修改 subscribe / request / cancel 这些操作的线程，改改自定义的还行，UI 相关的还是不要改了，会报警告
   数据的分发还是遵守原来的规则：哪个线程发，后续就在哪个线程
@@ -74,12 +78,13 @@ URLSession.shared.dataTaskPublisher(for: url)
   放在 sink 前面任何位置都行
 
 
+
 ## 映射
 
 map(_:) / tryMap(_:)
   如果遇到错误，会结束流
 
-mapError(_:)
+mapError(:)
   把流中出现的错误转变成另外一种错误
 
 replaceNil(with:)
@@ -110,13 +115,13 @@ replaceEmpty(with:)
 
 replaceError(with:)
   把流中出现的错误转变成正常值，相当于把错误的 finished 换成了一个元素，再无 finished 了
-  catch(_:) 是在错误发生时提供一个新的 Publisher
+  catch(:) 是在错误发生时提供一个新的 Publisher
 
 
 ## 累加
 
 collect() 所有元素，一个数组
-collect(_:) n个元素一组，多个数组
+collect(:) n个元素一组，多个数组
 collect(.byTime(RunLoop.main, .seconds(5)))           // 时间到
 collect(.byTimeOrCount(RunLoop.main, .seconds(5), 3)) // 时间到 / 缓冲区满
 
@@ -137,7 +142,7 @@ min() / min(by:) / tryMin(by:)
 
 ## 匹配规则
 
-contains(_:) / contains(where:) / tryContains(where:)
+contains(:) / contains(where:) / tryContains(where:)
 
 allSatisfy(_:) / tryAllSatisfy(_:)
 
@@ -146,14 +151,14 @@ allSatisfy(_:) / tryAllSatisfy(_:)
 
 drop(untilOutputFrom:)
   忽略所有发出的元素，直到第二个流发出一个元素，然后取订第二个流，应用场景？
-dropFirst(_:)
+dropFirst(:)
   忽略前 n 个元素
 drop(while:) / tryDrop(while:)
   一直忽略，直到闭包返回 false，且后面不忽略了
 
 prefix(untilOutputFrom:)
   提取所有发出的元素，直到第二个流发出一个元素
-prefix(_:)
+prefix(:)
   提取前 n 个元素
 prefix(while:) / tryPrefix(while:)
   一直提取，直到闭包返回 false，且后面不再取了
@@ -226,14 +231,14 @@ measureInterval(using:options:)
 delay(for:tolerance:scheduler:options:)
   延迟流后面订阅者收到元素的时间
 
-timeout(_:scheduler:options:customError:)
+timeout(:scheduler:options:customError:)
   某个时间内未有新元素，则超时
 
 
 ## 共享
 
 不知道这两种方式有什么特别的用处
-multicast(_:)
+multicast(:)
   参数是返回 subject 的闭包，每个订阅会创建新的 subject
 multicast(subject:)
   参数是 subject，每个订阅共享这个 subject

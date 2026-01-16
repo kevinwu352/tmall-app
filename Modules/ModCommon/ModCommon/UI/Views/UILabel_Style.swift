@@ -9,119 +9,7 @@ import UIKit
 import Atributika
 import AtributikaViews
 
-#if DEBUG
-public class Labels {
-  public init() { }
-
-  public func run() {
-    lb1.text = ""
-
-    lb2.fnt = { .boldSystemFont(ofSize: 14) }
-    lb2.clr = { .green }
-    lb2.alignment = .right
-    lb2.breakMode = .byCharWrapping
-    lb2.lineHeight = 20
-    lb2.lineSpacing = 20
-    lb2.paragraphSpacing = (10, 10)
-    lb2.config = {
-      $0[.underlineStyle] = NSUnderlineStyle.thick.rawValue
-      $0[.underlineColor] = UIColor.red
-    }
-    lb2.text = "aa bb cc"
-
-    lb3.text = "aa <b>bb</b> cc <p>dd</p> ee"
-
-    lb4.text = """
-      It is called <a href="http://www.atributika.com">Atributika</a>. @all I
-      found #swift #nsattributedstring really nice framework to manage attributed strings.
-      Call me if you want to <b>know</b> <p>more</p> (123)456-7890 https://github.com/psharanda/Atributika
-      """
-    lb4.onLinkTouchUpInside = { _, val in
-      //let link = val as? String
-    }
-  }
-
-  public lazy var lb1: UILabel = {
-    let ret = UILabel()
-    ret.font = .systemFont(ofSize: 14)
-    ret.textColor = .red
-    ret.textAlignment = .left
-    ret.lineBreakMode = .byWordWrapping
-    ret.numberOfLines = 0
-    return ret
-  }()
-
-  // same style for entire string
-  public lazy var lb2: Stylb = {
-    let ret = Stylb()
-    ret.setTextStyles(font: .systemFont(ofSize: 14),
-                      color: .red,
-                      alignment: .left,
-                      breakMode: .byWordWrapping,
-                      lineHeight: 20
-    ) {
-      // 字体横向拉伸，正拉负压，Double
-      $0[.expansion] = 1.0
-      // 字体倾斜度，正右负左，Double
-      $0[.obliqueness] = 1.0
-      // 字符间距，间距在后，正扩负缩，Double
-      $0[.kern] = 5.0
-
-      $0[.underlineStyle] = NSUnderlineStyle.thick.rawValue
-      $0[.underlineColor] = UIColor.red
-
-      $0[.strikethroughStyle] = NSUnderlineStyle.thick.rawValue
-      $0[.strikethroughColor] = UIColor.red
-    }
-    ret.chg.theme("update") { $0.reload(nil) }
-    ret.numberOfLines = 0
-    return ret
-  }()
-
-  // different style for each markup
-  public lazy var lb3: Stylb = {
-    let ret = Stylb()
-    ret.setMarkupStyles(
-      tags: [
-        "b": .init().font(.boldSystemFont(ofSize: 14)),
-        "p": .init().foregroundColor(.purple)
-      ],
-      base: .init()
-        .font(.systemFont(ofSize: 14))
-        .foregroundColor(.darkGray)
-        .paragraphStyle(.fromBase(base: nil, alignment: .left, breakMode: .byWordWrapping, lineHeight: 20))
-    )
-    ret.chg.theme("update") { $0.reload(nil) }
-    ret.numberOfLines = 0
-    return ret
-  }()
-
-  // with link/mention/hashtag
-  public lazy var lb4: Attlabel = {
-    let ret = Attlabel()
-    //ret.linkDetectionEnabled = false
-    ret.setMarkupStyles(
-      tags: [
-        "a": .init().foregroundColor(.red),
-        "@": .init().foregroundColor(.green),
-        "#": .init().foregroundColor(.blue),
-        "b": .init().font(.boldSystemFont(ofSize: 14)),
-        "p": .init().foregroundColor(.purple),
-      ],
-      high: .init().foregroundColor(.magenta),
-      base: .init()
-        .font(.systemFont(ofSize: 14))
-        .foregroundColor(.darkGray)
-        .paragraphStyle(.fromBase(base: nil, alignment: .left, breakMode: .byWordWrapping, lineHeight: 20))
-    )
-    ret.chg.theme("update") { $0.reload(nil) }
-    ret.numberOfLines = 0
-    return ret
-  }()
-}
-#endif
-
-public class Stylb: UILabel {
+public class StyLabel: UILabel {
 
   public override var text: String? {
     get { txt }
@@ -130,47 +18,63 @@ public class Stylb: UILabel {
   var txt: String? {
     didSet { reload(txt) }
   }
-  public func reload(_ val: String?) {
+  @objc public func reload(_ val: String?) {
     let str = val ?? txt
     reloadText?(str)
-    reloadMarkup?(str)
+    reloadMark?(str)
   }
-
-  public func setNeedsRefresh() {
-    setNeeds(#selector(refresh))
-  }
-  @objc public func refresh() {
-    reload(nil)
+  public func setNeedsReload() {
+    NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reload), object: nil)
+    perform(#selector(reload), with: nil, afterDelay: 0)
   }
 
 
   public var fnt: (()->UIFont?)? {
-    didSet { setNeedsRefresh() }
+    didSet { setNeedsReload() }
   }
   public var clr: (()->UIColor?)? {
-    didSet { setNeedsRefresh() }
+    didSet { setNeedsReload() }
   }
   public var alignment: NSTextAlignment? {
-    didSet { setNeedsRefresh() }
+    didSet { setNeedsReload() }
   }
   public var breakMode: NSLineBreakMode? {
-    didSet { setNeedsRefresh() }
+    didSet { setNeedsReload() }
   }
   public var lineHeight: Double? {
-    didSet { setNeedsRefresh() }
+    didSet { setNeedsReload() }
   }
   public var lineSpacing: Double? {
-    didSet { setNeedsRefresh() }
+    didSet { setNeedsReload() }
   }
   public var paragraphSpacing: (Double?,Double?)? {
-    didSet { setNeedsRefresh() }
+    didSet { setNeedsReload() }
   }
   public var config: ((inout [NSAttributedString.Key:Any])->Void)? {
-    didSet { setNeedsRefresh() }
+    didSet { setNeedsReload() }
   }
 
   public var reloadText: ((String?)->Void)?
 
+  public func setTextStyles(font: @escaping @autoclosure ()->UIFont?,
+                            color: @escaping @autoclosure ()->UIColor?,
+                            alignment: NSTextAlignment = .left,
+                            breakMode: NSLineBreakMode = .byWordWrapping,
+                            lineHeight: Double? = nil,
+                            lineSpacing: Double? = nil,
+                            paragraphSpacing: (Double?,Double?)? = nil,
+                            config: ((inout [NSAttributedString.Key:Any])->Void)? = nil
+  ) {
+    setTextStyles(font: { _ in font() },
+                  color: { _ in color() },
+                  alignment: alignment,
+                  breakMode: breakMode,
+                  lineHeight: lineHeight,
+                  lineSpacing: lineSpacing,
+                  paragraphSpacing: paragraphSpacing,
+                  config: config
+    )
+  }
   public func setTextStyles(font: @escaping (String?)->UIFont?,
                             color: @escaping (String?)->UIColor?,
                             alignment: NSTextAlignment = .left,
@@ -180,7 +84,6 @@ public class Stylb: UILabel {
                             paragraphSpacing: (Double?,Double?)? = nil,
                             config: ((inout [NSAttributedString.Key:Any])->Void)? = nil
   ) {
-    reloadMarkup = nil
     reloadText = { [weak self] in
       guard let self = self else { return }
       let str = $0 ?? ""
@@ -212,96 +115,43 @@ public class Stylb: UILabel {
 
       self.attributedText = NSAttributedString(string: str, attributes: attrs)
     }
+    reloadMark = nil
     reload(nil)
-  }
-  public func setTextStyles(font: @escaping @autoclosure ()->UIFont?,
-                            color: @escaping @autoclosure ()->UIColor?,
-                            alignment: NSTextAlignment = .left,
-                            breakMode: NSLineBreakMode = .byWordWrapping,
-                            lineHeight: Double? = nil,
-                            lineSpacing: Double? = nil,
-                            paragraphSpacing: (Double?,Double?)? = nil,
-                            config: ((inout [NSAttributedString.Key:Any])->Void)? = nil
-  ) {
-    setTextStyles(font: { _ in font() },
-                  color: { _ in color() },
-                  alignment: alignment,
-                  breakMode: breakMode,
-                  lineHeight: lineHeight,
-                  lineSpacing: lineSpacing,
-                  paragraphSpacing: paragraphSpacing,
-                  config: config
-    )
   }
 
 
   public var tags: (()->[String:Attrs]?)? {
-    didSet { setNeedsRefresh() }
+    didSet { setNeedsReload() }
   }
   public var base: (()->Attrs?)? {
-    didSet { setNeedsRefresh() }
+    didSet { setNeedsReload() }
   }
 
-  public var reloadMarkup: ((String?)->Void)?
+  public var reloadMark: ((String?)->Void)?
 
-  public func setMarkupStyles(tags: @escaping (String?)->[String:Attrs],
-                              base: @escaping (String?)->Attrs
+  public func setMarkStyles(tags: @escaping @autoclosure ()->[String:Attrs],
+                            base: @escaping @autoclosure ()->Attrs
+  ) {
+    setMarkStyles(tags: { _ in tags() }, base: { _ in base() })
+  }
+  public func setMarkStyles(tags: @escaping (String?)->[String:Attrs],
+                            base: @escaping (String?)->Attrs
   ) {
     reloadText = nil
-    reloadMarkup = { [weak self] in
+    reloadMark = { [weak self] in
       guard let self = self else { return }
       let str = $0 ?? ""
       self.attributedText = str
         .style(tags: self.tags?() ?? tags(str))
-        .styleBase(self.base?() ?? self.styles(base(str)))
+        .styleBase(self.base?() ?? base(str))
         .attributedString
     }
     reload(nil)
   }
-  public func setMarkupStyles(tags: @escaping @autoclosure ()->[String:Attrs],
-                              base: @escaping @autoclosure ()->Attrs
-  ) {
-    setMarkupStyles(tags: { _ in tags() }, base: { _ in base() })
-  }
-  func styles(_ attrs: Attrs) -> Attrs {
-    if let fnt = fnt?() {
-      attrs.font(fnt)
-    }
-    if let clr = clr?() {
-      attrs.foregroundColor(clr)
-    }
-    let paragraph = attrs.attributes[.paragraphStyle] as? NSMutableParagraphStyle
-    if let alignment = alignment {
-      paragraph?.alignment = alignment
-    }
-    if let breakMode = breakMode {
-      paragraph?.lineBreakMode = breakMode
-    }
-    if let lineHeight = lineHeight {
-      paragraph?.minimumLineHeight = lineHeight
-    }
-    if let lineHeight = paragraph?.minimumLineHeight, let font = attrs.attributes[.font] as? UIFont {
-      let offset = (lineHeight - font.lineHeight) / 2
-      attrs.baselineOffset(Float(offset))
-    }
-    if let lineSpacing = lineSpacing {
-      paragraph?.lineSpacing = lineSpacing
-    }
-    if let before = paragraphSpacing?.0 {
-      paragraph?.paragraphSpacingBefore = before
-    }
-    if let after = paragraphSpacing?.1 {
-      paragraph?.paragraphSpacing = after
-    }
-    if let paragraph = paragraph {
-      attrs.paragraphStyle(paragraph)
-    }
-    return attrs
-  }
 }
 
 
-public class Attlabel: AttributedLabel {
+public class AttLabel: AttributedLabel {
 
   public override var text: String? {
     get { txt }
@@ -310,39 +160,42 @@ public class Attlabel: AttributedLabel {
   var txt: String? {
     didSet { reload(txt) }
   }
-  public func reload(_ val: String?) {
+  @objc public func reload(_ val: String?) {
     let str = val ?? txt
-    reloadMarkup?(str)
+    reloadMark?(str)
   }
-
-  public func setNeedsRefresh() {
-    setNeeds(#selector(refresh))
-  }
-  @objc public func refresh() {
-    reload(nil)
+  public func setNeedsReload() {
+    NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reload), object: nil)
+    perform(#selector(reload), with: nil, afterDelay: 0)
   }
 
 
   public var tags: (()->[String:Attrs]?)? {
-    didSet { setNeedsRefresh() }
+    didSet { setNeedsReload() }
   }
   public var high: (()->Attrs?)? {
-    didSet { setNeedsRefresh() }
+    didSet { setNeedsReload() }
   }
   public var base: (()->Attrs?)? {
-    didSet { setNeedsRefresh() }
+    didSet { setNeedsReload() }
   }
 
   public var linkDetectionEnabled = true
 
-  public var reloadMarkup: ((String?)->Void)?
+  public var reloadMark: ((String?)->Void)?
 
-  // a, @, #
-  public func setMarkupStyles(tags: @escaping (String?)->[String:Attrs],
-                              high: @escaping (String?)->Attrs,
-                              base: @escaping (String?)->Attrs
+  public func setMarkStyles(tags: @escaping @autoclosure ()->[String:Attrs],
+                            high: @escaping @autoclosure ()->Attrs,
+                            base: @escaping @autoclosure ()->Attrs
   ) {
-    reloadMarkup = { [weak self] in
+    setMarkStyles(tags: { _ in tags() }, high: { _ in high() }, base: { _ in base() })
+  }
+  // a, @, #
+  public func setMarkStyles(tags: @escaping (String?)->[String:Attrs],
+                            high: @escaping (String?)->Attrs,
+                            base: @escaping (String?)->Attrs
+  ) {
+    reloadMark = { [weak self] in
       guard let self = self else { return }
       let str = $0 ?? ""
       self.highlightedLinkAttributes = (self.high?() ?? high(str)).attributes
@@ -378,11 +231,5 @@ public class Attlabel: AttributedLabel {
         .attributedString
     }
     reload(nil)
-  }
-  public func setMarkupStyles(tags: @escaping @autoclosure ()->[String:Attrs],
-                              high: @escaping @autoclosure ()->Attrs,
-                              base: @escaping @autoclosure ()->Attrs
-  ) {
-    setMarkupStyles(tags: { _ in tags() }, high: { _ in high() }, base: { _ in base() })
   }
 }

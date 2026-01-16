@@ -94,8 +94,8 @@ open class Infoline: BaseStackView {
     let ret = VerView()
     return ret
   }()
-  public lazy var titleLabel: Stylb = {
-    let ret = Stylb()
+  public lazy var titleLabel: StyLabel = {
+    let ret = StyLabel()
     ret.setTextStyles(font: .systemFont(ofSize: 14),
                       color: .black
     )
@@ -108,8 +108,8 @@ open class Infoline: BaseStackView {
     let ret = UIView()
     return ret
   }()
-  public lazy var infoLabel: Stylb = {
-    let ret = Stylb()
+  public lazy var infoLabel: StyLabel = {
+    let ret = StyLabel()
     ret.setTextStyles(font: .systemFont(ofSize: 14),
                       color: .darkGray,
                       alignment: .right,

@@ -26,6 +26,7 @@
 		0A8930FC2A545FC0005BEAA4 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8930F92A545FC0005BEAA4 /* R.generated.swift */; };
 		0A98D7D12C917AEB00308F47 /* ObjectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A98D7D02C917AEB00308F47 /* ObjectTableViewController.swift */; };
 		0A98D7D32C917BCF00308F47 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A98D7D22C917BCF00308F47 /* ListTableViewController.swift */; };
+		0ABAE5212F232A5400B37B1E /* LabelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABAE5202F232A5400B37B1E /* LabelViewController.swift */; };
 		0ACD897A2D7A887F0037ED5E /* ProblemOneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD89792D7A887F0037ED5E /* ProblemOneView.swift */; };
 		25D03B9C2CE8B59D00F1866F /* StackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D03B9B2CE8B59D00F1866F /* StackViewController.swift */; };
 		FDF8264CA04F5E2799BAA1D3 /* Pods_ModHomePage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86E5190BB0BD700F957EFBBC /* Pods_ModHomePage.framework */; };
@@ -67,6 +68,7 @@
 		0A8930F92A545FC0005BEAA4 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		0A98D7D02C917AEB00308F47 /* ObjectTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectTableViewController.swift; sourceTree = "<group>"; };
 		0A98D7D22C917BCF00308F47 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
+		0ABAE5202F232A5400B37B1E /* LabelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelViewController.swift; sourceTree = "<group>"; };
 		0ACD89792D7A887F0037ED5E /* ProblemOneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemOneView.swift; sourceTree = "<group>"; };
 		25D03B9B2CE8B59D00F1866F /* StackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewController.swift; sourceTree = "<group>"; };
 		4724E665BF70B51ADF19FB90 /* Pods-ModHomePage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModHomePage.release.xcconfig"; path = "Target Support Files/Pods-ModHomePage/Pods-ModHomePage.release.xcconfig"; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				0A62E15A2C4A2ECC00C5E855 /* BlurViewController.swift */,
 				0A62E15C2C4A38DA00C5E855 /* FontViewController.swift */,
 				25D03B9B2CE8B59D00F1866F /* StackViewController.swift */,
+				0ABAE5202F232A5400B37B1E /* LabelViewController.swift */,
 				0A8901BB2BEBB6EF00812A7F /* TabView.swift */,
 				0ACD89792D7A887F0037ED5E /* ProblemOneView.swift */,
 				0A534B152A5458F500EDA4BF /* Test */,
@@ -302,6 +305,7 @@
 				0A534B312A5458F500EDA4BF /* Module.swift in Sources */,
 				0A98D7D32C917BCF00308F47 /* ListTableViewController.swift in Sources */,
 				0A534B262A5458F500EDA4BF /* PopupViewController.swift in Sources */,
+				0ABAE5212F232A5400B37B1E /* LabelViewController.swift in Sources */,
 				0A168E2D2B6258D000727871 /* ShadowViewController.swift in Sources */,
 				0ACD897A2D7A887F0037ED5E /* ProblemOneView.swift in Sources */,
 				0A534B2A2A5458F500EDA4BF /* AppleViewController.swift in Sources */,

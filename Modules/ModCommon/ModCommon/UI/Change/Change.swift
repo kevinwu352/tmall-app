@@ -15,7 +15,7 @@ class ChangeManager {
 
 #if DEBUG
   init() {
-    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { [weak self] _ in self?.log() }
+    // Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { [weak self] _ in self?.log() }
   }
 #endif
 

@@ -1,0 +1,25 @@
+UIView.animate(
+  springDuration: TimeInterval,
+  bounce: CGFloat,
+  initialSpringVelocity: CGFloat,       <=
+  delay: TimeInterval,
+  options: UIView.AnimationOptions,
+  animations: () -> Void,
+  completion: ((Bool) -> Void)?
+)
+UIView.animate(
+  withDuration: TimeInterval,
+  delay: TimeInterval,
+  usingSpringWithDamping: CGFloat,      <= 传 0.5，效果和 UIViewPropertyAnimator 一样
+  initialSpringVelocity: CGFloat,       <=
+  options: UIView.AnimationOptions,
+  animations: () -> Void,
+  completion: ((Bool) -> Void)?
+)
+UIViewPropertyAnimator.init(
+  duration: TimeInterval,
+  dampingRatio: CGFloat,                <= 传 0.5
+  animations: (() -> Void)?
+)
+
+damping 阻尼 0-1，越小弹的次数越多

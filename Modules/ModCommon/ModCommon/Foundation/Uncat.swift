@@ -132,3 +132,8 @@ public extension BinaryInteger {
     return list
   }
 }
+
+
+public func withValue<T1, T2>(_ v: T1, _ h: (T1)->T2) -> T2 {
+  h(v)
+}

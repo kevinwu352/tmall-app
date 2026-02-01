@@ -28,21 +28,21 @@ public class Defaults {
        let aeskey = aeskey, let aesiv = aesiv, let decrypted = data.aesCBCDecrypt(aeskey, aesiv, true),
        let obj = json_from_data(decrypted) as? Jobj
     {
-      print("[common] defaults load, \(decrypted.str)")
+      print("[common] defaults load, \(decrypted.utf8str)")
       self.raw = obj
     } else {
       print("[common] defaults load, __")
       self.raw = [:]
     }
 
-    self.queue = DispatchQueue(label: "defaults-queue-\(path.dat.md5)", attributes: .concurrent)
+    self.queue = DispatchQueue(label: "defaults-queue-\(path.utf8dat.md5)", attributes: .concurrent)
   }
 
   func synchronize() {
     if let data = json_to_data(raw),
        let aeskey = aeskey, let aesiv = aesiv, let encrypted = data.aesCBCEncrypt(aeskey, aesiv, true)
     {
-      print("[common] defaults save, \(data.str)")
+      print("[common] defaults save, \(data.utf8str)")
       data_write(encrypted, path)
     }
   }

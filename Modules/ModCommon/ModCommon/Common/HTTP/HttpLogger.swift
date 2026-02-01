@@ -103,7 +103,7 @@ class HttpLoginter: @unchecked Sendable, RequestInterceptor {
                             urlRequest.url?.absoluteString,
                             urlRequest.method?.rawValue,
                             urlRequest.allHTTPHeaderFields,
-                            urlRequest.httpBody?.str)
+                            urlRequest.httpBody?.utf8str)
     completion(.success(urlRequest))
   }
 }

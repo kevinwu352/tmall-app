@@ -65,10 +65,10 @@ public extension String {
 
 // Data - String
 public extension Data {
-  var str: String { String(decoding: self, as: UTF8.self) }
+  var utf8str: String { String(decoding: self, as: UTF8.self) }
 }
 public extension String {
-  var dat: Data { Data(utf8) }
+  var utf8dat: Data { Data(utf8) }
 }
 
 // HexData - String

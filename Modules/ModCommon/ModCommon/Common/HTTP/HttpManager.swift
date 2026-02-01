@@ -37,7 +37,7 @@ public func http_req(path: String,
   let body: Data?
   if method == "POST" {
     addr = path
-    body = parameters?.query.dat
+    body = parameters?.query.utf8dat
   } else {
     addr = path.addedQuery(parameters?.query)
     body = nil
@@ -46,7 +46,7 @@ public func http_req(path: String,
 
 #if DEBUG
   let n = HttpLogger.shared.order
-  HttpLogger.shared.begin(n, addr, method, headers, body?.str)
+  HttpLogger.shared.begin(n, addr, method, headers, body?.utf8str)
 #endif
   var req = URLRequest(url: url)
   req.httpMethod = method
@@ -56,7 +56,7 @@ public func http_req(path: String,
 
   let task = URLSession.shared.dataTask(with: req) { dat, res, err in
 #if DEBUG
-    HttpLogger.shared.end(n, res?.code, err?.localizedDescription ?? dat?.str)
+    HttpLogger.shared.end(n, res?.code, err?.localizedDescription ?? dat?.utf8str)
 #endif
     completion(res, dat, err)
   }
@@ -214,7 +214,7 @@ open class HttpManager<Status>: BaseObject {
     .publishData(queue: .userInitiated)
     .map {
 #if DEBUG
-      HttpLogger.shared.end(n, $0.response?.statusCode, $0.data?.str)
+      HttpLogger.shared.end(n, $0.response?.statusCode, $0.data?.utf8str)
 #endif
       let response: Response<T> = shared.parse($0)
       return response
@@ -248,7 +248,7 @@ open class HttpManager<Status>: BaseObject {
     .validate()
     .responseData(queue: DispatchQueue.userInitiated) {
 #if DEBUG
-      HttpLogger.shared.end(n, $0.response?.statusCode, $0.data?.str)
+      HttpLogger.shared.end(n, $0.response?.statusCode, $0.data?.utf8str)
 #endif
       let response: Response<T> = shared.parse($0)
       queue.async { completion(response) }

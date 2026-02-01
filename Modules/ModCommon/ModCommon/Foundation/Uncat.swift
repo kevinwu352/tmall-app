@@ -26,14 +26,14 @@ public func dev_obj_addr(_ obj: AnyObject?) -> String? {
 }
 
 public func dev_read_file(_ path: String) -> String? {
-  data_read(path)?.str
+  data_read(path)?.utf8str
 }
 public func dev_write_file(_ path: String, _ str: String?) {
   guard let str = str else { return }
   path_create_file(path)
   let file = FileHandle(forUpdatingAtPath: path)
   _ = try? file?.seekToEnd()
-  try? file?.write(contentsOf: (str + "\n").dat)
+  try? file?.write(contentsOf: (str + "\n").utf8dat)
   try? file?.close()
 }
 #endif

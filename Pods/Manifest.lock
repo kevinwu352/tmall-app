@@ -41,7 +41,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   SwiftEntryKit:
-    :commit: 90585a015425be4fad6f11dbc06b8b908d774d49
+    :commit: 56bc3a3a5a9c0d076f8dc8332ff19586aadec559
     :git: https://github.com/kevinwu352/SwiftEntryKit.git
 
 SPEC CHECKSUMS:

@@ -10,10 +10,6 @@ import Combine
 
 open class BaseView: UIView, Combinable {
 
-  public lazy var cancellables = Set<AnyCancellable>()
-
-  open override class var requiresConstraintBasedLayout: Bool { true }
-
   public required init?(coder: NSCoder) {
     super.init(coder: coder)
   }
@@ -21,18 +17,14 @@ open class BaseView: UIView, Combinable {
     super.awakeFromNib()
     setup()
     layoutViews()
-    bindEvents()
     loadData()
-    initialized = true
     reload()
   }
   public override init(frame: CGRect) {
     super.init(frame: frame)
     setup()
     layoutViews()
-    bindEvents()
     loadData()
-    initialized = true
     reload()
   }
   open override func updateConstraints() {
@@ -44,17 +36,29 @@ open class BaseView: UIView, Combinable {
   }
   open func layoutViews() {
   }
-  open func bindEvents() {
-  }
   open func loadData() {
-  }
-
-  public func setNeedsReload() {
-    setNeeds(#selector(reload))
   }
   @objc open func reload() {
   }
-  public var initialized = false
+  public func setNeedsReload() {
+    NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reload), object: nil)
+    perform(#selector(reload), with: nil, afterDelay: 0)
+  }
+
+  public lazy var cancellables = Set<AnyCancellable>()
+
+
+
+
+  // 不管是用 init/xib 创建实例，拿到实例时，上面三个函数已经调用完成，所以 initialized 没必须，删掉
+  // ViewController 需要 initialized，因为从 init() - viewDidLoad() 之间可以改变属性
+  public var initialized = true
+
+  // 基于约束的布局是懒触发的，只有在添加了约束的情况下，系统才会自动调用 -updateConstraints 方法，如果把所有的约束放在 updateConstraints 中，那么系统将会不知道你的布局方式是基于约束的，所以重写 +requiresConstraintBasedLayout 返回 YES 就是明确告诉系统：虽然我之前没有添加约束，但我确实是基于约束的布局，这样可以保证系统一定会调用 -updateConstraints 方法，从而正确添加约束
+  open override class var requiresConstraintBasedLayout: Bool { true } // 不要这个方法
+
+  open func bindEvents() { // 不要这个方法
+  }
 
 
   public func setupTap(_ to: UIView?) {

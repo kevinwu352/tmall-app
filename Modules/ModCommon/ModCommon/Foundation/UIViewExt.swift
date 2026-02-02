@@ -92,6 +92,7 @@ public extension UIView {
     superview?.sendSubviewToBack(self)
   }
 
+  // 深度优先
   func descendant<T: UIView>(_ cls: T.Type) -> T? {
     if self is T {
       return self as? T

@@ -51,10 +51,10 @@ public extension EKAttributes {
             /** The delay of the range animation */
             public var delay: TimeInterval
             
-            /** The start value of the range animation (e.g. alpha) */
+            /** The start value of the range animation (e.g. alpha, scale) */
             public var start: CGFloat
             
-            /** The end value of the range animation (e.g. alpha) */
+            /** The end value of the range animation (e.g. alpha, scale) */
             public var end: CGFloat
             
             /** The spring of the animation */
@@ -66,29 +66,6 @@ public extension EKAttributes {
                 self.end = end
                 self.delay = delay
                 self.duration = duration
-                self.spring = spring
-            }
-        }
-        
-        /** Describes an animation with transform */
-        public struct TransformAnimation: EKAnimation, Equatable {
-            
-            /** The duration of the transform animation */
-            public var duration: TimeInterval
-            
-            /** The delay of the transform animation */
-            public var delay: TimeInterval
-            
-            /** The spring of the animation */
-            public var spring: Spring?
-            
-            /** The value of the transform animation */
-            public var value: CGAffineTransform
-            
-            public init(value: CGAffineTransform, duration: TimeInterval, delay: TimeInterval = 0, spring: Spring? = nil) {
-                self.value = value
-                self.duration = duration
-                self.delay = delay
                 self.spring = spring
             }
         }
@@ -130,14 +107,37 @@ public extension EKAttributes {
             }
         }
         
+        /** Describes an animation with transform */
+        public struct Transform: EKAnimation, Equatable {
+            
+            /** The duration of the transform animation */
+            public var duration: TimeInterval
+            
+            /** The delay of the transform animation */
+            public var delay: TimeInterval
+            
+            /** The spring of the animation */
+            public var spring: Spring?
+            
+            /** The value of the transform animation */
+            public var value: CGAffineTransform
+            
+            public init(value: CGAffineTransform, duration: TimeInterval, delay: TimeInterval = 0, spring: Spring? = nil) {
+                self.value = value
+                self.duration = duration
+                self.delay = delay
+                self.spring = spring
+            }
+        }
+        
         /** Translation animation prop */
         public var translate: Translate?
         
+        /** Transform animation prop */
+        public var transform: Transform?
+        
         /** Fade animation prop */
         public var fade: RangeAnimation?
-        
-        /** Transform animation prop */
-        public var transform: TransformAnimation?
         
         /** Does the animation contains translation */
         public var containsTranslation: Bool {
@@ -185,10 +185,10 @@ public extension EKAttributes {
         }
         
         /** Initializer */
-        public init(translate: Translate? = nil, fade: RangeAnimation? = nil, transform: TransformAnimation? = nil) {
+        public init(translate: Translate? = nil, transform: Transform? = nil, fade: RangeAnimation? = nil) {
             self.translate = translate
-            self.fade = fade
             self.transform = transform
+            self.fade = fade
         }
     }
 }

@@ -31,12 +31,18 @@ class PopupViewController: BaseViewController {
 
   @objc func showMid() {
     let pop = PopAlert()
+    pop.tag = 20
     pop.enroll()
   }
 
   @objc func showBot() {
     let pop = PopSheet()
+    pop.tag = 10
     pop.enroll()
+
+    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+      self.showMid()
+    }
   }
 
   lazy var stackView: UIStackView = {
@@ -86,6 +92,9 @@ class PopView: HoverView {
     addSubview(titleLabel)
     addSubview(descLabel)
     addSubview(stackView)
+    completion = { [weak self] confirm, hv in
+      print("got    \(self!.tag), confirm:\(confirm != nil ? confirm == true ? "true" : "false" : "nil"), overriding:\(hv.overriding)")
+    }
   }
   override func layoutViews() {
     super.layoutViews()

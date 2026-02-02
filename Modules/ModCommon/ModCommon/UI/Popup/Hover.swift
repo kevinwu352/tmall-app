@@ -1,6 +1,6 @@
 //
 //  Hover.swift
-//  ModCommon
+//  Common
 //
 //  Created by Kevin Wu on 2022/1/1.
 //
@@ -16,50 +16,42 @@ open class HoverView: BaseView {
     return ret
   }()
 
-  // hover level
+  // 顺序敏感，用 Comparable 比较时，先声明的 case 较小
   public enum Level: Comparable {
     case lower
     case normal
   }
   public var level: Level = .normal
 
-  // shown ever
-  public var shown = false
+  // 是否正在显示中，中途被抢占也算显示中
+  public var showing = false
+  // 是否正在被抢占中
+  public var overriding = false
 
-  // disappear reason
-  public enum Reason {
-    case overriden
-    case screen
-    case dismiss
-  }
-  public var reason: Reason = .screen
-
-  public var willAppear: VoidCb? {
-    get { attrs.lifecycleEvents.willAppear }
-    set { attrs.lifecycleEvents.willAppear = newValue }
-  }
-  public var didAppear: VoidCb? {
-    get { attrs.lifecycleEvents.didAppear }
-    set { attrs.lifecycleEvents.didAppear = newValue }
-  }
-  public var willDisappear: VoidCb? {
-    get { attrs.lifecycleEvents.willDisappear }
-    set { attrs.lifecycleEvents.willDisappear = newValue }
-  }
+  // 在回调中检查 overriding 属性，判断是正常结束而消失，还是被抢占而临时消失
+  public var willAppear: ((HoverView)->Void)?
+  public var didAppear: ((HoverView)->Void)?
+  public var willDisappear: ((HoverView)->Void)?
+  public var didDisappear: ((HoverView)->Void)?
 
   // 滚轮切换日期，调用 complete(nil)
-  // 点 confirm，调用 complete(true)
-  // 点 cancel，调用 complete(false)
-  // 点 screen，当成 cancel，调用 complete(false)
+  // 点 confirm，调用 dismiss(true)/complete(true)，推荐用前者
+  // 点 cancel，调用 dismiss(false)/complete(false)，推荐用前者
+  // 点 screen，调用 complete(false)，当成 cancel
   public var completion: ((Bool?,HoverView)->Void)?
+  // 用户只能做一次决定（滚轮切换不算决定），所以，completion 只能被调用一次
   public func complete(_ confirm: Bool?) {
+    print("complete , confirm:\(confirm != nil ? confirm == true ? "true" : "false" : "nil"), \(confirm != nil ? completion != nil ? "clear" : "empty" : "--")")
     completion?(confirm, self)
+    if confirm != nil {
+      completion = nil
+    }
   }
 
   public func enroll() {
     Hover.shared.enroll(self)
   }
-  public func dismiss(_ confirm: Bool?, _ completion: VoidCb?) {
+  public func dismiss(_ confirm: Bool?, _ completion: (()->Void)?) {
     guard let name = attrs.name else { return }
     Hover.shared.dismiss(name, confirm, completion)
   }
@@ -83,10 +75,11 @@ public class Hover {
 
   public func enroll(_ view: HoverView) {
     guard !displaying(view.attrs.name) && !queuing(view.attrs.name) else { return }
-    view.shown = false
+    // view.showing = false
+    // view.overriding = false
     if let old = currentEntry {
       if view.level >= old.level {
-        old.reason = .overriden
+        old.overriding = true
         enquque(old)
         display(view)
       } else {
@@ -98,46 +91,50 @@ public class Hover {
   }
   func display(_ view: HoverView) {
     var attrs = view.attrs
-    attrs.lifecycleEvents.didAppear = {
-      view.shown = true
-    }
-    attrs.lifecycleEvents.didDisappear = { [weak self] in
-      switch view.reason {
-      case .overriden:
-        view.reason = .screen
-      case .screen:
-        view.complete(false)
-        self?.dequeue()
-      case .dismiss:
-        view.reason = .screen
-        self?.dequeue()
+    attrs.lifecycleEvents = .init(
+      willAppear: {
+        view.willAppear?(view)
+      },
+      didAppear: {
+        view.didAppear?(view)
+        view.showing = true
+        view.overriding = false
+      },
+      willDisappear: {
+        view.willDisappear?(view)
+      },
+      didDisappear: { [weak self] in
+        print("disappear, overriding:\(view.overriding), \(view.tag)")
+        view.didDisappear?(view)
+        if !view.overriding {
+          // 每次消失都会调用 didDisappear，分三种情况：
+          // 1)正常消失，前面 dismiss 时已经调用 complete，且将 completion 置空，这里没啥副作用
+          // 2)点 screen 消失，前面没有调用 complete，这里调用
+          // 3)被抢占消失，不应该走到这行逻辑
+          view.complete(false)
+          self?.dequeue()
+        }
       }
-    }
+    )
     SwiftEntryKit.display(entry: view, using: attrs, presentInsideKeyWindow: false, rollbackWindow: .main)
   }
-  public func dismiss(_ name: String,
-                      _ confirm: Bool?,
-                      _ completion: VoidCb? = nil
-  ) {
+  public func dismiss(_ name: String, _ confirm: Bool?, _ completion: (()->Void)? = nil) {
     if let entry = currentEntry, entry.attrs.name == name {
-      entry.reason = .dismiss
       entry.complete(confirm)
       SwiftEntryKit.dismiss(.specific(entryName: name), with: completion)
     } else if let index = queue.firstIndex(where: { $0.attrs.name == name }) {
-      let entry = queue[index]
-      entry.reason = .dismiss
+      let entry = queue.remove(at: index)
       entry.complete(confirm)
-      queue.remove(at: index)
       completion?()
       // won't trigger did disappear
     }
   }
 
   func enquque(_ view: HoverView) {
-    if view.shown {
+    if view.showing {
       queue.insert(view, at: 0)
     } else {
-      if let i = queue.firstIndex(where: { !($0.shown) && ($0.level < view.level) }) {
+      if let i = queue.firstIndex(where: { !$0.showing && ($0.level < view.level) }) {
         queue.insert(view, at: i)
       } else {
         queue.append(view)
@@ -264,8 +261,8 @@ extension EKAttributes.Animation {
   }
   static var alertIn: Self {
     .init(
-      fade: .init(from: 0, to: 1, duration: 0.35),
-      transform: .init(value: CGAffineTransform(translationX: 0, y: 60), duration: 0.35, spring: .standard)
+      transform: .init(value: CGAffineTransform(translationX: 0, y: 60), duration: 0.35, spring: .standard),
+      fade: .init(from: 0, to: 1, duration: 0.35)
     )
   }
   static var alertOut: Self {

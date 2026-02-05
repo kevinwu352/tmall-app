@@ -6,6 +6,9 @@
 // app 加依赖，然后在 package 里 import 并使用
 //   会失败
 
+// app 的 Build Settings 对 package 的影响？
+// 无影响，Package 默认是 Swift 6 和 nonisolated，不受 app 设置的影响
+
 import PackageDescription
 
 let package = Package(

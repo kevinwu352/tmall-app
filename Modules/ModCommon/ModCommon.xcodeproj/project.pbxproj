@@ -426,8 +426,8 @@
 			isa = PBXGroup;
 			children = (
 				0AEB88502F346C630072CAA7 /* discard */,
-				0AEB88512F34711D0072CAA7 /* todo */,
 				0AEB88522F3473D80072CAA7 /* maybe-useful */,
+				0AEB88512F34711D0072CAA7 /* todo */,
 				0A5349762A54521A00EDA4BF /* Num.swift */,
 				0A53496E2A54521A00EDA4BF /* ThirdExt.swift */,
 			);
@@ -475,8 +475,6 @@
 		0AEB88512F34711D0072CAA7 /* todo */ = {
 			isa = PBXGroup;
 			children = (
-				0A5349732A54521A00EDA4BF /* CollectionExt.swift */,
-				0A53496C2A54521A00EDA4BF /* StringExt.swift */,
 				0A5349712A54521A00EDA4BF /* UIViewExt.swift */,
 			);
 			path = todo;
@@ -487,9 +485,11 @@
 			children = (
 				0AEDBF7D2D607C770047C478 /* UIImageExt.swift */,
 				0A53497A2A54521A00EDA4BF /* Utils.swift */,
-				0A5349792A54521A00EDA4BF /* Datetime.swift */,
 				0A5349702A54521A00EDA4BF /* Codec.swift */,
 				0A5349752A54521A00EDA4BF /* Path.swift */,
+				0A5349792A54521A00EDA4BF /* Datetime.swift */,
+				0A5349732A54521A00EDA4BF /* CollectionExt.swift */,
+				0A53496C2A54521A00EDA4BF /* StringExt.swift */,
 			);
 			path = "maybe-useful";
 			sourceTree = "<group>";

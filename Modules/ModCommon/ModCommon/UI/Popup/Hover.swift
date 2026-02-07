@@ -8,7 +8,7 @@
 import UIKit
 import SwiftEntryKit
 
-open class HoverView: BaseView {
+open class HoverView: UIView {
 
   public lazy var attrs: EKAttributes = {
     var ret = EKAttributes()
@@ -29,19 +29,20 @@ open class HoverView: BaseView {
   public var overriding = false
 
   // 在回调中检查 overriding 属性，判断是正常结束而消失，还是被抢占而临时消失
-  public var willAppear: ((HoverView)->Void)?
-  public var didAppear: ((HoverView)->Void)?
-  public var willDisappear: ((HoverView)->Void)?
-  public var didDisappear: ((HoverView)->Void)?
+  public var willAppear: ((HoverView) -> Void)?
+  public var didAppear: ((HoverView) -> Void)?
+  public var willDisappear: ((HoverView) -> Void)?
+  public var didDisappear: ((HoverView) -> Void)?
 
   // 滚轮切换日期，调用 complete(nil)
   // 点 confirm，调用 dismiss(true)/complete(true)，推荐用前者
   // 点 cancel，调用 dismiss(false)/complete(false)，推荐用前者
   // 点 screen，调用 complete(false)，当成 cancel
-  public var completion: ((Bool?,HoverView)->Void)?
+  public var completion: ((Bool?, HoverView) -> Void)?
   // 用户只能做一次决定（滚轮切换不算决定），所以，completion 只能被调用一次
   public func complete(_ confirm: Bool?) {
-    print("complete , confirm:\(confirm != nil ? confirm == true ? "true" : "false" : "nil"), \(confirm != nil ? completion != nil ? "clear" : "empty" : "--")")
+    // print("complete , confirm:\(confirm != nil ? confirm == true ? "true" : "false" : "nil"),
+    // \(confirm != nil ? completion != nil ? "clear" : "empty" : "--")")
     completion?(confirm, self)
     if confirm != nil {
       completion = nil
@@ -51,19 +52,19 @@ open class HoverView: BaseView {
   public func enroll() {
     Hover.shared.enroll(self)
   }
-  public func dismiss(_ confirm: Bool?, _ completion: (()->Void)?) {
+  public func dismiss(_ confirm: Bool?, completion: (() -> Void)? = nil) {
     guard let name = attrs.name else { return }
-    Hover.shared.dismiss(name, confirm, completion)
+    Hover.shared.dismiss(name, confirm: confirm, completion: completion)
   }
 }
 
-
+@MainActor
 public class Hover {
 
   public static let shared = Hover()
 
   public var currentEntry: HoverView? {
-    SwiftEntryKit.window?.descendant(HoverView.self)
+    SwiftEntryKit.window?.find(HoverView.self)
   }
 
   public func displaying(_ name: String?) -> Bool {
@@ -118,7 +119,7 @@ public class Hover {
     )
     SwiftEntryKit.display(entry: view, using: attrs, presentInsideKeyWindow: false, rollbackWindow: .main)
   }
-  public func dismiss(_ name: String, _ confirm: Bool?, _ completion: (()->Void)? = nil) {
+  public func dismiss(_ name: String, confirm: Bool?, completion: (() -> Void)? = nil) {
     if let entry = currentEntry, entry.attrs.name == name {
       entry.complete(confirm)
       SwiftEntryKit.dismiss(.specific(entryName: name), with: completion)
@@ -149,10 +150,10 @@ public class Hover {
   var queue: [HoverView] = []
 }
 
-
-public extension EKAttributes {
-  mutating func banner() {
-    //windowLevel = .statusBar
+extension EKAttributes {
+  @MainActor
+  public mutating func banner() {
+    // windowLevel = .statusBar
     position = .top
     precedence = .override(priority: .normal, dropEnqueuedEntries: true)
     displayDuration = .infinity
@@ -163,23 +164,24 @@ public extension EKAttributes {
     screenInteraction = .absorbTouches
     entryInteraction = .absorbTouches
     scroll = .disabled
-    //hapticFeedbackType = .none
-    //lifecycleEvents = LifecycleEvents()
+    // hapticFeedbackType = .none
+    // lifecycleEvents = LifecycleEvents()
 
     displayMode = .current
-    entryBackground = .color(color: .hover_background)
-    screenBackground = .color(color: .hover_screen)
-    //shadow = .none
-    //roundCorners = .none
-    //border = .none
+    entryBackground = .color(color: .hoverBackground)
+    screenBackground = .color(color: .hoverScreen)
+    // shadow = .none
+    // roundCorners = .none
+    // border = .none
     statusBar = .current
 
     entranceAnimation = .slide
     exitAnimation = .slide
     popBehavior = .animated(animation: .slide)
   }
-  mutating func sheet() {
-    //windowLevel = .statusBar
+  @MainActor
+  public mutating func sheet() {
+    // windowLevel = .statusBar
     position = .bottom
     precedence = .override(priority: .normal, dropEnqueuedEntries: true)
     displayDuration = .infinity
@@ -191,23 +193,24 @@ public extension EKAttributes {
     screenInteraction = .absorbTouches
     entryInteraction = .absorbTouches
     scroll = .disabled
-    //hapticFeedbackType = .none
-    //lifecycleEvents = LifecycleEvents()
+    // hapticFeedbackType = .none
+    // lifecycleEvents = LifecycleEvents()
 
     displayMode = .current
-    entryBackground = .color(color: .hover_background)
-    screenBackground = .color(color: .hover_screen)
-    //shadow = .none
-    //roundCorners = .none
-    //border = .none
+    entryBackground = .color(color: .hoverBackground)
+    screenBackground = .color(color: .hoverScreen)
+    // shadow = .none
+    // roundCorners = .none
+    // border = .none
     statusBar = .current
 
     entranceAnimation = .slide
     exitAnimation = .slide
     popBehavior = .animated(animation: .slide)
   }
-  mutating func alert() {
-    //windowLevel = .statusBar
+  @MainActor
+  public mutating func alert() {
+    // windowLevel = .statusBar
     position = .center
     precedence = .override(priority: .normal, dropEnqueuedEntries: true)
     displayDuration = .infinity
@@ -218,15 +221,15 @@ public extension EKAttributes {
     screenInteraction = .absorbTouches
     entryInteraction = .absorbTouches
     scroll = .disabled
-    //hapticFeedbackType = .none
-    //lifecycleEvents = LifecycleEvents()
+    // hapticFeedbackType = .none
+    // lifecycleEvents = LifecycleEvents()
 
     displayMode = .current
     entryBackground = .color(color: .init(.clear))
-    screenBackground = .color(color: .hover_screen)
-    //shadow = .none
-    //roundCorners = .none
-    //border = .none
+    screenBackground = .color(color: .hoverScreen)
+    // shadow = .none
+    // roundCorners = .none
+    // border = .none
     statusBar = .current
 
     entranceAnimation = .alertIn
@@ -237,19 +240,17 @@ public extension EKAttributes {
 
 extension EKAttributes.DisplayMode {
   static var current: Self {
-    switch THEME {
-    case .day: return .light
-    case .ngt: return .dark
-    }
+    // .day: .light
+    // .night: .dark
+    .light
   }
 }
 
 extension EKAttributes.StatusBar {
   static var current: Self {
-    switch THEME {
-    case .day: return .dark
-    case .ngt: return .light
-    }
+    // .day: .dark
+    // .night: .light
+    .dark
   }
 }
 
@@ -277,92 +278,106 @@ extension EKAttributes.Animation.Spring {
   }
 }
 
-
-// [COLORS]
 extension EKColor {
-  static let hover_background = EKColor(light: UIColor(hex: 0xf1f3f8), dark: UIColor(hex: 0x0d1626))
-  static let hover_screen = EKColor(light: UIColor(white: 50/255.0, alpha: 0.3), dark: UIColor(white: 0, alpha: 0.5))
+  @MainActor static let hoverBackground = EKColor(
+    light: UIColor(red: 0.9451, green: 0.95294, blue: 0.97255, alpha: 1), // 0xf1f3f8
+    dark: UIColor(red: 0.05098, green: 0.086275, blue: 0.14902, alpha: 1) // 0x0d1626
+  )
+  @MainActor static let hoverScreen = EKColor(
+    light: UIColor(white: 50 / 255.0, alpha: 0.3),
+    dark: UIColor(white: 0, alpha: 0.5)
+  )
 }
 
+extension UIView {
+  fileprivate func find<T: UIView>(_ cls: T.Type) -> T? {
+    if self is T {
+      return self as? T
+    }
+    for view in subviews {
+      if let ret = view.find(cls) {
+        return ret
+      }
+    }
+    return nil
+  }
+}
 
 // MARK: Display Attributes
 
-/** Entry presentation window level */
+// Entry presentation window level
 // public var windowLevel = WindowLevel.statusBar
 
-/** The position of the entry inside the screen */
+// The position of the entry inside the screen
 // public var position = Position.top
 
-/** The display manner of the entry. */
+// The display manner of the entry.
 // public var precedence = Precedence.override(priority: .normal, dropEnqueuedEntries: false)
 
-/** Describes how long the entry is displayed before it is dismissed */
+// Describes how long the entry is displayed before it is dismissed
 // public var displayDuration: DisplayDuration = 2 // Use .infinity for infinite duration
 
-/** The frame attributes of the entry */
+// The frame attributes of the entry
 // public var positionConstraints = PositionConstraints()
 // 安全区：
 //   .overridden 视图内容会伸进安全区
 //   .empty(fillSafeArea: true) 视图内容不会伸进安全区，是否用背景色填充安全区
 
-
 // MARK: User Interaction Attributes
 
-/** Describes what happens when the user interacts the screen,
- forwards the touch to the application window by default */
+// Describes what happens when the user interacts the screen,
+// forwards the touch to the application window by default
 // public var screenInteraction = UserInteraction.forward
 
-/** Describes what happens when the user interacts the entry,
- dismisses the content by default */
+// Describes what happens when the user interacts the entry,
+// dismisses the content by default
 // public var entryInteraction = UserInteraction.dismiss
 
-/** Describes the scrolling behaviour of the entry.
- The entry can be swiped out and in with an ability to spring back with a jolt */
+// Describes the scrolling behaviour of the entry.
+// The entry can be swiped out and in with an ability to spring back with a jolt
 // public var scroll = Scroll.enabled(swipeable: true, pullbackAnimation: .jolt)
 
-/** Generate haptic feedback once the entry is displayed */
+// Generate haptic feedback once the entry is displayed
 // public var hapticFeedbackType = NotificationHapticFeedback.none
 
-/** Describes the actions that take place when the entry appears or is being dismissed */
+// Describes the actions that take place when the entry appears or is being dismissed
 // public var lifecycleEvents = LifecycleEvents()
-
 
 // MARK: Theme & Style Attributes
 
-/** The display mode of the entry */
+// The display mode of the entry
 // public var displayMode = DisplayMode.inferred
 
-/** Describes the entry's background appearance while it shows */
+// Describes the entry's background appearance while it shows
 // 在外部修改时:
 //   $0.entryBackground = .color(color: .init(rgb: 0x0000ff))
 //   $0.entryBackground = .color(color: .init(UIColor.blue))
 // public var entryBackground = BackgroundStyle.clear
 
-/** Describes the background appearance while the entry shows */
+// Describes the background appearance while the entry shows
 // public var screenBackground = BackgroundStyle.clear
 
-/** The shadow around the entry */
+// The shadow around the entry
 // public var shadow = Shadow.none
 
-/** The corner attributes */
+// The corner attributes
 // public var roundCorners = RoundCorners.none
 
-/** The border around the entry */
+// The border around the entry
 // public var border = Border.none
 
-/** Preferred status bar style while the entry shows */
+// Preferred status bar style while the entry shows
 // public var statusBar = StatusBar.inferred
-
 
 // MARK: Animation Attributes
 
-/** Describes how the entry animates in */
+// Describes how the entry animates in
 // public var entranceAnimation = Animation.translation
 
-/** Describes how the entry animates out */
+// Describes how the entry animates out
 // public var exitAnimation = Animation.translation
 
-/** Describes the previous entry behaviour when a new entry with higher display-priority shows */
+// Describes the previous entry behaviour when a new entry with higher display-priority shows
 // public var popBehavior = PopBehavior.animated(animation: .translation) {
 //   didSet {
 //     popBehavior.validate()

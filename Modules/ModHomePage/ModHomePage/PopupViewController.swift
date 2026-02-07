@@ -86,8 +86,15 @@ class PopupViewController: BaseViewController {
 
 
 class PopView: HoverView {
-  override func setup() {
-    super.setup()
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    setup()
+    layoutViews()
+  }
+  @MainActor required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  func setup() {
     backgroundColor = .red
     addSubview(titleLabel)
     addSubview(descLabel)
@@ -96,8 +103,7 @@ class PopView: HoverView {
       print("got    \(self!.tag), confirm:\(confirm != nil ? confirm == true ? "true" : "false" : "nil"), overriding:\(hv.overriding)")
     }
   }
-  override func layoutViews() {
-    super.layoutViews()
+  func layoutViews() {
     titleLabel.snp.remakeConstraints { make in
       make.top.equalToSuperview().offset(20)
       make.centerX.equalToSuperview()
@@ -122,10 +128,10 @@ class PopView: HoverView {
     }
   }
   @objc func cancelClicked() {
-    dismiss(false, nil)
+    dismiss(false)
   }
   @objc func confirmClicked() {
-    dismiss(true, nil)
+    dismiss(true)
   }
   lazy var titleLabel: UILabel = {
     let ret = UILabel()

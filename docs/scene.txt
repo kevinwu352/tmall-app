@@ -1,0 +1,40 @@
+旧方式创建 UIWindow，整个 App 不用 scene
+  1)创建 UIWindow 前 connectedScenes 里就有 UIWindowScene 了，状态是 foregroundInactive，它里面没有 UIWindow
+  2)创建 UIWindow 后，scene 部分还是一样，不过它里面有一个 UIWindow 了
+  3)rootViewController 加载时，viewDidLoad 里面状态也是同上
+  4)在 touch 回调里，scene 的状态是 foregroundActive
+旧方式显示 UIWindow
+  1)用 init(frame:) 创建以后设置 isHidden = false 即可，但要将 UIWindow 实例保存到某处，否则会马上销毁
+    虽然没有用到 scene，但此 window 位于唯一的 scene 里面，和 keyWindow 并列兄弟
+  2)用 init(windowScene:) 创建的，也是 isHidden = false 即可，也要保存到某处
+    此时肯定是位于 scene 内部
+弹推送消息的窗口，App will resign active，此时显示 UIWindow
+  1)用 init(frame:) 能显示
+  2)用 init(windowScene:) 能显示，此时 scene 是 foregroundInactive
+从始至终，UIWindowScene 和 UIWindow 的实例都是相同的，地址一样，它们没变过
+
+新方式创建 UIWindow，用 UIScene
+  1)AppDelegate 里面，connectedScenes 空列表，当然也没 window
+  2)SceneDelegate 里面，创建 UIWindow 之前，connectedScenes 有一个 UIWindowScene，状态是 unattached，没有 window
+  3)在 makeKeyAndVisible 之前，scene 还是 unattached，有 window 了，不过不是 keyWindow
+  4)然后调用 makeKeyAndVisible 会触发 root.viewDidLoad，此时 scene 还是 unattached，window 不是 keyWindow
+  5)在 makeKeyAndVisible 之后，scene 还是 unattached，window 是 keyWindow 了
+  6)在 touch 回调里，scene 的状态是 foregroundActive
+  7)viewWillAppear 里是 unattached，viewDidAppear 里是 foregroundActive
+    viewDidLoad/viewWillAppear 里弹窗出 EntryKit 会失败，viewDidAppear 里可以
+新方式显示 UIWindow
+  1)用 init(frame:) 创建的，目前 scene 是 foregroundActive，不管是否保留 window，都无法显示出来
+  2)用 init(windowScene:) 创建的，能显示出来，而且一定要保留 window
+弹推送消息的窗口，App will resign active，此时显示 UIWindow
+  1)上面都显示不出来，这里更不行了
+  2)用 init(windowScene:) 创建的，scene 是 foregroundInactive，也能显示出来
+从始至终，UIWindowScene 和 UIWindow 的实例都是相同的，地址一样，它们没变过
+
+
+
+extension Optional where Wrapped == Bool {
+  var nnn: String {
+    self != nil ? self == true ? "t" : "f" : "n"
+  }
+}
+

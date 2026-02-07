@@ -7,6 +7,26 @@
 
 import UIKit
 
+// 15/16 6.1
+// Screen resolution (points): 393 x 852
+// Native resolution (pixels): 1179 x 2556 (460 ppi)
+// Safe Area Insets (portrait): top: 59, bottom: 34, left: 0, right: 0
+// Safe Area Insets (landscape): top: 0, bottom: 21, left: 59, right: 59
+// 灵动岛高 54，但安全区高 59
+// 如果有导航条，上面安全区留的位置是 53.67，导航条 44，总共是 97.67
+// 如果没导航条，视图顶上接安全区，上面的留白是 59
+// ScrollView.adjustedContentInset: {97.666666666666671, 0, 83, 0}，83-34=49，所以，TabBar 高度 49
+//
+// 17/17P 6.3
+// Screen resolution (points): 402 x 874
+// Native resolution (pixels): 1206 x 2622 (460 ppi)
+// Safe Area Insets (portrait): top: 62, bottom: 34, left: 0, right: 0
+// Safe Area Insets (landscape): top: 20, bottom: 20, left: 62, right: 62
+// 灵动岛高 54，但安全区高 62
+// 如果有导航条，上面安全区留的位置是 62，导航条 54，总共是 116
+// 如果没导航条，视图顶上接安全区，上面的留白是 62
+// ScrollView.adjustedContentInset: {116, 0, 83, 0}，83-34=49，所以，TabBar 高度 49
+
 // MARK: Main Elements
 
 public var APP_VERSION: String {

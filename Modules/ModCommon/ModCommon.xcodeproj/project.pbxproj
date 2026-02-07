@@ -425,9 +425,13 @@
 		0A5349682A54521A00EDA4BF /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				0AEB88502F346C630072CAA7 /* discard */,
+				0A5349692A54521A00EDA4BF /* Metric.swift */,
+				0A5349782A54521A00EDA4BF /* Types.swift */,
+				0A5349742A54521A00EDA4BF /* Uncat.swift */,
+				0A53496B2A54521A00EDA4BF /* UIColorExt.swift */,
+				0A53496A2A54521A00EDA4BF /* Serialize.swift */,
+				0A5349712A54521A00EDA4BF /* UIViewExt.swift */,
 				0AEB88522F3473D80072CAA7 /* maybe-useful */,
-				0AEB88512F34711D0072CAA7 /* todo */,
 				0A5349762A54521A00EDA4BF /* Num.swift */,
 				0A53496E2A54521A00EDA4BF /* ThirdExt.swift */,
 			);
@@ -458,26 +462,6 @@
 				0A53494A2A54521A00EDA4BF /* StateView */,
 			);
 			path = Uncat;
-			sourceTree = "<group>";
-		};
-		0AEB88502F346C630072CAA7 /* discard */ = {
-			isa = PBXGroup;
-			children = (
-				0A5349692A54521A00EDA4BF /* Metric.swift */,
-				0A5349782A54521A00EDA4BF /* Types.swift */,
-				0A5349742A54521A00EDA4BF /* Uncat.swift */,
-				0A53496B2A54521A00EDA4BF /* UIColorExt.swift */,
-				0A53496A2A54521A00EDA4BF /* Serialize.swift */,
-			);
-			path = discard;
-			sourceTree = "<group>";
-		};
-		0AEB88512F34711D0072CAA7 /* todo */ = {
-			isa = PBXGroup;
-			children = (
-				0A5349712A54521A00EDA4BF /* UIViewExt.swift */,
-			);
-			path = todo;
 			sourceTree = "<group>";
 		};
 		0AEB88522F3473D80072CAA7 /* maybe-useful */ = {

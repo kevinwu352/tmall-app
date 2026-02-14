@@ -21,12 +21,40 @@ class ButtonViewController: BaseViewController {
 
     view.addSubview(stack1)
     view.addSubview(stack2)
+    view.addSubview(stack3)
 
     view.addSubviews([iv1, iv2])
     view.addSubview(btn1)
     view.addSubview(btn2)
 
 
+    // btn.tintColor 影响的地方还挺多
+    //   plain 文字图标都是红色，当然图标肯定是 template 的
+    //   tinted 文字图标都是红色，背景是半透明的红
+    //   gray 不受任何影响
+    //   filled 文字图标白色，背景是纯红
+    //
+    // baseForegroundColor 影响所有的文字颜色，如果图片是 template 也受其影响（.glass 的图片不受影响）
+    //   连 gray 的文字图标也变色了
+    // tintColor 和 baseForegroundColor 同时设置时，前景色优先级更高
+    //   连 gray 的文字图标也变色了
+    //
+    // baseBackgroundColor 影响背景色
+    //   plain 本来就没背景色，所以不受影响
+    //   其它三个背景色都变了，包括 gray
+    // tintColor 和 baseBackgroundColor 同时设置时，背景色优先级更高
+
+    // 可以这样理解：
+    //   tintColor 是整体影响，前景后景都影响
+    //   baseForegroundColor/baseBackgroundColor 是分另控制前景后景，优先级高于 tintColor
+
+
+    let handler: (inout UIButton.Configuration?)->Void = {
+//      $0?.baseForegroundColor = .green
+      $0?.baseBackgroundColor = .green
+      $0?.image = UIImage(resource: .Com.iconCross).withRenderingMode(.alwaysTemplate)
+    }
+    let tintColor: UIColor? = .red
 
 
     let confs: [String:UIButton.Configuration] = [
@@ -36,9 +64,13 @@ class ButtonViewController: BaseViewController {
     if true {
       let views = ["plain", "tinted", "gray", "filled"]
         .map { it -> UIButton in
-          let conf = confs[it]
+          var conf = confs[it]
+          conf?.title = it
+          handler(&conf)
           let ret = UIButton(configuration: conf!)
-          ret.setTitle(it, for: .normal)
+          if let tintColor {
+            ret.tintColor = tintColor
+          }
           return ret
         }
       stack1.addArrangedSubviews(views)
@@ -46,13 +78,39 @@ class ButtonViewController: BaseViewController {
     if true {
       let views = ["borderless", "borderedTinted", "bordered", "borderedProminent"]
         .map { it -> UIButton in
-          let conf = confs[it]
+          var conf = confs[it]
+          conf?.title = it
+          handler(&conf)
           let ret = UIButton(configuration: conf!)
-          ret.setTitle(it, for: .normal)
+          if let tintColor {
+            ret.tintColor = tintColor
+          }
           return ret
         }
       stack2.addArrangedSubviews(views)
     }
+
+    if #available(iOS 26.0, *) {
+      let confs: [String:UIButton.Configuration] = [
+        "G": .glass(), "PG": .prominentGlass(), "CG": .clearGlass(), "PCG": .prominentClearGlass(),
+      ]
+      if true {
+        let views = ["G", "PG", "CG", "PCG"]
+          .map { it -> UIButton in
+            var conf = confs[it]
+            conf?.title = it
+            handler(&conf)
+            let ret = UIButton(configuration: conf!)
+            if let tintColor {
+              ret.tintColor = tintColor
+            }
+            return ret
+          }
+        stack3.addArrangedSubviews(views)
+      }
+    }
+
+//
 
   }
   override func layoutViews() {
@@ -65,19 +123,23 @@ class ButtonViewController: BaseViewController {
       make.pin_leading(stack1, 20)
       make.top.equalTo(stack1)
     }
+    stack3.snp.remakeConstraints { make in
+      make.pin_top(stack1, 10)
+      make.leading.trailing.equalToSuperview()
+    }
 
     iv1.snp.remakeConstraints { make in
       make.trailing.equalTo(view.snp.centerX).offset(-10)
-      make.bottom.equalTo(view.snp.centerY).offset(-20)
+      make.bottom.equalTo(view.snp.centerY).offset(20)
     }
     iv2.snp.remakeConstraints { make in
       make.leading.equalTo(view.snp.centerX).offset(10)
-      make.bottom.equalTo(view.snp.centerY).offset(-20)
+      make.bottom.equalTo(view.snp.centerY).offset(20)
     }
 
     btn1.snp.remakeConstraints { make in
       make.centerX.equalToSuperview()
-      make.top.equalTo(view.snp.centerY).offset(20)
+      make.top.equalTo(view.snp.centerY).offset(40)
       make.width.equalTo(200)
     }
     btn2.snp.remakeConstraints { make in
@@ -211,6 +273,14 @@ class ButtonViewController: BaseViewController {
   lazy var stack2: UIStackView = {
     let ret = UIStackView()
     ret.axis = .vertical
+    ret.alignment = .center
+    ret.distribution = .equalSpacing
+    ret.spacing = 10
+    return ret
+  }()
+  lazy var stack3: UIStackView = {
+    let ret = UIStackView()
+    ret.axis = .horizontal
     ret.alignment = .center
     ret.distribution = .equalSpacing
     ret.spacing = 10

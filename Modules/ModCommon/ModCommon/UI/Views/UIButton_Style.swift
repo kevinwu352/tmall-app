@@ -59,8 +59,8 @@ public extension UIButton {
   // 系统高亮
   //   (template, color)，务必给个颜色，否则会用系统某个颜色值。（如果传 original，颜色不起作用）
   // 自动高亮
-  //   (original, nil  ).high()，不给颜色，用图片算出一个高亮图片。（不准传 template）
   //   (template, color).high()，要给颜色，用颜色算出一个高亮颜色。（不准传 original）
+  //   (original, nil  ).high()，不给颜色，用图片算出一个高亮图片。（不准传 template）
   class Icon {
     var image: (Status)->(UIImage?,UIColor?)
     public init(_ image: @escaping (Status)->(UIImage?,UIColor?)) {

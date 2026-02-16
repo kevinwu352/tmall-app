@@ -53,4 +53,62 @@ class SendViewController: UIViewController {
     }
   }
 
+  // ================================================================================
+  // 协议上面的 Sendable 会传染，实现此协议的类也必须是 Sendable 的，虽然不用明确写出来，但隐含了
+  // 协议上面的 @MainActor 会传染，实现此协议的类也是属于 MainActor 的，虽然不用明确写出来，但隐含了
+  func infection() {
+    let work = WorkEntry()
+    sendable_closure {
+      print(work)
+    }
+    Task { @MyActor in
+      // 1) JobEntry1 没有 init 方法，它能在 @MyActor 里被创建
+      let job1 = JobEntry1()
+      print(job1)
+      // 2) JobEntry2 有 init 方法，它能在 @MyActor 里被创建
+      let job2 = JobEntry2()
+      print(job2)
+      // 3) JobEntry3 属于 MainActor 没有 init 方法，它能在 @MyActor 里被创建
+      let job3 = JobEntry3()
+      print(job3)
+      // 4) JobEntry4 属于 MainActor 有 init 方法，它不能在 @MyActor 里被创建
+//      let job4 = JobEntry4()
+//      print(job4)
+    }
+  }
+
+}
+
+protocol WorkModule: Sendable { // 如果去掉这里，会有跨区的警告，说明协议里的 Sendable 影响了使用此协议的实体
+  var name: String { get }
+}
+final class WorkEntry: WorkModule {
+  let name = ""
+}
+
+protocol JobModuleA {
+  var name: String { get }
+}
+final class JobEntry1: JobModuleA {
+  let name = ""
+}
+final class JobEntry2: JobModuleA {
+  init() {
+    name = "xx"
+  }
+  let name: String
+}
+
+@MainActor // 种种迹象表明，它的实现者必须要用在 MainActor 上
+protocol JobModuleB {
+  var name: String { get }
+}
+final class JobEntry3: JobModuleB {
+  let name = ""
+}
+final class JobEntry4: JobModuleB {
+  init() {
+    name = "xx"
+  }
+  let name: String
 }

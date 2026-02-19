@@ -49,7 +49,22 @@ import Combine
 //         header...
 //         return header
 //     }
-//     fatalError("invalid kind")
+//     return UICollectionReusableView()
+// }
+
+// 如果尺寸/位置不固定，可以用代理方法来算，实现 UICollectionViewDelegateFlowLayout 里的这几个方法，再给 delegate 赋值即可
+// 如果上面 UICollectionViewFlowLayout 的几个属性有值，也有下面的代理方法，代理方法的优先级更高
+// func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//   UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10)
+// }
+// func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//   10
+// }
+// func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//   10
+// }
+// func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//   CGSize(width: (SCREEN_WID - 30) / 2, height: 140)
 // }
 
 open class BaseCollectionViewCell: UICollectionViewCell, Combinable {

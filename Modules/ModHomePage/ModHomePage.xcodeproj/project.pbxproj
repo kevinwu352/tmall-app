@@ -28,6 +28,7 @@
 		0A98D7D32C917BCF00308F47 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A98D7D22C917BCF00308F47 /* ListTableViewController.swift */; };
 		0ABAE5212F232A5400B37B1E /* LabelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABAE5202F232A5400B37B1E /* LabelViewController.swift */; };
 		0ACD897A2D7A887F0037ED5E /* ProblemOneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACD89792D7A887F0037ED5E /* ProblemOneView.swift */; };
+		0AFA03F12F46BCC700AB8D9B /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFA03F02F46BCC700AB8D9B /* CollectionViewController.swift */; };
 		25D03B9C2CE8B59D00F1866F /* StackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D03B9B2CE8B59D00F1866F /* StackViewController.swift */; };
 		FDF8264CA04F5E2799BAA1D3 /* Pods_ModHomePage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86E5190BB0BD700F957EFBBC /* Pods_ModHomePage.framework */; };
 /* End PBXBuildFile section */
@@ -70,6 +71,7 @@
 		0A98D7D22C917BCF00308F47 /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		0ABAE5202F232A5400B37B1E /* LabelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelViewController.swift; sourceTree = "<group>"; };
 		0ACD89792D7A887F0037ED5E /* ProblemOneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemOneView.swift; sourceTree = "<group>"; };
+		0AFA03F02F46BCC700AB8D9B /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		25D03B9B2CE8B59D00F1866F /* StackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewController.swift; sourceTree = "<group>"; };
 		4724E665BF70B51ADF19FB90 /* Pods-ModHomePage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModHomePage.release.xcconfig"; path = "Target Support Files/Pods-ModHomePage/Pods-ModHomePage.release.xcconfig"; sourceTree = "<group>"; };
 		6EA6E42D3E2EB2E5A0DF44A0 /* Pods-ModHomePage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModHomePage.debug.xcconfig"; path = "Target Support Files/Pods-ModHomePage/Pods-ModHomePage.debug.xcconfig"; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				0ABAE5202F232A5400B37B1E /* LabelViewController.swift */,
 				0A8901BB2BEBB6EF00812A7F /* TabView.swift */,
 				0ACD89792D7A887F0037ED5E /* ProblemOneView.swift */,
+				0AFA03F02F46BCC700AB8D9B /* CollectionViewController.swift */,
 				0A534B152A5458F500EDA4BF /* Test */,
 				0A8930F32A545FC0005BEAA4 /* Resources */,
 			);
@@ -312,6 +315,7 @@
 				0A62E15B2C4A2ECC00C5E855 /* BlurViewController.swift in Sources */,
 				0A534B282A5458F500EDA4BF /* TestViewController.swift in Sources */,
 				25D03B9C2CE8B59D00F1866F /* StackViewController.swift in Sources */,
+				0AFA03F12F46BCC700AB8D9B /* CollectionViewController.swift in Sources */,
 				0A8930FC2A545FC0005BEAA4 /* R.generated.swift in Sources */,
 				0A8901BC2BEBB6EF00812A7F /* TabView.swift in Sources */,
 				0A35C1812BF7216600C39DD9 /* ButtonViewController.swift in Sources */,

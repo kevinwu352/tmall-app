@@ -72,6 +72,64 @@ public func masy(_ time: Double?, _ handler: VoidCb?) -> DispatchWorkItem? {
   DispatchQueue.main.delay(time, handler)
 }
 
+// 用此方法测试：
+// DispatchQueue.main.asyncAfter 和 perform(with:afterDelay:) 这俩方法 0.0001 时顺序准确，0.00001 时顺序错乱
+// res1: 598/600 0.000030
+// res1: 568/600 0.000040
+// res1: 494/600 0.000050
+// res1: 33/600 0.000060
+// res1: 8/600 0.000070
+// res1: 4/600 0.000080
+// res1: 2/600 0.000090
+// res2: 547/600 0.000030
+// res2: 301/600 0.000040
+// res2: 19/600 0.000050
+// res2: 8/600 0.000060
+// res2: 4/600 0.000070
+// res2: 2/600 0.000080
+// res2: 1/600 0.000090
+// 根据以上数据，在时间间隔为 0.0001 时，貌似系统能保证顺序
+//
+// var list: [Int] = []
+// var count = 0
+// var total = 0
+// let limit = 1200
+// var time = 0.0001
+// let step = 0.0001
+// let n = 100
+// func run() {
+//   list = []
+//   for i in 0..<n {
+//     let j = n - i - 1
+//     let delay = 0.1 + time * Double(j)
+//     // DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+//     //   guard let self else { return }
+//     //   self.list.append(j)
+//     // }
+//     perform(#selector(work), with: NSNumber(value: j), afterDelay: delay)
+//   }
+//   DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+//     guard let self else { return }
+//     let res = self.list == (0..<n).map { $0 }
+//     if !res { self.count += 1 }
+//     self.total += 1
+//     if self.total >= self.limit {
+//       print("res: \(self.count)/\(self.total) \(String(format: "%.6f", self.time))")
+//       self.time += self.step
+//       self.count = 0
+//       self.total = 0
+//     }
+//     if self.time < 0.0006 {
+//       self.run()
+//     } else {
+//       print("done")
+//     }
+//   }
+// }
+// @objc func work(_ value: NSNumber) {
+//   list.append(value.intValue)
+// }
+
 
 // =============================================================================
 

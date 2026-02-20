@@ -69,7 +69,38 @@ public extension ConstraintMaker {
     trailing.equalTo(anchor.snp.leading).offset(offset)
   }
   // make.leading.trailing.equalToSuperview().inset(20)
+  //
+  // make.top.equalTo(navbar?.snp.bottom ?? view.safeAreaLayoutGuide).offset(4)
+  //
+  // make.leading.equalTo(prev?.snp.trailing ?? (make.item as? UIView)?.superview ?? 0) 用这种写法，内部使用 make.item.superview，是相对的，不用写死
+  // make.leading.equalTo(prev?.snp.trailing ?? nameLabel.superview ?? 0) 这里的写死的
 }
+// 一个内部使用 auto-layout 的视图，被 frame 布局，情况如何？
+// class RedView: UIView {
+//   override init(frame: CGRect) {
+//     super.init(frame: frame)
+//     // translatesAutoresizingMaskIntoConstraints = false
+//     backgroundColor = .yellow
+//     let lb = UILabel()
+//     lb.text = "asdf"
+//     addSubview(lb)
+//     lb.snp.remakeConstraints { make in
+//       make.edges.equalToSuperview().inset(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+//     }
+//   }
+//   required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+// }
+// 在 viewWillLayoutSubviews 设置 frame，能成功，且设置的 frame.size 优先级大于固有尺寸
+//   控制台有约束冲突警告，查看视图层级时没有约束警告
+//   经验证，控制台的约束冲突是因为创建视图用的是 RedView()，而不是 RedView(frame: xxx)
+//   只要传正确的 frame，控制台就没有冲突警告了
+//   那俩冲突说的是 width/height == 0，和 left/right 冲突了
+//   因为左右边距是 10*2，所以，只要 RedView 的初始化宽度 <20 就会有警告
+//   所以，可以在初始化时用 20*20 的 size，消除警告，后面在 viewWillLayoutSubviews 里再设置真正的尺寸
+// translatesAutoresizingMaskIntoConstraints = false 以后，情况不一样了
+//   不管初始化时传不传 frame，不管后面在 viewWillLayoutSubviews 设置什么尺寸，都没用，视图始终是固有尺寸
+//   且位置在 (0,0) 错的，查看图层也说 position ambiguous
+// 所以，就算 frame 包 auto-layout，本质也是把 frame 转化成 auto-layout 了，否则要出错
 
 
 

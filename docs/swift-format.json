@@ -1,0 +1,140 @@
+// /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-format dump-configuration
+{
+  // 如果前面设置为 100，我们格式化一次，有些行因格式化而换行了
+  // 然后换成 180，再格式化一次，此时有些格式会回退，比如函数末尾的花括号，因为 100 导致换到了第二行，现在 180 了，会回退到上一行去
+  // 但是下面这种回退不了，就算现在 180，完全能容下，也回退不了
+  //   AnyPublisher<
+  //     Output, Never
+  //   > {
+  "lineLength" : 100,
+  "indentation" : {
+    "spaces" : 2
+  },
+  // 类之间/类函数之间，但 import 下面始终只有个空行，如果没有，格式化时会加
+  "maximumBlankLines" : 1,
+  "spacesBeforeEndOfLineComments" : 2,
+
+  // 长太长需要换行时，返回值/异常之类的声明，要不要和函数的 ) 在同一行
+  // 也就是换行的时候，把右括号带到下一行
+  // public func abc(_ handler: @escaping (Output) -> Bool)
+  //   -> AnyPublisher<Output, Never>
+  // {
+  // }
+  // public func abc(
+  //   _ handler: @escaping (Output) -> Bool
+  // ) -> AnyPublisher<Output, Never> {
+  // }
+  "prioritizeKeepingFunctionOutputTogether" : false,
+  // 行长度超限时，要不要把每个参数都断成一行。如果不的话，有时候两个参数会在同一行
+  "lineBreakBeforeEachArgument" : false,
+
+
+  // 以下的条目用默认值，不修改这些
+
+  "version" : 1,
+  // 文档说，只在 indentation 是 tabs 时才会用到
+  "tabWidth" : 8,
+  // 本来默认的情况是，只在行长于 lineLength 时，才会添加换行
+  // 如果行长度够用，那么就会尊重程序员添加的断行，不会完全按照 formatter 的想法来换行
+  // 如果将这里设置为 false，将不再尊重程序员已经写好的换行，而完全按照 formatter 的想法来重新换行
+  "respectsExistingLineBreaks" : true,
+  // 控制流的关键字要不要换行？比如 } else 要不要新起一行？
+  "lineBreakBeforeControlFlowKeywords" : false,
+  // 函数后面那个 where 语句，断行时，要不要把每个条件分成一行，本来每个条件间用逗号隔开的
+  "lineBreakBeforeEachGenericRequirement" : false,
+  // 就算长度不超限，如果开启此选项，下面这行也会分成三行，@ 开头的会独占一行
+  // @discardableResult @objc func myMethod() { }
+  "lineBreakBetweenDeclarationAttributes" : false,
+  // 链式调用时，如果某条语句后面是多行，则会把此行的 .xxx 移到下一行
+  // 如果是 .filter { aaa }，它不是多行，则不会移到下一行
+  "lineBreakAroundMultilineExpressionChainComponents" : false,
+
+  "indentSwitchCaseLabels" : false,
+  // #if 条件编译的 子内容 要不要缩进
+  "indentConditionalCompilationBlocks" : true,
+  // 设成 true 后，启动格式化，会在空白行增加很多空格
+  // 设成 false 后，启动格式化，会把纯空格的空行删掉
+  // 感觉设为真假都不行，直接不设这个属性
+  // 文档有这选项，但是默认值里没有
+  "indentBlankLines": false,
+
+  // 多行集合，末尾添加逗号
+  "multiElementCollectionTrailingCommas" : true,
+  // 文档有这选项，但是默认值里没有
+  // alwaysUsed|neverUsed|keptAsWritten
+  "multilineTrailingCommaBehavior": "keptAsWritten",
+
+  // 多行文字量换行，以及增加行尾的 \
+  "reflowMultilineStringLiterals" : "never",
+
+  // 0..<1 变成 0 ..< 1
+  "spacesAroundRangeFormationOperators" : false,
+
+  // 文件内部用的变量/函数，如果我在前面加了 fileprivate，自动变成 private
+  // 貌似会判断此变量有没有在外部被使用，如果没有，就加
+  // 要在 rules 里把开关打开，才有效果
+  "fileScopedDeclarationPrivacy" : {
+    "accessLevel" : "private"
+  },
+  "rules1": {
+    "FileScopedDeclarationPrivacy" : true,
+  },
+
+  // 赋值表达式应该独立，而不该成为其它表达式的一部分
+  // func updateValue(to newValue: Int) -> Void {
+  //   return self.value = newValue
+  // }
+  "noAssignmentInExpressions" : {
+    "allowedFunctions" : [
+      "XCTAssertNoThrow"
+    ]
+  },
+
+
+
+
+  "rules" : {
+    "AllPublicDeclarationsHaveDocumentation" : false,
+    "AlwaysUseLiteralForEmptyCollectionInit" : false,
+    "AlwaysUseLowerCamelCase" : true,
+    "AmbiguousTrailingClosureOverload" : true,
+    "AvoidRetroactiveConformances" : true,
+    "BeginDocumentationCommentWithOneLineSummary" : false,
+    "DoNotUseSemicolons" : true,
+    "DontRepeatTypeInStaticProperties" : true,
+    "FullyIndirectEnum" : true,
+    "GroupNumericLiterals" : true,
+    "IdentifiersMustBeASCII" : true,
+    "NeverForceUnwrap" : false,
+    "NeverUseForceTry" : false,
+    "NeverUseImplicitlyUnwrappedOptionals" : false,
+    "NoAccessLevelOnExtensionDeclaration" : true,
+    "NoAssignmentInExpressions" : true,
+    "NoBlockComments" : true,
+    "NoCasesWithOnlyFallthrough" : true,
+    "NoEmptyLinesOpeningClosingBraces" : false,
+    "NoEmptyTrailingClosureParentheses" : true,
+    "NoLabelsInCasePatterns" : true,
+    "NoLeadingUnderscores" : false,
+    "NoParensAroundConditions" : true,
+    "NoPlaygroundLiterals" : true,
+    "NoVoidReturnOnFunctionSignature" : true,
+    "OmitExplicitReturns" : false,
+    "OneCasePerLine" : true,
+    "OneVariableDeclarationPerLine" : true,
+    "OnlyOneTrailingClosureArgument" : true,
+    "OrderedImports" : true,
+    "ReplaceForEachWithForLoop" : true,
+    "ReturnVoidInsteadOfEmptyTuple" : true,
+    "TypeNamesShouldBeCapitalized" : true,
+    "UseEarlyExits" : false,
+    "UseExplicitNilCheckInConditions" : true,
+    "UseLetInEveryBoundCaseVariable" : true,
+    "UseShorthandTypeNames" : true,
+    "UseSingleLinePropertyGetter" : true,
+    "UseSynthesizedInitializer" : true,
+    "UseTripleSlashForDocumentationComments" : true,
+    "UseWhereClausesInForLoops" : false,
+    "ValidateDocumentationComments" : false
+  },
+}

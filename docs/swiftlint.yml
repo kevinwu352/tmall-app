@@ -1,0 +1,10 @@
+identifier_name:
+  min_length: # show warning/error when length < n
+    warning: 3
+    error: 1
+  excluded: [i, j, n, m, id, it, vc, vm]
+line_length: 180
+disabled_rules:
+  - trailing_comma
+  - nesting
+  - opening_brace

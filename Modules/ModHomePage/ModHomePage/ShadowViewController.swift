@@ -8,6 +8,86 @@
 import UIKit
 import ModCommon
 
+// 阴影跟随着视图的边缘，如果视图背景透明，阴影也看不到
+// 给视图加一个 UILabel，阴影将会沿着内部文字的边缘
+// 给 UILabel 加上背景色，阴影将会沿着 UILabel 的边缘
+// 背景色透明的同时，如果视图有边框，那么阴影会沿着边框，呈环状
+// 既有边框，也有中间文字，那么阴影会有两部分，一部分沿着边框，一部分沿着文字
+// 总结：反正阴影是沿着视图不透明部分的边沿走的
+//
+// lazy var shadowView: UIView = {
+//   let ret = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+//   ret.backgroundColor = .clear // (1)
+//   ret.layer.shadowColor = UIColor.red.cgColor
+//   ret.layer.shadowOpacity = 1
+//   ret.layer.shadowOffset = CGSize(width: 5, height: 5)
+//   ret.layer.shadowRadius = 5
+//   let lb = UILabel()
+//   lb.text = "xxx"
+//   lb.backgroundColor = .yellow
+//   ret.addSubview(lb)
+//   lb.sizeToFit()
+//   lb.frame = CGRect(x: (100 - lb.bounds.width)/2, y: (100 - lb.bounds.height)/2, width: lb.bounds.width, height: lb.bounds.height)
+//   return ret
+// }()
+
+// 如果视图内部，添加 sub layer，在子层上加阴影，必须加 shadowPath 才能看到
+// 此时，就算视图背景是透明的，也能看到阴影，且阴影是实心的，而非环状
+// 如果要加背景色的话，先加阴影层，再加背景色层
+class ShadowView: UIView {
+  required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    backgroundColor = .clear
+    layer.masksToBounds = false
+
+    // let layer1 = CALayer()
+    // layer1.name = "shadow"
+    // layer1.shadowColor = UIColor.red.cgColor
+    // layer1.shadowOpacity = 1
+    // layer1.shadowRadius = 5
+    // layer1.shadowOffset = CGSize(width: 0, height: 5)
+    // layer.addSublayer(layer1)
+    // let layer2 = CALayer()
+    // layer2.name = "background"
+    // layer2.backgroundColor = UIColor.green.cgColor
+    // layer2.cornerRadius = 24
+    // layer.addSublayer(layer2)
+    let shadowLayer = CAShapeLayer()
+    shadowLayer.name = "shadow"
+    shadowLayer.fillColor = UIColor.green.cgColor
+    shadowLayer.shadowColor = UIColor.red.cgColor
+    shadowLayer.shadowOpacity = 1
+    shadowLayer.shadowRadius = 5
+    shadowLayer.shadowOffset = CGSize(width: 0, height: 5)
+    layer.addSublayer(shadowLayer)
+
+    addSubview(lb)
+    lb.snp.remakeConstraints { make in
+      make.center.equalToSuperview()
+    }
+  }
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    // layer.sublayers?.first(where: { $0.name == "shadow" })?.frame = bounds
+    // layer.sublayers?.first(where: { $0.name == "shadow" })?.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: 24).cgPath
+    // layer.sublayers?.first(where: { $0.name == "background" })?.frame = bounds
+    if let shadowLayer = layer.sublayers?.first(where: { $0.name == "shadow" }) as? CAShapeLayer {
+      shadowLayer.frame = bounds
+      shadowLayer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: 24).cgPath
+      shadowLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: 24).cgPath
+    }
+  }
+  override var intrinsicContentSize: CGSize {
+    CGSize(width: 200, height: 100)
+  }
+  lazy var lb: UILabel = {
+    let ret = UILabel()
+    ret.text = "HEHE"
+    return ret
+  }()
+}
+
 class ShadowViewController: BaseViewController {
 
     override func setup() {

@@ -9,6 +9,11 @@ import UIKit
 import Combine
 import MJRefresh
 
+// Swift 6 的写法
+// private nonisolated(unsafe) var kAsdfKey = 0
+// SnapKit 内部的写法，细节参考 SnapKit
+// private var constraintsKey: UInt8 = 0
+
 fileprivate var kHeadHandlerKey: UInt8 = 0
 fileprivate var kHeadPublisherKey: UInt8 = 0
 

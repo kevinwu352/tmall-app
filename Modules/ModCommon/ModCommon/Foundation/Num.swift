@@ -19,6 +19,9 @@ import UIKit
 // print( Num(1/3.0) )
 // 0.333333333333333248
 
+// clamped
+// min(max(value, lower), upper)
+
 public struct Num: CustomStringConvertible {
   public static let nan = Num(Decimal.nan)
   public static let zero = Num(Decimal.zero)

@@ -69,6 +69,11 @@ public extension ConstraintMaker {
     trailing.equalTo(anchor.snp.leading).offset(offset)
   }
   // make.leading.trailing.equalToSuperview().inset(20)
+  //
+  // make.top.equalTo(navbar?.snp.bottom ?? view.safeAreaLayoutGuide).offset(4)
+  //
+  // make.leading.equalTo(prev?.snp.trailing ?? (make.item as? UIView)?.superview ?? 0) 用这种写法，内部使用 make.item.superview，是相对的，不用写死
+  // make.leading.equalTo(prev?.snp.trailing ?? nameLabel.superview ?? 0) 这里的写死的
 }
 
 

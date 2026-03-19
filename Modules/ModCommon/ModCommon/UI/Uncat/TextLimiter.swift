@@ -2,135 +2,84 @@
 //  TextLimiter.swift
 //  ModCommon
 //
-//  Created by Kevin Wu on 2022/1/1.
+//  Created by Kevin Wu on 3/19/26.
 //
 
 import UIKit
 
-open class TextLimiter: NSObject, UITextFieldDelegate {
-
-  public init(maxLength: Int?, allowedCharset: CharacterSet?) {
-    super.init()
-    self.maxLength = maxLength
-    self.allowedCharset = allowedCharset
-  }
-
-  public var maxLength: Int?
-
-  public var allowedCharset: CharacterSet?
-
-
-  open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-    guard string.count > 0 else { return true }
-    let currentText = textField.text ?? ""
-    let newText = currentText.replacingCharacters(in: range.in(currentText), with: string)
-
-    if let maxLength = maxLength, maxLength > 0 {
-      if newText.count <= maxLength {
-        // ...
-      } else {
-        return false
-      }
-    }
-
-    if let allowedCharset = allowedCharset {
-      if !allowedCharset.isSuperset(of: string.charset) {
-        return false
-      }
-    }
-
-    return true
-  }
-
-}
-
-
-open class NumberLimiter: TextLimiter {
-
-  public init(style: Style, min: String? = nil, max: String? = nil) {
-    self.style = style
-    self.min = min
-    self.max = max
-    super.init(maxLength: nil, allowedCharset: style.charset)
-  }
-
-  public enum Style {
-    case natural
-    case integer
-    case nonnegative(_ places: Int?)
-    case rational(_ places: Int?)
-    var regex: String {
-      switch self {
-      case .natural: return #"^\d*$"#
-      case .integer: return #"^-?\d*$"#
-      case let .nonnegative(places):
-        if let places = places, places > 0 {
-          return String(format: #"^\d*(\.\d{0,%d})?$"#, places)
-        } else {
-          return #"^\d*(\.\d*)?$"#
-        }
-      case let .rational(places):
-        if let places = places, places > 0 {
-          return String(format: #"^-?\d*(\.\d{0,%d})?$"#, places)
-        } else {
-          return #"^-?\d*(\.\d*)?$"#
-        }
-      }
-    }
-    var charset: CharacterSet? {
-      switch self {
-      case .natural: return "0123456789".charset
-      case .integer: return "0123456789-".charset
-      case .nonnegative: return "0123456789.".charset
-      case .rational: return "0123456789.-".charset
-      }
-    }
-  }
-  public var style: Style {
-    didSet { allowedCharset = style.charset }
-  }
-
-  public var min: String?
-  public var max: String?
-
-
-  open override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-    if !super.textField(textField, shouldChangeCharactersIn: range, replacementString: string) {
-      return false
-    }
-
-    guard string.count > 0 else { return true }
-    let currentText = textField.text ?? ""
-    let newText = currentText.replacingCharacters(in: range.in(currentText), with: string)
-
-    if !newText.regexTest(style.regex) {
-      return false
-    }
-
-    if let num = Num(newText).finited {
-      if let min = Num(min).finited, num < min {
-        return false
-      }
-      if let max = Num(max).finited, num > max {
-        return false
-      }
-    }
-
-    return true
-  }
-
-}
-
-
-public extension UITextField {
-  var limiter: TextLimiter? {
+extension UITextField {
+  public var limiter: TextLimiter? {
     get {
-      objc_getAssociatedObject(self, &kLimiterKey) as? TextLimiter
+      objc_getAssociatedObject(self, &kTextFieldLimiterKey) as? TextLimiter
     }
     set {
-      objc_setAssociatedObject(self, &kLimiterKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+      objc_setAssociatedObject(self, &kTextFieldLimiterKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
       delegate = newValue
     }
   }
 }
-fileprivate var kLimiterKey: UInt8 = 0
+private nonisolated(unsafe) var kTextFieldLimiterKey = 0
+
+open class TextLimiter: NSObject, UITextFieldDelegate {
+
+  public init(maxLength: Int = 0, allowedCharset: CharacterSet? = nil) {
+    self.maxLength = maxLength
+    self.allowedCharset = allowedCharset
+    super.init()
+  }
+  public let maxLength: Int
+  public let allowedCharset: CharacterSet?
+
+  public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    guard !string.isEmpty else { return true }
+    let text = ((textField.text ?? "") as NSString).replacingCharacters(in: range, with: string)
+    return shouldChangeCharacters(text)
+  }
+
+  open func shouldChangeCharacters(_ text: String) -> Bool {
+    if maxLength > 0 {
+      if text.count > maxLength {
+        return false
+      }
+    }
+    if let allowedCharset {
+      if !allowedCharset.isSuperset(of: CharacterSet(charactersIn: text)) {
+        return false
+      }
+    }
+    return true
+  }
+
+}
+
+// open class IntLimiter: TextLimiter {
+//   public init(maxLength: Int = 0, negativable: Bool = false, min: String? = nil, max: String? = nil) {
+//     self.min = min
+//     self.max = max
+//     super.init(maxLength: maxLength, allowedCharset: CharacterSet(charactersIn: "0123456789" + (negativable ? "-" : "")))
+//   }
+//   public let min: String?
+//   public let max: String?
+//   open override func shouldChangeCharacters(_ text: String) -> Bool {
+//     guard super.shouldChangeCharacters(text) else { return false }
+//     if let max {
+//       if text.padded > max.padded {
+//         return false
+//       }
+//     }
+//     return true
+//   }
+// }
+
+// extension String {
+//   fileprivate var padded: String {
+//     var str = self + (contains(".") ? "" : ".")
+//     while let i = str.firstIndex(of: "."), str[..<i].count < 30 {
+//       str = "0" + str
+//     }
+//     while let i = str.firstIndex(of: "."), str[i...].count < 30 {
+//       str = str + "0"
+//     }
+//     return str
+//   }
+// }

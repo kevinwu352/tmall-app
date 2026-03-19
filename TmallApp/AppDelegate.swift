@@ -9,6 +9,21 @@ import UIKit
 import Combine
 import ModCommon
 
+// 1. 取消 Main.storyboard & LaunchScreen.storyboard 的 Base 本地化
+//    取消 Use Base Internationalization
+//    删除 Base.lproj 目录
+// 2. Launch Screen File 先选择 Main 再选择 LaunchScreen
+// 3. SWIFT_VERSION 6
+//    SWIFT_DEFAULT_ACTOR_ISOLATION nonisolated
+// 4. 在 Build Settings 旁边的 Info 标签页内，删除 Main storyboard file base name
+//    在 Info.plist 里删除 Scene Configuration 里的 Storyboard Name
+// 5. 新建 Resources 目录
+// 6. 在 scene.willConnectTo 中添加代码
+//    guard let scene = scene as? UIWindowScene else { return }
+//    window = UIWindow(windowScene: scene)
+//    window?.rootViewController = ViewController()
+//    window?.makeKeyAndVisible()
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

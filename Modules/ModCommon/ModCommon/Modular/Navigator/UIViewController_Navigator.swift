@@ -33,6 +33,18 @@ import UIKit
 //   dismiss everything else to show receiver
 //   dismiss receiver if no else
 
+// nav 栈上有多个 vc，点击 tabbar 会直接回到 root，此时栈中间的 vc 不会调用 will/did appear，只有首尾的 vc 会调用
+// 如果用 setViewControllers 直接从 [vc1] => [vc1, vc2, vc3]，中间的 vc2 也不会调用生命周期
+
+// [vc1] 时，在 vc1 上调用三个 pop，都不会触发 nav.delegate.will/did show vc
+// [vc1, vc2] 时，在 vc2 上调用三个 pop，只有 popTo(self) 不会触发
+// [vc1, vc2, vc3] 时，在 vc3 上调用三个 pop，只有 popTo(self) 不会触发，popToRoot 不会触发 vc2 的生命周期函数
+
+// 如果 popToViewController(not-in-stack-vc)，会调用 top-vc 的 will/did appear
+// 如果 popToViewController(top-vc)，不会调用 will/did appear
+
+// 在被 pop 的 vc.viewDidDisappear 里，navigationController 已经为空
+
 public extension UIViewController {
 
   var navPrev: UIViewController? {

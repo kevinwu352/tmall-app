@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A23D0CF2F6BD17B0001E47E /* TextLimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A23D0CE2F6BD1770001E47E /* TextLimiter.swift */; };
 		0A3EE97A2B98A55400206B1F /* UIViewController_Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3EE9792B98A55400206B1F /* UIViewController_Navigator.swift */; };
 		0A534A012A54521B00EDA4BF /* Comb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349052A54521A00EDA4BF /* Comb.swift */; };
 		0A534A022A54521B00EDA4BF /* ControlEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349062A54521A00EDA4BF /* ControlEvent.swift */; };
@@ -43,7 +44,7 @@
 		0A534A322A54521B00EDA4BF /* ChangeExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349442A54521A00EDA4BF /* ChangeExt.swift */; };
 		0A534A332A54521B00EDA4BF /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349452A54521A00EDA4BF /* ThemeManager.swift */; };
 		0A534A342A54521B00EDA4BF /* Change.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349462A54521A00EDA4BF /* Change.swift */; };
-		0A534A352A54521B00EDA4BF /* TextLimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349482A54521A00EDA4BF /* TextLimiter.swift */; };
+		0A534A352A54521B00EDA4BF /* TextLimiter-old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349482A54521A00EDA4BF /* TextLimiter-old.swift */; };
 		0A534A362A54521B00EDA4BF /* KeyboardAvoiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5349492A54521A00EDA4BF /* KeyboardAvoiding.swift */; };
 		0A534A372A54521B00EDA4BF /* StateErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A53494B2A54521A00EDA4BF /* StateErrorView.swift */; };
 		0A534A382A54521B00EDA4BF /* StateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A53494C2A54521A00EDA4BF /* StateView.swift */; };
@@ -95,6 +96,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A23D0CE2F6BD1770001E47E /* TextLimiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLimiter.swift; sourceTree = "<group>"; };
 		0A3EE9792B98A55400206B1F /* UIViewController_Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController_Navigator.swift; sourceTree = "<group>"; };
 		0A53487A2A544E4B00EDA4BF /* ModCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ModCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A5349052A54521A00EDA4BF /* Comb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comb.swift; sourceTree = "<group>"; };
@@ -132,7 +134,7 @@
 		0A5349442A54521A00EDA4BF /* ChangeExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeExt.swift; sourceTree = "<group>"; };
 		0A5349452A54521A00EDA4BF /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		0A5349462A54521A00EDA4BF /* Change.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Change.swift; sourceTree = "<group>"; };
-		0A5349482A54521A00EDA4BF /* TextLimiter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextLimiter.swift; sourceTree = "<group>"; };
+		0A5349482A54521A00EDA4BF /* TextLimiter-old.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TextLimiter-old.swift"; sourceTree = "<group>"; };
 		0A5349492A54521A00EDA4BF /* KeyboardAvoiding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardAvoiding.swift; sourceTree = "<group>"; };
 		0A53494B2A54521A00EDA4BF /* StateErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateErrorView.swift; sourceTree = "<group>"; };
 		0A53494C2A54521A00EDA4BF /* StateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateView.swift; sourceTree = "<group>"; };
@@ -458,7 +460,8 @@
 				0A53495B2A54521A00EDA4BF /* Checkbox.swift */,
 				253548F52CF85C2A00471D54 /* Infoline.swift */,
 				0A5349492A54521A00EDA4BF /* KeyboardAvoiding.swift */,
-				0A5349482A54521A00EDA4BF /* TextLimiter.swift */,
+				0A5349482A54521A00EDA4BF /* TextLimiter-old.swift */,
+				0A23D0CE2F6BD1770001E47E /* TextLimiter.swift */,
 				0A53494A2A54521A00EDA4BF /* StateView */,
 			);
 			path = Uncat;
@@ -643,7 +646,7 @@
 				0A534A2B2A54521B00EDA4BF /* Navbar.swift in Sources */,
 				0A534A5E2A54521B00EDA4BF /* Defaults.swift in Sources */,
 				0A534A402A54521B00EDA4BF /* UIScrollView_Spinner.swift in Sources */,
-				0A534A352A54521B00EDA4BF /* TextLimiter.swift in Sources */,
+				0A534A352A54521B00EDA4BF /* TextLimiter-old.swift in Sources */,
 				0A534A4A2A54521B00EDA4BF /* BaseControl.swift in Sources */,
 				0A534A202A54521B00EDA4BF /* CommonConfiger.swift in Sources */,
 				0A534A252A54521B00EDA4BF /* UserCenterService.swift in Sources */,
@@ -704,6 +707,7 @@
 				0A534A332A54521B00EDA4BF /* ThemeManager.swift in Sources */,
 				0A534A5A2A54521B00EDA4BF /* CollectionExt.swift in Sources */,
 				0A534A512A54521B00EDA4BF /* Serialize.swift in Sources */,
+				0A23D0CF2F6BD17B0001E47E /* TextLimiter.swift in Sources */,
 				0A534A0A2A54521B00EDA4BF /* AppOptions.swift in Sources */,
 				0A98D7CF2C91731800308F47 /* HttpProp.swift in Sources */,
 				0A534A032A54521B00EDA4BF /* ControlProperty.swift in Sources */,

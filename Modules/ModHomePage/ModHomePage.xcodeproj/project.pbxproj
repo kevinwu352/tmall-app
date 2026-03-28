@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0A168E2D2B6258D000727871 /* ShadowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A168E2C2B6258D000727871 /* ShadowViewController.swift */; };
 		0A23D0D12F6BD1AA0001E47E /* LimiterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A23D0D02F6BD1A90001E47E /* LimiterViewController.swift */; };
+		0A35385D2F77B3DE00292E4A /* GestureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A35385C2F77B3DE00292E4A /* GestureViewController.swift */; };
 		0A35C1812BF7216600C39DD9 /* ButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A35C1802BF7216600C39DD9 /* ButtonViewController.swift */; };
 		0A534B262A5458F500EDA4BF /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A534B142A5458F500EDA4BF /* PopupViewController.swift */; };
 		0A534B272A5458F500EDA4BF /* CatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A534B162A5458F500EDA4BF /* CatViewController.swift */; };
@@ -51,6 +52,7 @@
 /* Begin PBXFileReference section */
 		0A168E2C2B6258D000727871 /* ShadowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowViewController.swift; sourceTree = "<group>"; };
 		0A23D0D02F6BD1A90001E47E /* LimiterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimiterViewController.swift; sourceTree = "<group>"; };
+		0A35385C2F77B3DE00292E4A /* GestureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureViewController.swift; sourceTree = "<group>"; };
 		0A35C1802BF7216600C39DD9 /* ButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonViewController.swift; sourceTree = "<group>"; };
 		0A53488E2A544E8000EDA4BF /* ModHomePage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ModHomePage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A534B142A5458F500EDA4BF /* PopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				0A8901BB2BEBB6EF00812A7F /* TabView.swift */,
 				0ACD89792D7A887F0037ED5E /* ProblemOneView.swift */,
 				0AFA03F02F46BCC700AB8D9B /* CollectionViewController.swift */,
+				0A35385C2F77B3DE00292E4A /* GestureViewController.swift */,
 				0A534B152A5458F500EDA4BF /* Test */,
 				0A8930F32A545FC0005BEAA4 /* Resources */,
 			);
@@ -323,6 +326,7 @@
 				0A8930FC2A545FC0005BEAA4 /* R.generated.swift in Sources */,
 				0A8901BC2BEBB6EF00812A7F /* TabView.swift in Sources */,
 				0A35C1812BF7216600C39DD9 /* ButtonViewController.swift in Sources */,
+				0A35385D2F77B3DE00292E4A /* GestureViewController.swift in Sources */,
 				0A62E15D2C4A38DA00C5E855 /* FontViewController.swift in Sources */,
 				0A98D7D12C917AEB00308F47 /* ObjectTableViewController.swift in Sources */,
 				0A534B272A5458F500EDA4BF /* CatViewController.swift in Sources */,

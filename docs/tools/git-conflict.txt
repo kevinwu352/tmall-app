@@ -40,3 +40,14 @@ git merge master
 =======
   xxx
 >>>>>>> master                imcoming change
+
+
+git merge 详解
+两个分支的 commit 会按时间排序合并到一起，并在最终增加一个 merge commit
+
+如果有冲突，两个分支的 commit 会保持各自 commit 的原始内容，我们解决冲突，merge commit 里呈现的是解决后的内容
+即：333-commit里是xxx 444-commit里是yyy merge-commit里是zzz
+
+reset 时，如果回退 merge commit，那么，此 commit 以及它带来的那个分支的所有 commit 都会回退
+暂存区里存的是解决冲突后的状态，即 zzz
+总结：回退时，两个分支的内容都会放到暂存区，只是冲突的部分已解决的，冲突的部分是新的

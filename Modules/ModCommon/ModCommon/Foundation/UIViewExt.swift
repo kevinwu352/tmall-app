@@ -20,24 +20,24 @@ import UIKit
 // delaysTouchesBegan = false   手势识别成功后视图收不到触摸事件，失败后才会发 touch began 给视图
 // delaysTouchesEnded = true    手势识别成功后视图收到 touch cancelled，失败后才会发 touch ended 给视图
 
-public extension UIView {
-  var isShown: Bool {
+extension UIView {
+  public var isShown: Bool {
     get { !isHidden }
     set { isHidden = !newValue }
   }
 
-  var imageRep: UIImage {
+  public var imageRep: UIImage {
     UIGraphicsImageRenderer(bounds: bounds).image {
       layer.render(in: $0.cgContext)
     }
   }
 
   // for cell
-  static var reuseId: String {
+  public static var reuseId: String {
     String(describing: self)
   }
 
-  var responder: UIResponder? {
+  public var responder: UIResponder? {
     if isFirstResponder {
       return self
     }
@@ -49,8 +49,7 @@ public extension UIView {
     return nil
   }
 
-
-  func kangLa(_ priority: UILayoutPriority, _ axis: NSLayoutConstraint.Axis?) {
+  public func kangLa(_ priority: UILayoutPriority, _ axis: NSLayoutConstraint.Axis?) {
     if let axis = axis {
       setContentHuggingPriority(priority, for: axis)
     } else {
@@ -58,7 +57,7 @@ public extension UIView {
       setContentHuggingPriority(priority, for: .horizontal)
     }
   }
-  func kangYa(_ priority: UILayoutPriority, _ axis: NSLayoutConstraint.Axis?) {
+  public func kangYa(_ priority: UILayoutPriority, _ axis: NSLayoutConstraint.Axis?) {
     if let axis = axis {
       setContentCompressionResistancePriority(priority, for: axis)
     } else {
@@ -66,34 +65,53 @@ public extension UIView {
       setContentCompressionResistancePriority(priority, for: .horizontal)
     }
   }
-  func degradeLaya(_ val: Int, _ axis: NSLayoutConstraint.Axis?) {
+  public func degradeLaya(_ val: Int, _ axis: NSLayoutConstraint.Axis?) {
     if let axis = axis {
-      setContentHuggingPriority(.defaultLow-Float(val), for: axis)
-      setContentCompressionResistancePriority(.defaultHigh-Float(val), for: axis)
+      setContentHuggingPriority(.defaultLow - Float(val), for: axis)
+      setContentCompressionResistancePriority(.defaultHigh - Float(val), for: axis)
     } else {
-      setContentHuggingPriority(.defaultLow-Float(val), for: .horizontal)
-      setContentHuggingPriority(.defaultLow-Float(val), for: .vertical)
-      setContentCompressionResistancePriority(.defaultHigh-Float(val), for: .horizontal)
-      setContentCompressionResistancePriority(.defaultHigh-Float(val), for: .vertical)
+      setContentHuggingPriority(.defaultLow - Float(val), for: .horizontal)
+      setContentHuggingPriority(.defaultLow - Float(val), for: .vertical)
+      setContentCompressionResistancePriority(.defaultHigh - Float(val), for: .horizontal)
+      setContentCompressionResistancePriority(.defaultHigh - Float(val), for: .vertical)
     }
   }
 
-
-  func addSubviews(_ views: [UIView]) {
+  public func addSubviews(_ views: [UIView]) {
     views.forEach { addSubview($0) }
   }
-  func removeAllSubviews() {
+  public func removeAllSubviews() {
     subviews.forEach { $0.removeFromSuperview() }
   }
-  func bringToFront() {
+  public func bringToFront() {
     superview?.bringSubviewToFront(self)
   }
-  func sendToBack() {
+  public func sendToBack() {
     superview?.sendSubviewToBack(self)
+  }
+  public func moveAbove(_ view: UIView?) {
+    guard let view, let target = superview?.subviews.firstIndex(of: view) else { return }
+    while let i = superview?.subviews.firstIndex(of: self) {
+      if i < target {
+        superview?.exchangeSubview(at: i, withSubviewAt: i + 1)
+      } else {
+        break
+      }
+    }
+  }
+  public func moveBelow(_ view: UIView?, adjacent: Bool = false) {
+    guard let view, let target = superview?.subviews.firstIndex(of: view) else { return }
+    while let i = superview?.subviews.firstIndex(of: self) {
+      if i > target {
+        superview?.exchangeSubview(at: i, withSubviewAt: i - 1)
+      } else {
+        break
+      }
+    }
   }
 
   // 深度优先
-  func descendant<T: UIView>(_ cls: T.Type) -> T? {
+  public func descendant<T: UIView>(_ cls: T.Type) -> T? {
     if self is T {
       return self as? T
     }
@@ -104,7 +122,7 @@ public extension UIView {
     }
     return nil
   }
-  func ancestor<T: UIView>(_ cls: T.Type) -> T? {
+  public func ancestor<T: UIView>(_ cls: T.Type) -> T? {
     if self is T {
       return self as? T
     } else {
@@ -112,13 +130,12 @@ public extension UIView {
     }
   }
 
-
   // view.addPushTransition(.fromLeft) { print("push done") }
   // view.backgroundColor = .red
   //
   // navigationController?.view.addPushTransition(.fromRight) { print("pop done") }
   // navigationController?.popViewController(animated: false)
-  func addPushTransition(_ subtype: CATransitionSubtype, _ completion: VoidCb?) {
+  public func addPushTransition(_ subtype: CATransitionSubtype, _ completion: VoidCb?) {
     CATransaction.begin()
     let transition = CATransition()
     transition.duration = 0.35
@@ -131,11 +148,10 @@ public extension UIView {
     CATransaction.commit()
   }
 
-
   // To use in code
   //   set View - Custom Class
   //   in code: XXXView.fromNib()
-  static func fromNib() -> Self {
+  public static func fromNib() -> Self {
     UINib(nibName: String(describing: self), bundle: Bundle(for: self))
       .instantiate(withOwner: nil, options: nil).first as? Self ?? .init()
   }
@@ -143,7 +159,7 @@ public extension UIView {
   //   set File's Owner - Custom Class
   //   in another xib, add a sub UIView, set its Custom Class
   //   in code: awakeFromNib() { ... }
-  func loadContentFromNib() {
+  public func loadContentFromNib() {
     UINib(nibName: String(describing: Self.self), bundle: Bundle(for: Self.self))
       .instantiate(withOwner: self, options: nil)
       .compactMap { $0 as? UIView }
@@ -158,45 +174,42 @@ public extension UIView {
   }
 }
 
-public extension NSLayoutConstraint.Axis {
-  var next: Self {
+extension NSLayoutConstraint.Axis {
+  public var next: Self {
     self == .vertical ? .horizontal : .vertical
   }
-  var isVertical: Bool {
+  public var isVertical: Bool {
     self == .vertical
   }
-  var isHorizontal: Bool {
+  public var isHorizontal: Bool {
     self == .horizontal
   }
 }
 
-
-public extension UIStackView {
-  func addArrangedSubviews(_ views: [UIView]) {
+extension UIStackView {
+  public func addArrangedSubviews(_ views: [UIView]) {
     views.forEach { addArrangedSubview($0) }
   }
-  func removeAllArrangedSubviews() {
+  public func removeAllArrangedSubviews() {
     arrangedSubviews.forEach { $0.removeFromSuperview() }
   }
 }
 
-
-public extension UIViewController {
-  func addSubvc(_ child: UIViewController, _ inView: UIView?) {
+extension UIViewController {
+  public func addSubvc(_ child: UIViewController, _ inView: UIView?) {
     addChild(child)
     (inView ?? view).addSubview(child.view)
     child.didMove(toParent: self)
   }
-  func removeSubvc(_ child: UIViewController) {
+  public func removeSubvc(_ child: UIViewController) {
     child.willMove(toParent: nil)
     child.view.removeFromSuperview()
     child.removeFromParent()
   }
 }
 
-
-public extension UIView {
-  var owner: UIViewController? {
+extension UIView {
+  public var owner: UIViewController? {
     var responder: UIResponder? = self
     while !(responder is UIViewController) {
       responder = responder?.next
@@ -205,8 +218,8 @@ public extension UIView {
     return (responder as? UIViewController)
   }
 }
-public extension UIViewController {
-  var ancestor: UIViewController? {
+extension UIViewController {
+  public var ancestor: UIViewController? {
     var ret = self
     while let vc = ret.parent {
       ret = vc
@@ -214,11 +227,10 @@ public extension UIViewController {
     return ret
   }
 }
-public extension UINavigationController {
-  var root: UIViewController? { viewControllers.at(0) }
-  var top: UIViewController? { topViewController }
+extension UINavigationController {
+  public var root: UIViewController? { viewControllers.at(0) }
+  public var top: UIViewController? { topViewController }
 }
-
 
 // ValueControl
 //

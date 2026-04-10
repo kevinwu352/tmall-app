@@ -60,3 +60,47 @@ extension NavigationController: UIGestureRecognizerDelegate {
 //    }
 //  }
 //}
+
+
+// 实现自定义的 push/pop 转场
+// extension NavigationController: UINavigationControllerDelegate {
+//   public func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> (any UIViewControllerAnimatedTransitioning)? {
+//     MyAnimator(push: operation == .push)
+//   }
+// }
+//
+// class MyAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+//   init(push: Bool) {
+//     pushing = push
+//   }
+//   let pushing: Bool
+//
+//   func transitionDuration(using transitionContext: (any UIViewControllerContextTransitioning)?) -> TimeInterval {
+//     5
+//   }
+//
+//   func animateTransition(using transitionContext: any UIViewControllerContextTransitioning) {
+//     let containerView = transitionContext.containerView
+//
+//     let fromViewController = transitionContext.viewController(forKey: .from)
+//     let toViewController = transitionContext.viewController(forKey: .to)
+//     var fromView = fromViewController?.view
+//     var toView = toViewController?.view
+//
+//     if pushing {
+//       toView?.frame = CGRectMake(UIScreen.main.bounds.width, 0, fromView!.frame.width, fromView!.frame.height)
+//     } else {
+//       toView?.frame = CGRectMake(-UIScreen.main.bounds.width, 0, fromView!.frame.width, fromView!.frame.height)
+//     }
+//     containerView.addSubview(toView!)
+//
+//     let duration = transitionDuration(using: transitionContext)
+//     UIView.animate(withDuration: duration, delay: 0, options: .curveLinear) {
+//       let frame = transitionContext.finalFrame(for: toViewController!)
+//       toView?.frame = frame
+//     } completion: { finished in
+//       let cancelled = transitionContext.transitionWasCancelled
+//       transitionContext.completeTransition(!cancelled)
+//     }
+//   }
+// }

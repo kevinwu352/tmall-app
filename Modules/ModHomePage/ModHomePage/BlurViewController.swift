@@ -48,21 +48,92 @@ import ModCommon
  ])
 */
 
-class BlurViewController: BaseViewController, UICollectionViewDataSource {
+extension UIBlurEffect.Style {
+  var name: String {
+    switch self {
+    case .extraDark: "extraDark"
+    case .extraLight: "extraLight"
+    case .light: "light"
+    case .dark: "dark"
+    case .regular: "regular"
+    case .prominent: "prominent"
+
+    case .systemUltraThinMaterial: "systemUltraThinMaterial"
+    case .systemThinMaterial: "systemThinMaterial"
+    case .systemMaterial: "systemMaterial"
+    case .systemThickMaterial: "systemThickMaterial"
+    case .systemChromeMaterial: "systemChromeMaterial"
+
+    case .systemUltraThinMaterialLight: "systemUltraThinMaterialLight"
+    case .systemThinMaterialLight: "systemThinMaterialLight"
+    case .systemMaterialLight: "systemMaterialLight"
+    case .systemThickMaterialLight: "systemThickMaterialLight"
+    case .systemChromeMaterialLight: "systemChromeMaterialLight"
+
+    case .systemUltraThinMaterialDark: "systemUltraThinMaterialDark"
+    case .systemThinMaterialDark: "systemThinMaterialDark"
+    case .systemMaterialDark: "systemMaterialDark"
+    case .systemThickMaterialDark: "systemThickMaterialDark"
+    case .systemChromeMaterialDark: "systemChromeMaterialDark"
+
+    @unknown default: "unknown"
+    }
+  }
+}
+
+class BlurViewController: BaseViewController {
 
   override func setup() {
     super.setup()
-    view.addSubview(collectionView)
+    // view.addSubview(collectionView)
+    view.addSubview(label)
+    view.addSubview(imageView)
+    view.addSubview(stackView)
   }
   override func layoutViews() {
     super.layoutViews()
-    collectionView.snp.remakeConstraints { make in
-      make.leading.trailing.bottom.equalToSuperview()
-      make.pin_top(navbar, 0)
+    label.snp.remakeConstraints { make in
+      make.top.equalTo(navbar!.snp.bottom).offset(10)
+      make.leading.trailing.equalToSuperview().inset(10)
+      make.height.equalTo(40)
+    }
+    imageView.snp.remakeConstraints { make in
+      make.top.equalTo(label.snp.bottom).offset(10)
+      make.leading.trailing.equalToSuperview().inset(10)
+      make.height.equalTo((make.item as? UIView)?.snp.width ?? 0).multipliedBy(0.5)
+    }
+    stackView.snp.remakeConstraints { make in
+      make.centerX.equalToSuperview()
+      make.top.equalTo(imageView.snp.bottom).offset(10)
+    }
+    // collectionView.snp.remakeConstraints { make in
+    //   make.leading.trailing.bottom.equalToSuperview()
+    //   make.pin_top(navbar, 0)
+    // }
+  }
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    index = 0
+  }
+
+
+  var blurView: UIVisualEffectView!
+
+  var index = 0 {
+    didSet {
+      label.text = styles[index].name
+      blurView?.removeFromSuperview()
+      let effect: UIBlurEffect = UIBlurEffect(style: styles[index])
+      blurView = UIVisualEffectView(effect: effect)
+      view.addSubview(blurView)
+      blurView.snp.remakeConstraints { make in
+        make.leading.top.bottom.equalTo(imageView)
+        make.width.equalTo(imageView) //.multipliedBy(0.5)
+      }
     }
   }
 
-  lazy var styles: [UIBlurEffect.Style] = [
+  let styles: [UIBlurEffect.Style] = [
     .extraLight,
     .light,
     .dark,
@@ -87,77 +158,131 @@ class BlurViewController: BaseViewController, UICollectionViewDataSource {
     .systemThickMaterialDark,
     .systemChromeMaterialDark,
   ]
-  lazy var names: [UIBlurEffect.Style:String] = [
-    .extraLight: "extra Light",
-    .light: "light",
-    .dark: "dark",
-    .regular: "regular",
-    .prominent: "prominent",
+  // let names: [UIBlurEffect.Style:String] = [
+  //   .extraLight: "extra Light",
+  //   .light: "light",
+  //   .dark: "dark",
+  //   .regular: "regular",
+  //   .prominent: "prominent",
 
-    .systemUltraThinMaterial: "system Ultra Thin Material",
-    .systemThinMaterial: "system Thin Material",
-    .systemMaterial: "system Material",
-    .systemThickMaterial: "system Thick Material",
-    .systemChromeMaterial: "system Chrome Material",
+  //   .systemUltraThinMaterial: "system Ultra Thin Material",
+  //   .systemThinMaterial: "system Thin Material",
+  //   .systemMaterial: "system Material",
+  //   .systemThickMaterial: "system Thick Material",
+  //   .systemChromeMaterial: "system Chrome Material",
 
-    .systemUltraThinMaterialLight: "system Ultra Thin Material Light",
-    .systemThinMaterialLight: "system Thin Material Light",
-    .systemMaterialLight: "system Material Light",
-    .systemThickMaterialLight: "system Thick Material Light",
-    .systemChromeMaterialLight: "system Chrome Material Light",
+  //   .systemUltraThinMaterialLight: "system Ultra Thin Material Light",
+  //   .systemThinMaterialLight: "system Thin Material Light",
+  //   .systemMaterialLight: "system Material Light",
+  //   .systemThickMaterialLight: "system Thick Material Light",
+  //   .systemChromeMaterialLight: "system Chrome Material Light",
 
-    .systemUltraThinMaterialDark: "system Ultra Thin Material Dark",
-    .systemThinMaterialDark: "system Thin Material Dark",
-    .systemMaterialDark: "system Material Dark",
-    .systemThickMaterialDark: "system Thick Material Dark",
-    .systemChromeMaterialDark: "system Chrome Material Dark",
-  ]
+  //   .systemUltraThinMaterialDark: "system Ultra Thin Material Dark",
+  //   .systemThinMaterialDark: "system Thin Material Dark",
+  //   .systemMaterialDark: "system Material Dark",
+  //   .systemThickMaterialDark: "system Thick Material Dark",
+  //   .systemChromeMaterialDark: "system Chrome Material Dark",
+  // ]
 
-  lazy var collectionView: UICollectionView = {
-    let items = 1.0
-    let hor_margin = 20.0
-    let ver_margin = 20.0
-    let ver_spacing = 10.0
-    let hor_spacing = 10.0
-
-    let item_width = (SCREEN_WID - hor_margin * 2 - hor_spacing * (items-1)) / items
-    let item_height = item_width / 2.0
-
-
-    let layout = UICollectionViewFlowLayout()
-    layout.scrollDirection = .vertical
-    layout.sectionInset = UIEdgeInsets(top: ver_margin, left: hor_margin, bottom: ver_margin, right: hor_margin)
-    layout.itemSize = CGSize(width: item_width, height: item_height)
-    //layout.estimatedItemSize
-    layout.minimumInteritemSpacing = hor_spacing
-    layout.minimumLineSpacing = ver_spacing
-    //layout.headerReferenceSize
-    //layout.footerReferenceSize
-    //layout.sectionHeadersPinToVisibleBounds
-    //layout.sectionFootersPinToVisibleBounds
-
-    let ret = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    ret.dataSource = self
-    ret.register(EntryCell.self, forCellWithReuseIdentifier: "cell")
-    ret.backgroundColor = .clear
-
+  lazy var label: UILabel = {
+    let ret = UILabel()
+    ret.font = .systemFont(ofSize: 16)
+    ret.textColor = .blue
+    ret.textAlignment = .left
+    ret.lineBreakMode = .byWordWrapping
+    ret.numberOfLines = 0
+    return ret
+  }()
+  lazy var imageView: UIImageView = {
+    let ret = UIImageView(image: Res.img.hill.cur)
     return ret
   }()
 
-  func numberOfSections(in collectionView: UICollectionView) -> Int {
-    1
+  lazy var stackView: UIStackView = {
+    let ret = UIStackView()
+    ret.axis = .horizontal
+    ret.alignment = .fill
+    ret.distribution = .equalSpacing
+    ret.spacing = 50
+    ret.addArrangedSubviews([prevBtn, nextBtn])
+    return ret
+  }()
+  lazy var prevBtn: UIButton = {
+    let ret = UIButton(type: .system)
+    ret.tag = 0
+    ret.setTitle("<<<", for: .normal)
+    ret.addTarget(self, action: #selector(jump), for: .touchUpInside)
+    return ret
+  }()
+  lazy var nextBtn: UIButton = {
+    let ret = UIButton(type: .system)
+    ret.tag = 1
+    ret.setTitle(">>>", for: .normal)
+    ret.addTarget(self, action: #selector(jump), for: .touchUpInside)
+    return ret
+  }()
+  @objc func jump(_ sender: UIButton) {
+    if sender.tag == 0 {
+      if index > 0 {
+        index -= 1
+      } else {
+        index = styles.count - 1
+      }
+    } else {
+      if index < styles.count - 1 {
+        index += 1
+      } else {
+        index = 0
+      }
+    }
   }
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    styles.count
-  }
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! EntryCell
 
-    cell.style = styles[indexPath.row]
-    cell.label.text = names[styles[indexPath.row]]
 
-    return cell
-  }
+  // lazy var collectionView: UICollectionView = {
+  //   let items = 1.0
+  //   let hor_margin = 20.0
+  //   let ver_margin = 20.0
+  //   let ver_spacing = 10.0
+  //   let hor_spacing = 10.0
+
+  //   let item_width = (SCREEN_WID - hor_margin * 2 - hor_spacing * (items-1)) / items
+  //   let item_height = item_width / 2.0
+
+
+  //   let layout = UICollectionViewFlowLayout()
+  //   layout.scrollDirection = .vertical
+  //   layout.sectionInset = UIEdgeInsets(top: ver_margin, left: hor_margin, bottom: ver_margin, right: hor_margin)
+  //   layout.itemSize = CGSize(width: item_width, height: item_height)
+  //   //layout.estimatedItemSize
+  //   layout.minimumInteritemSpacing = hor_spacing
+  //   layout.minimumLineSpacing = ver_spacing
+  //   //layout.headerReferenceSize
+  //   //layout.footerReferenceSize
+  //   //layout.sectionHeadersPinToVisibleBounds
+  //   //layout.sectionFootersPinToVisibleBounds
+
+  //   let ret = UICollectionView(frame: .zero, collectionViewLayout: layout)
+  //   ret.dataSource = self
+  //   ret.register(EntryCell.self, forCellWithReuseIdentifier: "cell")
+  //   ret.backgroundColor = .clear
+
+  //   return ret
+  // }()
+
+  // func numberOfSections(in collectionView: UICollectionView) -> Int {
+  //   1
+  // }
+  // func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  //   styles.count
+  // }
+  // func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  //   let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! EntryCell
+
+  //   cell.style = styles[indexPath.row]
+  //   cell.label.text = names[styles[indexPath.row]]
+
+  //   return cell
+  // }
 
 
   class EntryCell: BaseCollectionViewCell {

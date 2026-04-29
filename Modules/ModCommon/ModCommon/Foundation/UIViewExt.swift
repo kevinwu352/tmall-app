@@ -49,31 +49,42 @@ extension UIView {
     return nil
   }
 
-  public func kangLa(_ priority: UILayoutPriority, _ axis: NSLayoutConstraint.Axis?) {
-    if let axis = axis {
+  public func kangLa(_ priority: UILayoutPriority, axis: NSLayoutConstraint.Axis? = nil) {
+    if let axis {
       setContentHuggingPriority(priority, for: axis)
     } else {
-      setContentHuggingPriority(priority, for: .vertical)
       setContentHuggingPriority(priority, for: .horizontal)
+      setContentHuggingPriority(priority, for: .vertical)
     }
   }
-  public func kangYa(_ priority: UILayoutPriority, _ axis: NSLayoutConstraint.Axis?) {
-    if let axis = axis {
+  public func kangYa(_ priority: UILayoutPriority, axis: NSLayoutConstraint.Axis? = nil) {
+    if let axis {
       setContentCompressionResistancePriority(priority, for: axis)
     } else {
-      setContentCompressionResistancePriority(priority, for: .vertical)
       setContentCompressionResistancePriority(priority, for: .horizontal)
+      setContentCompressionResistancePriority(priority, for: .vertical)
     }
   }
-  public func degradeLaya(_ val: Int, _ axis: NSLayoutConstraint.Axis?) {
-    if let axis = axis {
-      setContentHuggingPriority(.defaultLow - Float(val), for: axis)
-      setContentCompressionResistancePriority(.defaultHigh - Float(val), for: axis)
+  public func degradeLaya(_ value: Int, axis: NSLayoutConstraint.Axis? = nil) {
+    if let axis {
+      setContentHuggingPriority(.defaultLow - Float(value), for: axis)
+      setContentCompressionResistancePriority(.defaultHigh - Float(value), for: axis)
     } else {
-      setContentHuggingPriority(.defaultLow - Float(val), for: .horizontal)
-      setContentHuggingPriority(.defaultLow - Float(val), for: .vertical)
-      setContentCompressionResistancePriority(.defaultHigh - Float(val), for: .horizontal)
-      setContentCompressionResistancePriority(.defaultHigh - Float(val), for: .vertical)
+      setContentHuggingPriority(.defaultLow - Float(value), for: .horizontal)
+      setContentHuggingPriority(.defaultLow - Float(value), for: .vertical)
+      setContentCompressionResistancePriority(.defaultHigh - Float(value), for: .horizontal)
+      setContentCompressionResistancePriority(.defaultHigh - Float(value), for: .vertical)
+    }
+  }
+  public func adaptLaya(_ value: Int, axis: NSLayoutConstraint.Axis? = nil) {
+    if let axis = axis {
+      setContentHuggingPriority(UILayoutPriority(Float(value)), for: axis)
+      setContentCompressionResistancePriority(UILayoutPriority(Float(value)), for: axis)
+    } else {
+      setContentHuggingPriority(UILayoutPriority(Float(value)), for: .horizontal)
+      setContentHuggingPriority(UILayoutPriority(Float(value)), for: .vertical)
+      setContentCompressionResistancePriority(UILayoutPriority(Float(value)), for: .horizontal)
+      setContentCompressionResistancePriority(UILayoutPriority(Float(value)), for: .vertical)
     }
   }
 

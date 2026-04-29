@@ -116,7 +116,7 @@ open class Infoline: BaseStackView {
                       breakMode: .byWordWrapping
     )
     ret.numberOfLines = 0
-    ret.degradeLaya(1, .horizontal)
+    ret.degradeLaya(1, axis: .horizontal)
     return ret
   }()
 

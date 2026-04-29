@@ -57,9 +57,9 @@ class ShadowView: UIView {
     shadowLayer.name = "shadow"
     shadowLayer.fillColor = UIColor.green.cgColor
     shadowLayer.shadowColor = UIColor.red.cgColor
-    shadowLayer.shadowOpacity = 1
-    shadowLayer.shadowRadius = 5
-    shadowLayer.shadowOffset = CGSize(width: 0, height: 5)
+    shadowLayer.shadowOpacity = 1                           // Figma Opacity
+    shadowLayer.shadowRadius = 5                            // Figma Blur / 2
+    shadowLayer.shadowOffset = CGSize(width: 0, height: 5)  // Figma X, Y
     layer.addSublayer(shadowLayer)
 
     addSubview(lb)

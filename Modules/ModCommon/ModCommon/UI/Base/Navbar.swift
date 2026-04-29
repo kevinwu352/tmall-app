@@ -140,7 +140,7 @@ public class Navbar: BaseView {
     ret.lineBreakMode = .byTruncatingMiddle
     ret.font = .nav_title
     ret.chg.textColor(.nav_title)
-    ret.degradeLaya(1, nil)
+    ret.degradeLaya(1, axis: nil)
     return ret
   }()
 
@@ -192,8 +192,8 @@ public extension UIViewController {
     nb.snp.remakeConstraints { make in
       make.leading.trailing.top.equalToSuperview()
     }
-    nb.kangLa(.required, nil)
-    nb.kangYa(.required, nil)
+    nb.kangLa(.required, axis: nil)
+    nb.kangYa(.required, axis: nil)
 
     nb.backAction = { [weak self] in
       self?.backSelf(true, nil)

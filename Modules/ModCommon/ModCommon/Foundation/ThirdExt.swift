@@ -75,6 +75,9 @@ public extension ConstraintMaker {
   // make.leading.equalTo(prev?.snp.trailing ?? (make.item as? UIView)?.superview ?? 0) 用这种写法，内部使用 make.item.superview，是相对的，不用写死
   // make.leading.equalTo(prev?.snp.trailing ?? nameLabel.superview ?? 0) 这里的写死的
 }
+// 键盘是不算安全区的，键盘弹出后，底部安全区并不会变高
+
+
 // 一个内部使用 auto-layout 的视图，被 frame 布局，情况如何？
 // class RedView: UIView {
 //   override init(frame: CGRect) {
@@ -102,6 +105,12 @@ public extension ConstraintMaker {
 //   且位置在 (0,0) 错的，查看图层也说 position ambiguous
 // 所以，就算 frame 包 auto-layout，本质也是把 frame 转化成 auto-layout 了，否则要出错
 
+
+// stack1 包含左右两个视图 stack2 label
+// stack2 包含上下两个 label1 label2
+// 想让 label 完全显示，压缩左边
+// 只需要让 label1 label2 抗压优先级等于 751 即可，就算 stack2 和 label 都是 750，压缩的也是左边
+// 因为左边 stack2 内部包含了 高抗压751 的两个子
 
 
 public extension UIImageView {

@@ -85,10 +85,11 @@ class BlurViewController: BaseViewController {
 
   override func setup() {
     super.setup()
+    // view.backgroundColor = .clear
     // view.addSubview(collectionView)
     view.addSubview(label)
-    view.addSubview(imageView)
     view.addSubview(stackView)
+    view.addSubview(imageView)
   }
   override func layoutViews() {
     super.layoutViews()
@@ -97,14 +98,16 @@ class BlurViewController: BaseViewController {
       make.leading.trailing.equalToSuperview().inset(10)
       make.height.equalTo(40)
     }
-    imageView.snp.remakeConstraints { make in
-      make.top.equalTo(label.snp.bottom).offset(10)
-      make.leading.trailing.equalToSuperview().inset(10)
-      make.height.equalTo((make.item as? UIView)?.snp.width ?? 0).multipliedBy(0.5)
-    }
     stackView.snp.remakeConstraints { make in
       make.centerX.equalToSuperview()
-      make.top.equalTo(imageView.snp.bottom).offset(10)
+      make.top.equalTo(label.snp.bottom).offset(10)
+    }
+    if imageView.superview != nil {
+      imageView.snp.remakeConstraints { make in
+        make.top.equalTo(stackView.snp.bottom).offset(10)
+        make.leading.trailing.equalToSuperview().inset(10)
+        make.height.equalTo((make.item as? UIView)?.snp.width ?? 0).multipliedBy(0.5)
+      }
     }
     // collectionView.snp.remakeConstraints { make in
     //   make.leading.trailing.bottom.equalToSuperview()
@@ -117,19 +120,65 @@ class BlurViewController: BaseViewController {
   }
 
 
+  func addBlurEffect() {
+    blurView?.removeFromSuperview()
+
+    let effect = UIBlurEffect(style: styles[index])
+    blurView = UIVisualEffectView(effect: effect)
+    // 能改透明度，但感觉最好不要改
+    // blurView.alpha = 0.95
+    view.addSubview(blurView)
+    blurView.snp.remakeConstraints { make in
+      make.leading.top.bottom.equalTo(imageView)
+      make.width.equalTo(imageView) //.multipliedBy(0.5)
+    }
+  }
   var blurView: UIVisualEffectView!
+
+
+  // 重要例子，如何使用 Vibrancy
+  func addVibrancyEffect() {
+    vibrancyView?.removeFromSuperview()
+
+    let imageView: UIImageView
+    if let iv = view.viewWithTag(20) {
+      imageView = iv as! UIImageView
+    } else {
+      imageView = UIImageView()
+      imageView.tag = 20
+      imageView.image = Res.img.hill.cur
+      view.addSubview(imageView)
+      imageView.frame = CGRect(x: 10, y: 500, width: SCREEN_WID - 20, height: (SCREEN_WID - 20) / 2)
+    }
+
+    let lblName = UILabel()
+    lblName.font = UIFont.boldSystemFont(ofSize: 48)
+    lblName.text = "Anurag"
+    lblName.sizeToFit()
+    lblName.center = CGPoint(x: imageView.center.x, y: imageView.frame.size.height / 2)
+
+    let blurEffect = UIBlurEffect(style: styles[index])
+
+    let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
+    let vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
+    vibrancyEffectView.frame = imageView.bounds
+    vibrancyEffectView.contentView.addSubview(lblName)
+
+    let blurredEffectView = UIVisualEffectView(effect: blurEffect)
+    blurredEffectView.contentView.addSubview(vibrancyEffectView)
+    blurredEffectView.frame = imageView.frame
+    view.addSubview(blurredEffectView)
+
+    vibrancyView = blurredEffectView
+  }
+  var vibrancyView: UIVisualEffectView!
+
 
   var index = 0 {
     didSet {
       label.text = styles[index].name
-      blurView?.removeFromSuperview()
-      let effect: UIBlurEffect = UIBlurEffect(style: styles[index])
-      blurView = UIVisualEffectView(effect: effect)
-      view.addSubview(blurView)
-      blurView.snp.remakeConstraints { make in
-        make.leading.top.bottom.equalTo(imageView)
-        make.width.equalTo(imageView) //.multipliedBy(0.5)
-      }
+      addBlurEffect()
+      addVibrancyEffect()
     }
   }
 
@@ -188,7 +237,7 @@ class BlurViewController: BaseViewController {
     let ret = UILabel()
     ret.font = .systemFont(ofSize: 16)
     ret.textColor = .blue
-    ret.textAlignment = .left
+    ret.textAlignment = .center
     ret.lineBreakMode = .byWordWrapping
     ret.numberOfLines = 0
     return ret

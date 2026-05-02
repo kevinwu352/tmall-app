@@ -16,9 +16,8 @@ import UIKit
 // shadowOpacity  0.0           不透明度，最大值 1
 // shadowOffset   (0.0, -3.0)   偏移量，负值往左上偏移
 
-// cancelsTouchesInView = true  手势识别成功后是否取消视图的触摸事件，通过发送 touch cancelled
-// delaysTouchesBegan = false   手势识别成功后视图收不到触摸事件，失败后才会发 touch began 给视图
-// delaysTouchesEnded = true    手势识别成功后视图收到 touch cancelled，失败后才会发 touch ended 给视图
+// 先给 view 添加一个 subview，再给 view.layer 添加 sublayer，sublayer 会处于 subview 上面
+// 如果用 view.layer.insertSublayer(greenLayer, at: 0) 则会处于 subview 后面
 
 extension UIView {
   public var isShown: Bool {

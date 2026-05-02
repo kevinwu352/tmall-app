@@ -69,10 +69,30 @@ class TaskViewController: UIViewController {
 //    run_order()
 
     Task {
-//      await return_value_2()
-//      await cancel_task()
-      await cancel_network()
+      // await return_value_2()
+      // await cancel_task()
+      // await cancel_network()
+
+      // 一定要注意，Task 的闭包是 async throws 的，所以，这里面如果某个函数抛出了异常，会导致后续的函数调用被跳过
+      print("throw 111")
+      // throw Unicode.UTF8.ValidationError.Kind.truncatedScalar
+      // 这里传 false 时，一切正常，但传 true 时，后续被跳过了
+      // 且这里非常隐蔽，不容易被发现
+      // 平常处理能抛异常的函数，必须包在 do-catch 里面，所以，会处理异常退出的情况，会清理资源
+      // 但是这里，do-catch 并非强制，所以很容易漏掉
+      // 如果抛出了异常，后续被跳过，清理工作也被跳过，很容易会造成内存泄漏或资源未释放
+      try can_throw(true)
+      print("throw 222")
     }
+  }
+
+  // ================================================================================
+  func can_throw(_ val: Bool) throws {
+    print("before can_throw")
+    if val {
+      throw Unicode.UTF8.ValidationError.Kind.truncatedScalar
+    }
+    print("after can_throw")
   }
 
   // ================================================================================

@@ -32,6 +32,8 @@ ggsup   | git branch --set-upstream-to=origin/$(git_current_branch)
 gclean  | git clean -id
 ```
 
+git merge --squash another-branch
+
 
 ## 配置
 

@@ -40,6 +40,9 @@ git merge master
 =======
   xxx
 >>>>>>> master                imcoming change
+注意：
+这里是 merge master 所以 mine 在前
+现实中应该是位于 master 然后 merge fix，此时 mine 就在后
 
 
 git merge 详解

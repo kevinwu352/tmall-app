@@ -34,6 +34,16 @@ gclean  | git clean -id
 
 git merge --squash another-branch
 
+在 aaa 分支将 main 分支更新到最新，main:main 是必须的
+  git fetch origin main:main
+在 .zshrc 中添加，一定要用单引号
+  alias gfp='(){ git fetch origin $1:$1 }'
+用法：gfp main
+
+(would clobber existing tag)
+网上说：删了原来一个 tag，然后重新创建了一个同名的
+git fetch --tags -f
+
 
 ## 配置
 

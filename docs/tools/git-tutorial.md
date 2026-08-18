@@ -34,6 +34,16 @@ gclean  | git clean -id
 
 git merge --squash another-branch
 
+在 aaa 分支将 main 分支更新到最新，main:main 是必须的
+  git fetch origin main:main
+在 .zshrc 中添加，一定要用单引号
+  alias gfp='(){ git fetch origin $1:$1 }'
+用法：gfp main
+
+(would clobber existing tag)
+网上说：删了原来一个 tag，然后重新创建了一个同名的
+git fetch --tags -f
+
 
 ## 配置
 
@@ -114,4 +124,24 @@ git reset --soft HEAD^
 git reset --soft HEAD~2
 # 删除两个提交，不会放到哪
 git reset --hard HEAD~2
+```
+
+## worktree
+
+```
+# 新建 worktree
+# 首先，当前目录肯定是个 worktree
+git worktree add ../111 fix11
+
+# 列出所有 worktree
+# 新建一个以后，这里会列出两个 worktree
+# 且 main 上面，不能切换到 fix11 分支，因为那个分支位于某 worktree 内
+# 相反也是，不能在 111 内切换到 main 分支
+git worktree list
+# 删除，参数是路径，不是分支名
+git worktree remove ../111
+  如果要强行删除有未提交内容的 worktree，没试过
+  git worktree remove --force <path-to-worktree>
+  如果目录已经删除了，只需要清理一下即可，没试过
+  git worktree prune
 ```

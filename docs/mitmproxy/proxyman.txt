@@ -1,0 +1,19 @@
+
+
+{
+  "name": "hichat",
+  "request": "launch",
+  "type": "dart",
+  "program": "lib/main.dart",
+  "toolArgs": [
+    "--dart-define=HTTP_PROXY=127.0.0.1:9090"
+  ]
+}
+
+String _proxy = String.fromEnvironment('HTTP_PROXY');
+
+if (_proxy.isNotEmpty) {
+  client.findProxy = (uri) => 'PROXY $_proxy';
+}
+
+https://proxyman.com/posts/2024-11-11-capture-https-traffic-from-flutter-ios

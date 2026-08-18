@@ -1,0 +1,58 @@
+
+OSX
+  mitmproxy-ca.pem        The certificate and the private key in PEM format.
+  mitmproxy-ca-cert.pem   The certificate in PEM format. Use this to distribute on most non-Windows platforms.
+  mitmproxy-ca-cert.p12   The certificate in PKCS12 format. For use on Windows.
+  mitmproxy-ca-cert.cer   Same file as .pem, but with an extension expected by some Android devices.
+  包含证书和私钥，证书部分和 2 4 完全一样
+  给非 windows 用
+  给 windows 用，二进制的
+  和 2 内容完全一样，只是后缀名不同，有些安卓要这后缀名
+教程里安装的是第二个证书
+在 Keychain 里看到 Proxyman 安装的也只是证书，没有私钥，没有打开箭头
+
+iOS
+  Ensure the macOS machine running the emulator is configured to use mitmproxy in its network settings.
+  Open Safari on the emulator and visit mitm.it to download the iOS certificate.
+  Navigate to Settings > General > VPN & Device Management to install the certificate.
+  Go to Settings > About > Certificate Trust Settings and enable trust for the installed root certificate.
+
+关于证书，现在，我电脑上没安装根证书，模拟器里装了
+
+
+
+方式一：设置为系统代理 + 白名单
+
+白名单配置方式
+~/.mitmproxy/config.yaml
+allow_hosts:
+  - dummyjson.com
+  - typicode.com
+
+系统里很多软件会走系统代理，这样不好，有些软件要报错
+虽然有了白名单，只抓这些域名的，但总感觉不好
+而且 dummyjson.com 这个网站，好像加了白名单以后它不能打开，google 能打开
+总结，这方式一般，不用这种
+
+方式二：代码里指定代理服务器
+
+Flutter 和 URLSession 都能指定代理服务器
+此时，只需要把 mitmweb 启动起来，我们开发的 App 会主动把请求发送到这个代理服务器
+总结：这方式不错
+
+方式三：抓包某进程
+
+这方式会在 Settings - General - Login Items & Extensions 里安装 Mitmproxy Redirector 扩展
+不知道这会不会和 OpenVPN 冲突
+总结：这方式不错
+
+好像抓不到 Flutter 的？
+答：
+经验证，不要用 mitmweb --mode local:DeviceHub 方式启动，此时 iOS 和 Flutter 都抓不到
+还是先用 mitmweb 启动，再到 web 里面启动 DeviceHub 抓包，两个都能抓了
+
+
+
+Map Local
+|/c/1a72-4497-44a2-b22c|~/rela/maploc/111.json
+
